@@ -29,7 +29,6 @@
             background-color: #f8f9fa;
         }
 
-        /* מצב Embed (מסתיר כותרת ומשתמש בכל שטח המסך) */
         body.embed-mode header {
             display: none !important;
         }
@@ -66,24 +65,27 @@
             z-index: 1;
         }
 
-        /* עיצוב המקרא (Dynamic Legend) */
+        /* עיצוב המקרא - בצד שמאל, מיושר לשמאל LTR */
         .map-legend {
             background: white;
-            padding: 10px 14px;
+            padding: 8px 12px;
             border-radius: 8px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
             font-size: 13px;
-            line-height: 1.6;
+            line-height: 1.5;
             color: #1e293b;
-            max-width: 220px;
+            min-width: 170px;
+            direction: ltr !important;
+            text-align: left !important;
         }
 
         .map-legend h4 {
             margin-bottom: 6px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
             border-bottom: 1px solid #e2e8f0;
             padding-bottom: 4px;
+            color: #0f172a;
         }
 
         .legend-item {
@@ -91,6 +93,7 @@
             align-items: center;
             gap: 8px;
             margin-bottom: 4px;
+            justify-content: flex-start;
         }
 
         .legend-icon {
@@ -98,9 +101,24 @@
             height: 12px;
             border-radius: 50%;
             border: 1.5px solid #ffffff;
-            box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.25);
             display: inline-block;
             flex-shrink: 0;
+        }
+
+        /* עיצוב חלונית קואורדינטות */
+        .coords-box {
+            background: rgba(255, 255, 255, 0.92);
+            padding: 4px 8px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            font-family: monospace, monospace;
+            font-size: 11px;
+            color: #334155;
+            direction: ltr !important;
+            text-align: left !important;
+            border: 1px solid #cbd5e1;
+            margin-top: 6px !important;
         }
 
         /* עיצוב הפופאפ במפה */
@@ -157,14 +175,13 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-        // 1. זיהוי Embed Mode לפי פרמטר ב-URL (למשל: index.html?embed=true)
+        // 1. Embed Mode
         const urlParams = new URLSearchParams(window.location.search);
-        const isEmbed = urlParams.get('embed') === 'true' || urlParams.get('embed') === '1';
-        if (isEmbed) {
+        if (urlParams.get('embed') === 'true' || urlParams.get('embed') === '1') {
             document.body.classList.add('embed-mode');
         }
 
-        // 2. הגדרת מפות הבסיס (OpenStreetMap + צילום אוויר של Esri)
+        // 2. שכבות בסיס
         const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '© OpenStreetMap contributors'
@@ -172,21 +189,38 @@
 
         const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             maxZoom: 19,
-            attribution: 'Tiles © Esri — Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+            attribution: 'Tiles © Esri'
         });
 
         const map = L.map('map', {
-            layers: [osmLayer] // מפת ברירת מחדל
+            layers: [osmLayer]
         });
 
-        // בקר החלפת רקעים (Layers Control)
+        // בקר שכבות בצד שמאל למעלה
         const baseMaps = {
             "OpenStreetMap": osmLayer,
             "צילום אוויר (Satellite)": satelliteLayer
         };
         L.control.layers(baseMaps, null, { position: 'topleft' }).addTo(map);
 
-        // שדות להצגה בטולטיפ
+        // 3. חלונית קואורדינטות בצד שמאל למעלה (תופיע תחת המקרא)
+        const coordsControl = L.control({ position: 'topleft' });
+        coordsControl.onAdd = function () {
+            const div = L.DomUtil.create('div', 'coords-box');
+            div.id = 'coordsDisplay';
+            div.innerHTML = 'Lat: -- | Lng: --';
+            return div;
+        };
+
+        // 4. עדכון קואורדינטות בתנועת העכבר
+        map.on('mousemove', function (e) {
+            const el = document.getElementById('coordsDisplay');
+            if (el) {
+                el.innerHTML = `Lat: ${e.latlng.lat.toFixed(5)} | Lng: ${e.latlng.lng.toFixed(5)}`;
+            }
+        });
+
+        // שדות פופאפ
         const displayFields = [
             { key: "OBJECTID", label: "OBJECTID" },
             { key: "GlobalID", label: "GlobalID" },
@@ -222,7 +256,7 @@
             return html;
         }
 
-        // 3. טעינת קובץ ההגדרות config.json וקובץ ה-GeoJSON
+        // 5. טעינת ההגדרות והנתונים
         Promise.all([
             fetch('config.json').then(res => res.json()),
             fetch('data/pois.geojson').then(res => res.json())
@@ -230,9 +264,8 @@
             
             const symbologyConfig = config.symbology || {};
             const topicSettings = symbologyConfig.topics || {};
-            const defaultStyle = symbologyConfig.default || { color: "#666666", radius: 6, visible: true, label: "אחר" };
+            const defaultStyle = symbologyConfig.default || { color: "#666666", radius: 6, visible: true, label: "Other" };
 
-            // פונקציית סטייל לפי POI_Topic
             function getFeatureStyle(topicValue) {
                 const setting = topicSettings[topicValue] || defaultStyle;
                 return {
@@ -245,20 +278,17 @@
                 };
             }
 
-            // סינון נקודות לפי הגדרת visible בקובץ ה-config
             function isFeatureVisible(feature) {
                 const topicVal = feature.properties ? feature.properties[symbologyConfig.field || "POI_Topic"] : null;
                 const setting = topicSettings[topicVal] || defaultStyle;
                 return setting.visible !== false;
             }
 
-            // טעינת הנקודות למפה
             const geojsonLayer = L.geoJSON(geojsonData, {
                 filter: isFeatureVisible,
                 pointToLayer: function (feature, latlng) {
                     const topicVal = feature.properties ? feature.properties.POI_Topic : null;
-                    const style = getFeatureStyle(topicVal);
-                    return L.circleMarker(latlng, style);
+                    return L.circleMarker(latlng, getFeatureStyle(topicVal));
                 },
                 onEachFeature: function (feature, layer) {
                     if (feature.properties) {
@@ -281,24 +311,22 @@
                 }
             }).addTo(map);
 
-            // עדכון מונה הנקודות
-            const displayedCount = geojsonLayer.getLayers().length;
-            document.getElementById('poiCount').textContent = displayedCount + ' נקודות';
+            // מונה נקודות מוצגות
+            document.getElementById('poiCount').textContent = geojsonLayer.getLayers().length + ' נקודות';
 
-            // 4. הגדרת Extent פתיחה
+            // Extent פתיחה מדויק מדרום (דימונה) לצפון (צפת)
             if (config.mapConfig && config.mapConfig.initialExtent && config.mapConfig.initialExtent.useCustomExtent) {
                 map.fitBounds(config.mapConfig.initialExtent.bounds);
             } else if (geojsonLayer.getBounds().isValid()) {
                 map.fitBounds(geojsonLayer.getBounds(), { padding: [40, 40] });
             }
 
-            // 5. יצירת מקרא דינמי
-            const legend = L.control({ position: 'bottomright' });
+            // 6. מקרא בצד שמאל למעלה (תחת בקר השכבות)
+            const legend = L.control({ position: 'topleft' });
             legend.onAdd = function () {
                 const div = L.DomUtil.create('div', 'map-legend');
-                div.innerHTML = '<h4>מקרא מקורות</h4>';
+                div.innerHTML = '<h4>מקרא</h4>';
 
-                // הוספת פריטים מה-config
                 Object.keys(topicSettings).forEach(topicKey => {
                     const item = topicSettings[topicKey];
                     if (item.visible !== false) {
@@ -310,7 +338,6 @@
                     }
                 });
 
-                // ברירת מחדל
                 if (defaultStyle.visible !== false) {
                     div.innerHTML += `
                         <div class="legend-item">
@@ -323,8 +350,11 @@
             };
             legend.addTo(map);
 
+            // הוספת חלונית הקואורדינטות בסוף כדי שתופיע מתחת למקרא
+            coordsControl.addTo(map);
+
         }).catch(err => {
-            console.error("שגיאה בטעינת קבצי הנתונים/ההגדרות:", err);
+            console.error("שגיאה בטעינה:", err);
             document.getElementById('poiCount').textContent = 'שגיאה בטעינה';
         });
     </script>
