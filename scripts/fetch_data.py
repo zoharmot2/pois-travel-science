@@ -3,7 +3,6 @@ import os
 import csv
 import urllib.request
 
-# בדיקה וטעינה זהירה של ספריות ה-PDF ועיבוד התמונות
 try:
     from fpdf import FPDF
     from bidi.algorithm import get_display
@@ -27,6 +26,9 @@ ATTACHMENTS_DIR = os.path.join(DATA_DIR, "attachments")
 FONT_PATH = "NotoSansHebrew-Regular.ttf"
 FONT_URL = "https://github.com/googlefonts/noto-fonts/raw/main/hinted/ttf/NotoSansHebrew/NotoSansHebrew-Regular.ttf"
 
+# סיומות קבצים מורשות להורדה בלבד (תמונות)
+IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.gif', '.webp')
+
 def fetch_json(url):
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
     with urllib.request.urlopen(req) as response:
@@ -37,8 +39,8 @@ def download_file(url, save_path):
     with urllib.request.urlopen(req) as response, open(save_path, "wb") as out_file:
         out_file.write(response.read())
 
-def optimize_image(image_path, max_dim=1600, quality=80):
-    """דחיסה ואופטימיזציה של תמונה לרוחב/גובה מרבי של max_dim פיקסלים"""
+def optimize_image(image_path, max_dim=1000, quality=70):
+    """כיווץ אגרסיבי של התמונות למניעת חריגה בגודל ה-PDF וה-Git"""
     if not IMAGE_OPTIMIZE_SUPPORT or not os.path.exists(image_path):
         return
     try:
@@ -87,7 +89,6 @@ def get_attachments_map(object_ids):
     try:
         data = fetch_json(url_def)
         if "attachmentGroups" in data:
-            print("שליפת קבצים דרך definitionExpression הצליחה.")
             for group in data.get("attachmentGroups", []):
                 pid = group.get("parentObjectId")
                 attachments_map[pid] = group.get("attachmentInfos", [])
@@ -100,7 +101,6 @@ def get_attachments_map(object_ids):
     try:
         data = fetch_json(url_ids)
         if "attachmentGroups" in data:
-            print("שליפת קבצים דרך objectIds הצליחה.")
             for group in data.get("attachmentGroups", []):
                 pid = group.get("parentObjectId")
                 attachments_map[pid] = group.get("attachmentInfos", [])
@@ -108,7 +108,6 @@ def get_attachments_map(object_ids):
     except Exception as e:
         print(f"ניסיון 2 נכשל: {e}")
 
-    print("מבצע תשאול פרטני...")
     for oid in object_ids:
         single_url = f"{BASE_URL}/{oid}/attachments?f=json"
         try:
@@ -181,9 +180,10 @@ def generate_pdf(features, output_path):
                 pdf.ln(3)
 
                 for img_path in attachments:
-                    if os.path.exists(img_path):
+                    # דילוג על קישורים שאינם תמונות מקומיות (כמו וידאו)
+                    if isinstance(img_path, str) and os.path.exists(img_path) and img_path.lower().endswith(IMAGE_EXTENSIONS):
                         try:
-                            pdf.image(img_path, w=120, x=45)
+                            pdf.image(img_path, w=100, x=55)
                             pdf.ln(5)
                         except Exception as img_err:
                             print(f"אזהרה: לא ניתן להוסיף תמונה {img_path} ל-PDF: {img_err}")
@@ -221,20 +221,28 @@ def fetch_and_process():
             att_name = att.get("name")
             download_url = f"{BASE_URL}/{oid}/attachments/{att_id}"
 
-            safe_filename = f"{oid}_{att_id}_{att_name}"
-            local_path = os.path.join(ATTACHMENTS_DIR, safe_filename)
-            relative_path = f"data/attachments/{safe_filename}"
+            # בדיקה אם הקובץ הוא תמונה
+            is_image = att_name.lower().endswith(IMAGE_EXTENSIONS)
 
-            if not os.path.exists(local_path):
-                print(f"מוריד קובץ: {safe_filename}...")
-                try:
-                    download_file(download_url, local_path)
-                    optimize_image(local_path)  # דחיסה ואופטימיזציה של התמונה
-                except Exception as err:
-                    print(f"שגיאה בהורדת {download_url}: {err}")
-                    continue
+            if is_image:
+                safe_filename = f"{oid}_{att_id}_{att_name}"
+                local_path = os.path.join(ATTACHMENTS_DIR, safe_filename)
+                relative_path = f"data/attachments/{safe_filename}"
 
-            attachments_map[oid].append(relative_path)
+                if not os.path.exists(local_path):
+                    print(f"מוריד תמונה: {safe_filename}...")
+                    try:
+                        download_file(download_url, local_path)
+                        optimize_image(local_path)
+                    except Exception as err:
+                        print(f"שגיאה בהורדת {download_url}: {err}")
+                        continue
+
+                attachments_map[oid].append(relative_path)
+            else:
+                # עבור וידאו/קבצים כבדים - שמירת קישור ישיר בלבד ללא הורדה מקומית
+                print(f"מדלג על הורדת קובץ שאינו תמונה ({att_name}), שומר קישור ישיר.")
+                attachments_map[oid].append(download_url)
 
     for feature in features:
         props = feature.get("properties", {})
