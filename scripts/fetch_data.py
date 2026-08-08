@@ -129,14 +129,12 @@ def parse_feature_date(feature):
     return props.get("OBJECTID") or props.get("objectid") or 0
 
 def is_empty_feature(feature):
-    """בדיקה האם הנקודה ריקה מתוכן רלוונטי"""
+    """סינון נקודות ריקות"""
     props = feature.get("properties", {})
     name = str(get_prop_val(props, "POI_Name") or get_prop_val(props, "name")).strip()
     topic = str(get_prop_val(props, "POI_Topic")).strip()
     desc = str(get_prop_val(props, "POI_Description")).strip()
     atts = props.get("attachments", [])
-    
-    # אם אין שם, אין נושא, אין תיאור ואין קבצים מצורפים - הנקודה נחשבת ריקה
     return not name and not topic and not desc and not atts
 
 def get_attachments_map(object_ids):
@@ -188,24 +186,23 @@ def generate_csv(features, output_path):
     for feat in features:
         all_keys.update(feat.get("properties", {}).keys())
 
-    fieldnames = sorted(list(all_keys))
+    # סדר העמודות המבוקש בראש קובץ ה-CSV
+    priority_fields = [
+        "OBJECTID",
+        "GlobalID",
+        "Date_Point",
+        "Collect_Name",
+        "POI_Name",
+        "POI_Topic",
+        "POI_Type",
+        "POI_Description",
+        "Latitude",
+        "Longitude",
+        "attachments"
+    ]
 
-    for col in ["Date_Point", "OBJECTID"]:
-        if col in fieldnames:
-            fieldnames.remove(col)
-            fieldnames.insert(0, col)
-
-    if "attachments" in fieldnames:
-        fieldnames.remove("attachments")
-        target_idx = -1
-        for idx, fn in enumerate(fieldnames):
-            if fn.lower() == "collection_date":
-                target_idx = idx
-                break
-        if target_idx != -1:
-            fieldnames.insert(target_idx + 1, "attachments")
-        else:
-            fieldnames.append("attachments")
+    remaining_fields = sorted([k for k in all_keys if k not in priority_fields])
+    fieldnames = priority_fields + remaining_fields
 
     with open(output_path, "w", newline="", encoding="utf-8-sig") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -237,14 +234,19 @@ def generate_pdf(features, output_path):
         pdf.set_font("NotoHebrew", size=14)
         pdf.cell(0, 10, fix_hebrew("דוח מפורט - נקודות עניין ומדיה"), ln=True, align="C")
 
+        # השדות שיוצגו לכל נקודה ב-PDF בסדר המבוקש
         ordered_fields = [
-            ("POI_Name", "שם הנקודה:"),
-            ("POI_Topic", "נושא:"),
-            ("POI_Type", "סוג:"),
-            ("POI_Description", "תיאור:"),
-            ("Date_Point", "תאריך:"),
-            ("Longitude", "קו אורך (Longitude):"),
-            ("Latitude", "קו רוחב (Latitude):")
+            ("OBJECTID", "OBJECTID:"),
+            ("GlobalID", "GlobalID:"),
+            ("Date_Point", "Date_Point:"),
+            ("Collect_Name", "Collect_Name:"),
+            ("POI_Name", "POI_Name:"),
+            ("POI_Topic", "POI_Topic:"),
+            ("POI_Type", "POI_Type:"),
+            ("POI_Description", "POI_Description:"),
+            ("Latitude", "Latitude:"),
+            ("Longitude", "Longitude:"),
+            ("attachments", "attachments:")
         ]
 
         for feat in features:
@@ -254,14 +256,16 @@ def generate_pdf(features, output_path):
             pdf.set_font("NotoHebrew", size=12)
             for key_name, label in ordered_fields:
                 val = get_prop_val(props, key_name)
+                if isinstance(val, list):
+                    val = ", ".join(val)
                 if val is not None and str(val).strip() != "":
                     line_text = f"{label} {val}"
-                    pdf.set_x(10)  # יישור קו השוליים הימני לכל השדות
+                    pdf.set_x(10)  # יישור לשמאל
                     if key_name == "POI_Description":
-                        pdf.multi_cell(0, 8, fix_hebrew(line_text), align="R")
+                        pdf.multi_cell(0, 8, fix_hebrew(line_text), align="L")
                         pdf.ln(2)
                     else:
-                        pdf.cell(0, 8, fix_hebrew(line_text), ln=True, align="R")
+                        pdf.cell(0, 8, fix_hebrew(line_text), ln=True, align="L")
 
             attachments = props.get("attachments", [])
             if attachments:
@@ -278,11 +282,11 @@ def generate_pdf(features, output_path):
                 if images:
                     pdf.set_x(10)
                     pdf.set_font("NotoHebrew", size=13)
-                    pdf.cell(0, 8, fix_hebrew("צילומים ותמונות:"), ln=True, align="R")
+                    pdf.cell(0, 8, fix_hebrew("צילומים ותמונות:"), ln=True, align="L")
                     pdf.ln(3)
                     for img_path in images:
                         try:
-                            pdf.image(img_path, w=110, x=50)
+                            pdf.image(img_path, w=110, x=10)
                             pdf.ln(5)
                         except Exception as img_err:
                             print(f"אזהרה: לא ניתן להוסיף תמונה {img_path} ל-PDF: {img_err}")
@@ -291,11 +295,11 @@ def generate_pdf(features, output_path):
                     pdf.ln(3)
                     pdf.set_x(10)
                     pdf.set_font("NotoHebrew", size=12)
-                    pdf.cell(0, 8, fix_hebrew("סרטונים / קבצי מדיה מצורפים:"), ln=True, align="R")
+                    pdf.cell(0, 8, fix_hebrew("סרטונים / קבצי מדיה מצורפים:"), ln=True, align="L")
                     pdf.set_font("NotoHebrew", size=10)
                     for link in media_links:
                         pdf.set_x(10)
-                        pdf.cell(0, 6, fix_hebrew(f"קישור ישיר: {link}"), ln=True, align="R")
+                        pdf.cell(0, 6, fix_hebrew(f"קישור ישיר: {link}"), ln=True, align="L")
 
         pdf.output(output_path)
     except Exception as pdf_err:
