@@ -63,7 +63,7 @@ def download_file(url, save_path):
         out_file.write(response.read())
 
 def optimize_image(image_path, max_dim=600, quality=45):
-    """דחיסת תמונות מוגברת כדי לשמור על גודל PDF מתחת ל-100MB"""
+    """דחיסת תמונות לשמירה על גודל קובץ תקין"""
     if not IMAGE_OPTIMIZE_SUPPORT or not os.path.exists(image_path):
         return
     try:
@@ -143,6 +143,7 @@ def parse_to_datetime(val):
         return datetime.max
 
 def format_datetime_str(val):
+    """המרת ערך תאריך לפורמט קריא DD/MM/YYYY HH:MM"""
     dt = parse_to_datetime(val)
     if dt == datetime.max:
         return str(val) if val is not None else ""
@@ -313,6 +314,7 @@ def fetch_and_process():
             props["Longitude"] = coords[0]
             props["Latitude"] = coords[1]
 
+        # 1. קביעת שדה Date_Point
         raw_date = (
             get_prop_val(props, "Date_Point") or 
             get_prop_val(props, "Collection_date") or 
@@ -320,6 +322,12 @@ def fetch_and_process():
             get_prop_val(props, "EditDate")
         )
         props["Date_Point"] = format_datetime_str(raw_date)
+
+        # 2. המרת כל שדות התאריכים בטבלה לפורמט קריא
+        for key, val in list(props.items()):
+            if any(d_word in key.lower() for d_word in ["date", "time"]) or key in ["Collection_date", "CreationDate", "EditDate"]:
+                if val is not None and str(val).strip() != "":
+                    props[key] = format_datetime_str(val)
 
         oid = props.get("OBJECTID") or props.get("objectid") or props.get("FID")
         if oid is not None:
@@ -345,7 +353,6 @@ def fetch_and_process():
                 local_path = os.path.join(ATTACHMENTS_DIR, safe_filename)
                 relative_path = f"data/attachments/{safe_filename}"
 
-                # הורדה ודחיסה של כל התמונות
                 if not os.path.exists(local_path):
                     print(f"מוריד תמונה: {safe_filename}...")
                     try:
