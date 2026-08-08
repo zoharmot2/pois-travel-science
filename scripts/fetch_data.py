@@ -2,6 +2,7 @@ import json
 import os
 import csv
 import urllib.request
+from datetime import datetime
 
 try:
     from fpdf import FPDF
@@ -26,7 +27,6 @@ ATTACHMENTS_DIR = os.path.join(DATA_DIR, "attachments")
 FONT_PATH = "NotoSansHebrew-Regular.ttf"
 FONT_URL = "https://github.com/googlefonts/noto-fonts/raw/main/hinted/ttf/NotoSansHebrew/NotoSansHebrew-Regular.ttf"
 
-# סיומות קבצים מורשות להורדה בלבד (תמונות)
 IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.gif', '.webp')
 
 def fetch_json(url):
@@ -40,7 +40,6 @@ def download_file(url, save_path):
         out_file.write(response.read())
 
 def optimize_image(image_path, max_dim=1000, quality=70):
-    """כיווץ אגרסיבי של התמונות למניעת חריגה בגודל ה-PDF וה-Git"""
     if not IMAGE_OPTIMIZE_SUPPORT or not os.path.exists(image_path):
         return
     try:
@@ -79,6 +78,34 @@ def fix_hebrew(text):
         except Exception:
             return str(text)
     return str(text)
+
+def get_prop_val(props, key_name):
+    if key_name in props and props[key_name] is not None:
+        return props[key_name]
+    for k, v in props.items():
+        if k.lower() == key_name.lower() and v is not None:
+            return v
+    return ""
+
+def parse_feature_date(feature):
+    """חילוץ תאריך מהנקודה לצורך מיון כרונולוגי (מהישן לחדש)"""
+    props = feature.get("properties", {})
+    
+    # חיפוש שדות תאריך נפוצים במערכות ESRI
+    for key, val in props.items():
+        if val is not None and any(d_field in key.lower() for d_field in ["date", "time", "created"]):
+            if isinstance(val, (int, float)):
+                return val
+            if isinstance(val, str):
+                if val.isdigit():
+                    return int(val)
+                try:
+                    return datetime.fromisoformat(val.replace("Z", "+00:00")).timestamp()
+                except Exception:
+                    return val
+                    
+    # ברירת מחדל: מיון לפי OBJECTID אם לא נמצא שדה תאריך
+    return props.get("OBJECTID") or props.get("objectid") or 0
 
 def get_attachments_map(object_ids):
     attachments_map = {}
@@ -130,9 +157,12 @@ def generate_csv(features, output_path):
         all_keys.update(feat.get("properties", {}).keys())
 
     fieldnames = sorted(list(all_keys))
-    if "OBJECTID" in fieldnames:
-        fieldnames.remove("OBJECTID")
-        fieldnames.insert(0, "OBJECTID")
+    
+    priority_fields = ["OBJECTID", "POI_Name", "POI_Topic", "POI_Type", "POI_Description", "Longitude", "Latitude"]
+    for pf in reversed(priority_fields):
+        if pf in fieldnames:
+            fieldnames.remove(pf)
+            fieldnames.insert(0, pf)
 
     with open(output_path, "w", newline="", encoding="utf-8-sig") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -156,37 +186,68 @@ def generate_pdf(features, output_path):
         pdf.set_auto_page_break(auto=True, margin=15)
         pdf.add_font("NotoHebrew", "", FONT_PATH, uni=True)
 
+        # דף פתיחה
+        pdf.add_page()
+        pdf.ln(80)
+        pdf.set_font("NotoHebrew", size=32)
+        pdf.cell(0, 20, fix_hebrew("יומן מסע"), ln=True, align="C")
+        pdf.set_font("NotoHebrew", size=14)
+        pdf.cell(0, 10, fix_hebrew("דוח מפורט - נקודות עניין ומדיה"), ln=True, align="C")
+
+        ordered_fields = [
+            ("POI_Name", "שם הנקודה:"),
+            ("POI_Topic", "נושא:"),
+            ("POI_Type", "סוג:"),
+            ("POI_Description", "תיאור:"),
+            ("Longitude", "קו אורך (Longitude):"),
+            ("Latitude", "קו רוחב (Latitude):")
+        ]
+
         for feat in features:
             props = feat.get("properties", {})
             pdf.add_page()
 
-            pdf.set_font("NotoHebrew", size=18)
-            poi_title = props.get("NAME") or props.get("name") or f"נקודה {props.get('OBJECTID', '')}"
-            pdf.cell(0, 10, fix_hebrew(f"דוח נקודה: {poi_title}"), ln=True, align="R")
-            pdf.ln(5)
-
-            pdf.set_font("NotoHebrew", size=11)
-            for key, val in props.items():
-                if key in ["attachments"] or val is None:
-                    continue
-                line_text = f"{key}: {val}"
-                pdf.cell(0, 7, fix_hebrew(line_text), ln=True, align="R")
+            pdf.set_font("NotoHebrew", size=12)
+            for key_name, label in ordered_fields:
+                val = get_prop_val(props, key_name)
+                if val is not None and str(val).strip() != "":
+                    line_text = f"{label} {val}"
+                    if key_name == "POI_Description":
+                        pdf.multi_cell(0, 8, fix_hebrew(line_text), align="R")
+                        pdf.ln(2)
+                    else:
+                        pdf.cell(0, 8, fix_hebrew(line_text), ln=True, align="R")
 
             attachments = props.get("attachments", [])
             if attachments:
-                pdf.ln(10)
-                pdf.set_font("NotoHebrew", size=13)
-                pdf.cell(0, 8, fix_hebrew("צילומים ותמונות:"), ln=True, align="R")
-                pdf.ln(3)
+                pdf.ln(5)
+                images = []
+                media_links = []
 
-                for img_path in attachments:
-                    # דילוג על קישורים שאינם תמונות מקומיות (כמו וידאו)
-                    if isinstance(img_path, str) and os.path.exists(img_path) and img_path.lower().endswith(IMAGE_EXTENSIONS):
+                for att in attachments:
+                    if isinstance(att, str) and os.path.exists(att) and att.lower().endswith(IMAGE_EXTENSIONS):
+                        images.append(att)
+                    else:
+                        media_links.append(att)
+
+                if images:
+                    pdf.set_font("NotoHebrew", size=13)
+                    pdf.cell(0, 8, fix_hebrew("צילומים ותמונות:"), ln=True, align="R")
+                    pdf.ln(2)
+                    for img_path in images:
                         try:
                             pdf.image(img_path, w=100, x=55)
-                            pdf.ln(5)
+                            pdf.ln(4)
                         except Exception as img_err:
                             print(f"אזהרה: לא ניתן להוסיף תמונה {img_path} ל-PDF: {img_err}")
+
+                if media_links:
+                    pdf.ln(3)
+                    pdf.set_font("NotoHebrew", size=12)
+                    pdf.cell(0, 8, fix_hebrew("סרטונים / קבצי מדיה מצורפים:"), ln=True, align="R")
+                    pdf.set_font("NotoHebrew", size=10)
+                    for link in media_links:
+                        pdf.cell(0, 6, fix_hebrew(f"קישור ישיר: {link}"), ln=True, align="R")
 
         pdf.output(output_path)
     except Exception as pdf_err:
@@ -204,6 +265,13 @@ def fetch_and_process():
     object_ids = []
     for feat in features:
         props = feat.get("properties", {})
+        geom = feat.get("geometry", {})
+        
+        coords = geom.get("coordinates", []) if geom else []
+        if len(coords) >= 2:
+            props["Longitude"] = coords[0]
+            props["Latitude"] = coords[1]
+
         oid = props.get("OBJECTID") or props.get("objectid") or props.get("FID")
         if oid is not None:
             object_ids.append(oid)
@@ -221,7 +289,6 @@ def fetch_and_process():
             att_name = att.get("name")
             download_url = f"{BASE_URL}/{oid}/attachments/{att_id}"
 
-            # בדיקה אם הקובץ הוא תמונה
             is_image = att_name.lower().endswith(IMAGE_EXTENSIONS)
 
             if is_image:
@@ -240,14 +307,16 @@ def fetch_and_process():
 
                 attachments_map[oid].append(relative_path)
             else:
-                # עבור וידאו/קבצים כבדים - שמירת קישור ישיר בלבד ללא הורדה מקומית
-                print(f"מדלג על הורדת קובץ שאינו תמונה ({att_name}), שומר קישור ישיר.")
+                print(f"מדלג על הורדת קובץ מדיה ({att_name}), שומר קישור ישיר.")
                 attachments_map[oid].append(download_url)
 
     for feature in features:
         props = feature.get("properties", {})
         oid = props.get("OBJECTID") or props.get("objectid") or props.get("FID")
         props["attachments"] = attachments_map.get(oid, [])
+
+    # 3. מיון הנקודות לפי תאריך מהישן לחדש ביותר
+    features.sort(key=parse_feature_date)
 
     output_geojson = os.path.join(DATA_DIR, "pois.geojson")
     with open(output_geojson, "w", encoding="utf-8") as f:
