@@ -83,7 +83,7 @@ def optimize_image(image_path, max_dim=600, quality=45):
         return
     try:
         with Image.open(image_path) as img:
-            # יישור התמונה פיזית לפי נתוני החיישן (EXIF) של המצלמה/סמארטפון
+            # יישור התמונה פיזית בדיסק לפי חיישן המצלמה (EXIF)
             img = ImageOps.exif_transpose(img)
 
             if img.mode in ("RGBA", "P"):
@@ -101,7 +101,7 @@ def optimize_image(image_path, max_dim=600, quality=45):
             
             img.save(image_path, "JPEG", optimize=True, quality=quality)
     except Exception as e:
-        print(f"אזהרה: לא ניתן היה לבצע אופטימיזציה לתמונה {image_path}: {e}")
+        print(f"אזהרה: לא ניתן היה לבצע אופטימיזציה/יישור לתמונה {image_path}: {e}")
 
 def ensure_hebrew_font():
     if not os.path.exists(FONT_PATH):
@@ -303,11 +303,11 @@ def fetch_and_process():
             props["Longitude"] = coords[0]
             props["Latitude"] = coords[1]
 
-        # שמירת הערך המקורי למיון
+        # שמירת הערך המקורי למיון מדויק
         raw_cdate = get_prop_val(props, "CreationDate") or get_prop_val(props, "Date_Point")
         props["_sort_date"] = parse_to_datetime(raw_cdate)
 
-        # המרת כל שדות התאריכים לפורמט קריא
+        # המרת כל שדות התאריכים בטבלה לפורמט קריא
         for key, val in list(props.items()):
             if any(d_word in key.lower() for d_word in ["date", "time"]) or key in ["Collection_date", "CreationDate", "EditDate"]:
                 if val is not None and str(val).strip() != "":
@@ -345,6 +345,7 @@ def fetch_and_process():
                         print(f"שגיאה בהורדת {download_url}: {err}")
                         continue
 
+                # אופטימיזציה ויישור זווית ה-EXIF מבוצעים תמיד (גם עבור קבצים שכבר הורדו בעבר)
                 optimize_image(local_path, max_dim=600, quality=45)
                 attachments_map[oid].append(relative_path)
             else:
@@ -358,7 +359,7 @@ def fetch_and_process():
 
     features = [f for f in features if not is_empty_feature(f)]
 
-    # מיון כרונולוגי לפי CreationDate (מהישן לחדש)
+    # מיון כרונולוגי לפי CreationDate מהישן לחדש
     features.sort(key=lambda f: f.get("properties", {}).get("_sort_date", datetime.max))
 
     # ניקוי שדה העזר של המיון
