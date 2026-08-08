@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POIs Travel Science</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        #map { width: 100vw; height: 100vh; }
+    </style>
+</head>
+<body>
+
+    <div id="map"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // אתחול המפה במרכז ישראל
+        const map = L.map('map').setView([31.5, 34.75], 8);
+
+        // הוספת מפת בסיס מבית OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // טעינת ה-GeoJSON שנשמר על ידי ה-Workflow
+        fetch('./data/pois.geojson')
+            .then(response => response.json())
+            .then(data => {
+                const geojsonLayer = L.geoJSON(data, {
+                    onEachFeature: function (feature, layer) {
+                        // בניית חלונית מידע (Popup) עבור כל נכס/נקודה שנאספה
+                        let props = feature.properties;
+                        let popupContent = '<div>';
+                        for (let key in props) {
+                            if (props[key] !== null) {
+                                popupContent += `<strong>${key}:</strong> ${props[key]}<br>`;
+                            }
+                        }
+                        popupContent += '</div>';
+                        layer.bindPopup(popupContent);
+                    }
+                }).addTo(map);
+
+                // התאמת זום המפה לגבולות כל הנקודות שנמצאו
+                if (data.features && data.features.length > 0) {
+                    map.fitBounds(geojsonLayer.getBounds());
+                }
+            })
+            .catch(err => console.error('שגיאה שטעינת ה-GeoJSON:', err));
+    </script>
+</body>
+</html>
