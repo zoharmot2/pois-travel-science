@@ -34,7 +34,7 @@ def fetch_json(url):
         return json.loads(response.read().decode("utf-8"))
 
 def fetch_all_features():
-    """שליפת כל הנקודות מ-ArcGIS בלולאה כדי למנוע מגבלת כמות תוצאות (Pagination)"""
+    """שליפת כל הנקודות מ-ArcGIS בלולאה למניעת מגבלת כמות תוצאות (Pagination)"""
     all_features = []
     offset = 0
     record_count = 1000
@@ -62,7 +62,8 @@ def download_file(url, save_path):
     with urllib.request.urlopen(req) as response, open(save_path, "wb") as out_file:
         out_file.write(response.read())
 
-def optimize_image(image_path, max_dim=1000, quality=70):
+def optimize_image(image_path, max_dim=600, quality=45):
+    """דחיסת תמונות מוגברת כדי לשמור על גודל PDF מתחת ל-100MB"""
     if not IMAGE_OPTIMIZE_SUPPORT or not os.path.exists(image_path):
         return
     try:
@@ -111,7 +112,6 @@ def get_prop_val(props, key_name):
     return ""
 
 def parse_to_datetime(val):
-    """המרת ערך תאריך מכל סוג לאובייקט datetime לצורך מיון מדויק"""
     if val is None or str(val).strip() in ("", "None", "null"):
         return datetime.max
     
@@ -143,14 +143,12 @@ def parse_to_datetime(val):
         return datetime.max
 
 def format_datetime_str(val):
-    """עיצוב תאריך לתצוגה נוחה בפורמט DD/MM/YYYY HH:MM"""
     dt = parse_to_datetime(val)
     if dt == datetime.max:
         return str(val) if val is not None else ""
     return dt.strftime("%d/%m/%Y %H:%M")
 
 def is_empty_feature(feature):
-    """סינון בטוח: רלוונטי רק אם אין קואורדינטות וכל השדות ריקים לחלוטין"""
     props = feature.get("properties", {})
     geom = feature.get("geometry", {})
     coords = geom.get("coordinates", []) if geom else []
@@ -315,7 +313,6 @@ def fetch_and_process():
             props["Longitude"] = coords[0]
             props["Latitude"] = coords[1]
 
-        # מתן קדימות לשדה Date_Point המקורי
         raw_date = (
             get_prop_val(props, "Date_Point") or 
             get_prop_val(props, "Collection_date") or 
@@ -348,15 +345,16 @@ def fetch_and_process():
                 local_path = os.path.join(ATTACHMENTS_DIR, safe_filename)
                 relative_path = f"data/attachments/{safe_filename}"
 
+                # הורדה ודחיסה של כל התמונות
                 if not os.path.exists(local_path):
                     print(f"מוריד תמונה: {safe_filename}...")
                     try:
                         download_file(download_url, local_path)
-                        optimize_image(local_path)
                     except Exception as err:
                         print(f"שגיאה בהורדת {download_url}: {err}")
                         continue
 
+                optimize_image(local_path, max_dim=600, quality=45)
                 attachments_map[oid].append(relative_path)
             else:
                 print(f"מדלג על הורדת קובץ מדיה ({att_name}), שומר קישור ישיר.")
@@ -367,10 +365,8 @@ def fetch_and_process():
         oid = props.get("OBJECTID") or props.get("objectid") or props.get("FID")
         props["attachments"] = attachments_map.get(oid, [])
 
-    # 3. סינון בטוח
     features = [f for f in features if not is_empty_feature(f)]
 
-    # 4. מיון כרונולוגי מדויק לפי Date_Point מהישן לחדש ביותר
     def get_sort_key(f):
         dp = f.get("properties", {}).get("Date_Point", "")
         return parse_to_datetime(dp)
@@ -379,7 +375,6 @@ def fetch_and_process():
     geojson_data["features"] = features
     print(f"לאחר עיבוד נותרו {len(features)} נקודות בסדר כרונולוגי.")
 
-    # 5. יצירת הקבצים
     output_geojson = os.path.join(DATA_DIR, "pois.geojson")
     with open(output_geojson, "w", encoding="utf-8") as f:
         json.dump(geojson_data, f, ensure_ascii=False, indent=2)
