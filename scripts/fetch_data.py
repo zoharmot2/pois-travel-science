@@ -113,21 +113,6 @@ def format_datetime_str(val):
             return str(val)
     return str(val)
 
-def parse_feature_date(feature):
-    props = feature.get("properties", {})
-    for key, val in props.items():
-        if val is not None and any(d_field in key.lower() for d_field in ["date", "time", "created"]):
-            if isinstance(val, (int, float)):
-                return val
-            if isinstance(val, str):
-                if val.isdigit():
-                    return int(val)
-                try:
-                    return datetime.fromisoformat(val.replace("Z", "+00:00")).timestamp()
-                except Exception:
-                    return val
-    return props.get("OBJECTID") or props.get("objectid") or 0
-
 def is_empty_feature(feature):
     """סינון נקודות ריקות"""
     props = feature.get("properties", {})
@@ -186,7 +171,7 @@ def generate_csv(features, output_path):
     for feat in features:
         all_keys.update(feat.get("properties", {}).keys())
 
-    # סדר העמודות המבוקש בראש קובץ ה-CSV
+    # סדר העמודות בראש קובץ ה-CSV
     priority_fields = [
         "OBJECTID",
         "GlobalID",
@@ -224,7 +209,10 @@ def generate_pdf(features, output_path):
     try:
         pdf = FPDF()
         pdf.set_auto_page_break(auto=True, margin=15)
-        pdf.add_font("NotoHebrew", "", FONT_PATH, uni=True)
+        try:
+            pdf.add_font("NotoHebrew", fname=FONT_PATH)
+        except TypeError:
+            pdf.add_font("NotoHebrew", "", FONT_PATH, uni=True)
 
         # דף פתיחה
         pdf.add_page()
@@ -234,76 +222,60 @@ def generate_pdf(features, output_path):
         pdf.set_font("NotoHebrew", size=14)
         pdf.cell(0, 10, fix_hebrew("דוח מפורט - נקודות עניין ומדיה"), ln=True, align="C")
 
-        # השדות שיוצגו לכל נקודה ב-PDF בסדר המבוקש
+        # 11 השדות הנדרשים לכל נקודה
         ordered_fields = [
-            ("OBJECTID", "OBJECTID:"),
-            ("GlobalID", "GlobalID:"),
-            ("Date_Point", "Date_Point:"),
-            ("Collect_Name", "Collect_Name:"),
-            ("POI_Name", "POI_Name:"),
-            ("POI_Topic", "POI_Topic:"),
-            ("POI_Type", "POI_Type:"),
-            ("POI_Description", "POI_Description:"),
-            ("Latitude", "Latitude:"),
-            ("Longitude", "Longitude:"),
-            ("attachments", "attachments:")
+            "OBJECTID",
+            "GlobalID",
+            "Date_Point",
+            "Collect_Name",
+            "POI_Name",
+            "POI_Topic",
+            "POI_Type",
+            "POI_Description",
+            "Latitude",
+            "Longitude",
+            "attachments"
         ]
 
         for feat in features:
             props = feat.get("properties", {})
             pdf.add_page()
 
-            pdf.set_font("NotoHebrew", size=12)
-            for key_name, label in ordered_fields:
-                val = get_prop_val(props, key_name)
+            pdf.set_font("NotoHebrew", size=11)
+            
+            for key in ordered_fields:
+                val = get_prop_val(props, key)
                 if isinstance(val, list):
-                    val = ", ".join(val)
-                if val is not None and str(val).strip() != "":
-                    line_text = f"{label} {val}"
-                    pdf.set_x(10)  # יישור לשמאל
-                    if key_name == "POI_Description":
-                        pdf.multi_cell(0, 8, fix_hebrew(line_text), align="L")
-                        pdf.ln(2)
-                    else:
-                        pdf.cell(0, 8, fix_hebrew(line_text), ln=True, align="L")
+                    val_str = ", ".join([str(x) for x in val])
+                else:
+                    val_str = "" if val is None else str(val)
 
+                line_text = f"{key}: {val_str}"
+                
+                pdf.set_x(10)  # יישור לשמאל
+                pdf.multi_cell(0, 7, fix_hebrew(line_text), align="L")
+                pdf.ln(1)
+
+            # הצגת תמונות
             attachments = props.get("attachments", [])
             if attachments:
-                pdf.ln(5)
-                images = []
-                media_links = []
-
-                for att in attachments:
-                    if isinstance(att, str) and os.path.exists(att) and att.lower().endswith(IMAGE_EXTENSIONS):
-                        images.append(att)
-                    else:
-                        media_links.append(att)
-
+                images = [att for att in attachments if isinstance(att, str) and os.path.exists(att) and att.lower().endswith(IMAGE_EXTENSIONS)]
                 if images:
+                    pdf.ln(4)
                     pdf.set_x(10)
-                    pdf.set_font("NotoHebrew", size=13)
-                    pdf.cell(0, 8, fix_hebrew("צילומים ותמונות:"), ln=True, align="L")
-                    pdf.ln(3)
+                    pdf.set_font("NotoHebrew", size=12)
+                    pdf.cell(0, 8, fix_hebrew("תמונות מצורפות:"), ln=True, align="L")
+                    pdf.ln(2)
                     for img_path in images:
                         try:
                             pdf.image(img_path, w=110, x=10)
-                            pdf.ln(5)
+                            pdf.ln(4)
                         except Exception as img_err:
                             print(f"אזהרה: לא ניתן להוסיף תמונה {img_path} ל-PDF: {img_err}")
 
-                if media_links:
-                    pdf.ln(3)
-                    pdf.set_x(10)
-                    pdf.set_font("NotoHebrew", size=12)
-                    pdf.cell(0, 8, fix_hebrew("סרטונים / קבצי מדיה מצורפים:"), ln=True, align="L")
-                    pdf.set_font("NotoHebrew", size=10)
-                    for link in media_links:
-                        pdf.set_x(10)
-                        pdf.cell(0, 6, fix_hebrew(f"קישור ישיר: {link}"), ln=True, align="L")
-
         pdf.output(output_path)
     except Exception as pdf_err:
-        print(f"שגיאה בלתי צפויה ביצירת ה-PDF: {pdf_err}")
+        print(f"שגיאה ביצירת ה-PDF: {pdf_err}")
 
 def fetch_and_process():
     os.makedirs(ATTACHMENTS_DIR, exist_ok=True)
@@ -324,7 +296,7 @@ def fetch_and_process():
             props["Longitude"] = coords[0]
             props["Latitude"] = coords[1]
 
-        raw_date = get_prop_val(props, "Collection_date") or get_prop_val(props, "CreationDate")
+        raw_date = get_prop_val(props, "Collection_date") or get_prop_val(props, "CreationDate") or get_prop_val(props, "Date_Point")
         props["Date_Point"] = format_datetime_str(raw_date)
 
         oid = props.get("OBJECTID") or props.get("objectid") or props.get("FID")
@@ -372,12 +344,17 @@ def fetch_and_process():
 
     # 3. סינון נקודות ריקות מתוכן
     features = [f for f in features if not is_empty_feature(f)]
+
+    # 4. מיון לפי Date_Point מהישן לחדש
+    def get_sort_key(f):
+        dp = f.get("properties", {}).get("Date_Point", "")
+        return str(dp) if dp else "9999-99-99 99:99:99"
+
+    features.sort(key=get_sort_key)
     geojson_data["features"] = features
-    print(f"לאחר סינון נקודות ריקות נותרו {len(features)} נקודות.")
+    print(f"לאחר סינון ומיון כרונולוגי נותרו {len(features)} נקודות.")
 
-    # 4. מיון לפי תאריך מהישן לחדש ביותר
-    features.sort(key=parse_feature_date)
-
+    # 5. יצירת הקבצים
     output_geojson = os.path.join(DATA_DIR, "pois.geojson")
     with open(output_geojson, "w", encoding="utf-8") as f:
         json.dump(geojson_data, f, ensure_ascii=False, indent=2)
