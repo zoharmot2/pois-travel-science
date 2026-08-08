@@ -13,32 +13,32 @@
     "field": "POI_Topic",
     "default": {
       "color": "#64748B",
-      "radius": 6,
+      "radius": 8,
       "visible": true,
       "label": "Other"
     },
     "topics": {
-      "Settlements_Project": {
-        "color": "#1B661A",
-        "radius": 7,
-        "visible": true,
-        "label": "Settlements"
-      },
-      "Climate": {
-        "color": "#0284C7",
-        "radius": 7,
-        "visible": true,
-        "label": "Climate Negev"
-      },
       "Historical Earthquakes": {
         "color": "#8B261D",
         "radius": 10,
         "visible": true,
         "label": "Historical Earthquakes"
       },
+      "Climate": {
+        "color": "#0284C7",
+        "radius": 10,
+        "visible": true,
+        "label": "Climate Negev"
+      },
+      "Settlements_Project": {
+        "color": "#1B661A",
+        "radius": 10,
+        "visible": true,
+        "label": "Settlements"
+      },
       "TBV": {
         "color": "#189299",
-        "radius": 7,
+        "radius": 10,
         "visible": true,
         "label": "TBV"
       }
