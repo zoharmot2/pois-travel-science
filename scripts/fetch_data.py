@@ -193,10 +193,11 @@ def generate_csv(features, output_path):
     for feat in features:
         all_keys.update(feat.get("properties", {}).keys())
 
+    # CreationDate הוחלף במיקום של Date_Point, ו-Date_Point הועבר למיקום שבו היה CreationDate
     priority_fields = [
         "OBJECTID",
         "GlobalID",
-        "Date_Point",
+        "CreationDate",
         "Collect_Name",
         "POI_Name",
         "POI_Topic",
@@ -204,6 +205,9 @@ def generate_csv(features, output_path):
         "POI_Description",
         "Latitude",
         "Longitude",
+        "Collection_date",
+        "Collector",
+        "Date_Point",
         "attachments"
     ]
 
@@ -245,7 +249,7 @@ def generate_pdf(features, output_path):
         ordered_fields = [
             "OBJECTID",
             "GlobalID",
-            "Date_Point",
+            "CreationDate",
             "Collect_Name",
             "POI_Name",
             "POI_Topic",
@@ -253,6 +257,9 @@ def generate_pdf(features, output_path):
             "POI_Description",
             "Latitude",
             "Longitude",
+            "Collection_date",
+            "Collector",
+            "Date_Point",
             "attachments"
         ]
 
