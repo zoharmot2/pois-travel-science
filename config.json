@@ -1,0 +1,47 @@
+{
+  "mapConfig": {
+    "initialExtent": {
+      "useCustomExtent": true,
+      "bounds": [
+        [28.0, 25.0],
+        [37.5, 36.5]
+      ]
+    },
+    "defaultBasemap": "OSM"
+  },
+  "symbology": {
+    "field": "POI_Topic",
+    "default": {
+      "color": "#64748B",
+      "radius": 6,
+      "visible": true,
+      "label": "Other"
+    },
+    "topics": {
+      "Settlements_Project": {
+        "color": "#8B261D",
+        "radius": 7,
+        "visible": true,
+        "label": "Settlements"
+      },
+      "Climate": {
+        "color": "#0284C7",
+        "radius": 7,
+        "visible": true,
+        "label": "Climate Negev"
+      },
+      "Historical Earthquakes": {
+        "color": "#059669",
+        "radius": 7,
+        "visible": true,
+        "label": "Historical Earthquakes"
+      },
+      "TBV": {
+        "color": "#189299",
+        "radius": 7,
+        "visible": true,
+        "label": "TBV"
+      }
+    }
+  }
+}

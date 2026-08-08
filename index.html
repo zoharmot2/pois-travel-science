@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,11 @@
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
+
     <style>
         * {
             box-sizing: border-box;
@@ -15,28 +20,98 @@
             padding: 0;
         }
 
-        body, html {
-            height: 100%;
-            width: 100%;
-            font-family: Arial, sans-serif;
+        body {
+            font-family: 'Assistant', -apple-system, BlinkMacSystemFont, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
             background-color: #f8f9fa;
         }
 
-        #map {
-            width: 100%;
-            height: 100vh;
+        /* מצב Embed (מסתיר כותרת ומשתמש בכל שטח המסך) */
+        body.embed-mode header {
+            display: none !important;
         }
 
-        /* עיצוב הפופאפ במפה - יישור לשמאל LTR */
+        header {
+            background-color: #1e293b;
+            color: #ffffff;
+            padding: 10px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .poi-count-badge {
+            background-color: #8B261D;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 14px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        #map {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* עיצוב המקרא (Dynamic Legend) */
+        .map-legend {
+            background: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+            font-size: 13px;
+            line-height: 1.6;
+            color: #1e293b;
+            max-width: 220px;
+        }
+
+        .map-legend h4 {
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 4px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .legend-icon {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 1.5px solid #ffffff;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        /* עיצוב הפופאפ במפה */
         .leaflet-popup-content-wrapper {
             border-radius: 8px;
             padding: 4px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .leaflet-popup-content {
-            margin: 12px;
+            margin: 10px 12px;
             max-width: 280px !important;
             font-size: 13px;
             line-height: 1.45;
@@ -49,8 +124,6 @@
             margin-bottom: 3px;
             word-wrap: break-word;
             word-break: break-all;
-            direction: ltr;
-            text-align: left;
         }
 
         .popup-field strong {
@@ -68,11 +141,15 @@
             margin-top: 8px;
             border: 1px solid #ddd;
             box-shadow: 0 1px 4px rgba(0,0,0,0.15);
-            image-orientation: from-image;
         }
     </style>
 </head>
 <body>
+
+    <header>
+        <h1>מפת נקודות עניין (POI)</h1>
+        <div id="poiCount" class="poi-count-badge">טוען...</div>
+    </header>
 
     <div id="map"></div>
 
@@ -80,16 +157,36 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-        // 1. אתחול המפה
-        const map = L.map('map').setView([31.5, 34.85], 8);
+        // 1. זיהוי Embed Mode לפי פרמטר ב-URL (למשל: index.html?embed=true)
+        const urlParams = new URLSearchParams(window.location.search);
+        const isEmbed = urlParams.get('embed') === 'true' || urlParams.get('embed') === '1';
+        if (isEmbed) {
+            document.body.classList.add('embed-mode');
+        }
 
-        // 2. טעינת אריחי OpenStreetMap
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        // 2. הגדרת מפות הבסיס (OpenStreetMap + צילום אוויר של Esri)
+        const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
+        });
 
-        // רשימת השדות המבוקשת בסדר המדויק
+        const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 19,
+            attribution: 'Tiles © Esri — Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        });
+
+        const map = L.map('map', {
+            layers: [osmLayer] // מפת ברירת מחדל
+        });
+
+        // בקר החלפת רקעים (Layers Control)
+        const baseMaps = {
+            "OpenStreetMap": osmLayer,
+            "צילום אוויר (Satellite)": satelliteLayer
+        };
+        L.control.layers(baseMaps, null, { position: 'topleft' }).addTo(map);
+
+        // שדות להצגה בטולטיפ
         const displayFields = [
             { key: "OBJECTID", label: "OBJECTID" },
             { key: "GlobalID", label: "GlobalID" },
@@ -103,11 +200,8 @@
             { key: "Longitude", label: "Longitude" }
         ];
 
-        // פונקציית יצירת תוכן ה-Popup
         function buildPopupContent(properties) {
             let html = '<div style="direction: ltr; text-align: left;">';
-
-            // הוספת השדות
             displayFields.forEach(field => {
                 const val = properties[field.key];
                 if (val !== undefined && val !== null && val !== "") {
@@ -115,78 +209,124 @@
                 }
             });
 
-            // הוספת התמונות המצורפות
             let attachments = properties.attachments;
             if (attachments) {
-                let imgList = [];
-                if (Array.isArray(attachments)) {
-                    imgList = attachments;
-                } else if (typeof attachments === 'string') {
-                    imgList = attachments.split(',').map(s => s.trim()).filter(Boolean);
-                }
-
+                let imgList = Array.isArray(attachments) ? attachments : attachments.split(',').map(s => s.trim()).filter(Boolean);
                 imgList.forEach(imgPath => {
                     if (imgPath) {
-                        html += `
-                            <a href="${imgPath}" target="_blank">
-                                <img src="${imgPath}" alt="POI Image" class="popup-img" />
-                            </a>`;
+                        html += `<a href="${imgPath}" target="_blank"><img src="${imgPath}" alt="POI Image" class="popup-img" /></a>`;
                     }
                 });
             }
-
             html += '</div>';
             return html;
         }
 
-        // 3. טעינת ה-GeoJSON מתוך data/pois.geojson
-        fetch('data/pois.geojson')
-            .then(res => res.json())
-            .then(data => {
-                const geojsonLayer = L.geoJSON(data, {
-                    // עיגולים בצבע אדום-חום #8B261D
-                    pointToLayer: function (feature, latlng) {
-                        return L.circleMarker(latlng, {
-                            radius: 7,
-                            fillColor: "#8B261D",
-                            color: "#FFFFFF",
-                            weight: 1.5,
-                            opacity: 1,
-                            fillOpacity: 0.85
-                        });
-                    },
+        // 3. טעינת קובץ ההגדרות config.json וקובץ ה-GeoJSON
+        Promise.all([
+            fetch('config.json').then(res => res.json()),
+            fetch('data/pois.geojson').then(res => res.json())
+        ]).then(([config, geojsonData]) => {
+            
+            const symbologyConfig = config.symbology || {};
+            const topicSettings = symbologyConfig.topics || {};
+            const defaultStyle = symbologyConfig.default || { color: "#666666", radius: 6, visible: true, label: "אחר" };
 
-                    // חיבור פופאפ ואפקט מעבר עכבר
-                    onEachFeature: function (feature, layer) {
-                        if (feature.properties) {
-                            layer.bindPopup(buildPopupContent(feature.properties));
-                        }
+            // פונקציית סטייל לפי POI_Topic
+            function getFeatureStyle(topicValue) {
+                const setting = topicSettings[topicValue] || defaultStyle;
+                return {
+                    radius: setting.radius || 7,
+                    fillColor: setting.color || "#8B261D",
+                    color: "#FFFFFF",
+                    weight: 1.5,
+                    opacity: 1,
+                    fillOpacity: 0.85
+                };
+            }
 
-                        layer.on({
-                            mouseover: function (e) {
-                                e.target.setStyle({
-                                    radius: 9,
-                                    fillColor: "#A63228",
-                                    weight: 2
-                                });
-                            },
-                            mouseout: function (e) {
-                                e.target.setStyle({
-                                    radius: 7,
-                                    fillColor: "#8B261D",
-                                    weight: 1.5
-                                });
-                            }
-                        });
+            // סינון נקודות לפי הגדרת visible בקובץ ה-config
+            function isFeatureVisible(feature) {
+                const topicVal = feature.properties ? feature.properties[symbologyConfig.field || "POI_Topic"] : null;
+                const setting = topicSettings[topicVal] || defaultStyle;
+                return setting.visible !== false;
+            }
+
+            // טעינת הנקודות למפה
+            const geojsonLayer = L.geoJSON(geojsonData, {
+                filter: isFeatureVisible,
+                pointToLayer: function (feature, latlng) {
+                    const topicVal = feature.properties ? feature.properties.POI_Topic : null;
+                    const style = getFeatureStyle(topicVal);
+                    return L.circleMarker(latlng, style);
+                },
+                onEachFeature: function (feature, layer) {
+                    if (feature.properties) {
+                        layer.bindPopup(buildPopupContent(feature.properties));
                     }
-                }).addTo(map);
-
-                // התאמת זום למיקומי הנקודות
-                if (geojsonLayer.getBounds().isValid()) {
-                    map.fitBounds(geojsonLayer.getBounds(), { padding: [40, 40] });
+                    layer.on({
+                        mouseover: function (e) {
+                            const topicVal = feature.properties ? feature.properties.POI_Topic : null;
+                            const currentStyle = getFeatureStyle(topicVal);
+                            e.target.setStyle({
+                                radius: currentStyle.radius + 2,
+                                weight: 2.5
+                            });
+                        },
+                        mouseout: function (e) {
+                            const topicVal = feature.properties ? feature.properties.POI_Topic : null;
+                            e.target.setStyle(getFeatureStyle(topicVal));
+                        }
+                    });
                 }
-            })
-            .catch(err => console.error("שגיאה בטעינת הנתונים:", err));
+            }).addTo(map);
+
+            // עדכון מונה הנקודות
+            const displayedCount = geojsonLayer.getLayers().length;
+            document.getElementById('poiCount').textContent = displayedCount + ' נקודות';
+
+            // 4. הגדרת Extent פתיחה
+            if (config.mapConfig && config.mapConfig.initialExtent && config.mapConfig.initialExtent.useCustomExtent) {
+                map.fitBounds(config.mapConfig.initialExtent.bounds);
+            } else if (geojsonLayer.getBounds().isValid()) {
+                map.fitBounds(geojsonLayer.getBounds(), { padding: [40, 40] });
+            }
+
+            // 5. יצירת מקרא דינמי
+            const legend = L.control({ position: 'bottomright' });
+            legend.onAdd = function () {
+                const div = L.DomUtil.create('div', 'map-legend');
+                div.innerHTML = '<h4>מקרא מקורות</h4>';
+
+                // הוספת פריטים מה-config
+                Object.keys(topicSettings).forEach(topicKey => {
+                    const item = topicSettings[topicKey];
+                    if (item.visible !== false) {
+                        div.innerHTML += `
+                            <div class="legend-item">
+                                <span class="legend-icon" style="background-color: ${item.color};"></span>
+                                <span>${item.label || topicKey}</span>
+                            </div>`;
+                    }
+                });
+
+                // ברירת מחדל
+                if (defaultStyle.visible !== false) {
+                    div.innerHTML += `
+                        <div class="legend-item">
+                            <span class="legend-icon" style="background-color: ${defaultStyle.color};"></span>
+                            <span>${defaultStyle.label}</span>
+                        </div>`;
+                }
+
+                return div;
+            };
+            legend.addTo(map);
+
+        }).catch(err => {
+            console.error("שגיאה בטעינת קבצי הנתונים/ההגדרות:", err);
+            document.getElementById('poiCount').textContent = 'שגיאה בטעינה';
+        });
     </script>
 </body>
 </html>
