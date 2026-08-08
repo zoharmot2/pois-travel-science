@@ -258,9 +258,12 @@
 
         // 5. טעינת ההגדרות והנתונים
         Promise.all([
-            fetch('config.json').then(res => res.json()),
-            fetch('data/pois.geojson').then(res => res.json())
-        ]).then(([config, geojsonData]) => {
+    fetch('config.json?t=' + new Date().getTime(), { cache: "no-store" }).then(res => {
+        if (!res.ok) throw new Error("קובץ config.json לא נמצא או אינו תקין");
+        return res.json();
+    }),
+    fetch('data/pois.geojson?t=' + new Date().getTime(), { cache: "no-store" }).then(res => res.json())
+]).then(([config, geojsonData]) => {
             
             const symbologyConfig = config.symbology || {};
             const topicSettings = symbologyConfig.topics || {};
