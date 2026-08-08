@@ -3,8 +3,8 @@
     "initialExtent": {
       "useCustomExtent": true,
       "bounds": [
-        [30.98, 34.30],
-        [33.05, 35.70]
+        [31.00, 31.30],
+        [33.00, 35.70]
       ]
     },
     "defaultBasemap": "OSM"
