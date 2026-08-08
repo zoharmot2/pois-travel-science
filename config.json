@@ -19,7 +19,7 @@
     },
     "topics": {
       "Settlements_Project": {
-        "color": "#8B261D",
+        "color": "#1B661A",
         "radius": 7,
         "visible": true,
         "label": "Settlements"
@@ -31,7 +31,7 @@
         "label": "Climate Negev"
       },
       "Historical Earthquakes": {
-        "color": "#059669",
+        "color": "#8B261D",
         "radius": 7,
         "visible": true,
         "label": "Historical Earthquakes"
