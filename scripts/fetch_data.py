@@ -28,6 +28,21 @@ FONT_URL = "https://github.com/googlefonts/noto-fonts/raw/main/hinted/ttf/NotoSa
 
 IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.gif', '.webp')
 
+# סדר השדות הראשיים המבוקש ב-CSV ובדיווחי הנתונים
+PRIORITY_FIELDS = [
+    "OBJECTID",
+    "GlobalID",
+    "CreationDate",
+    "Collect_Name",
+    "POI_Name",
+    "POI_Topic",
+    "POI_Type",
+    "POI_Description",
+    "Latitude",
+    "Longitude",
+    "attachments"
+]
+
 def fetch_json(url):
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
     with urllib.request.urlopen(req) as response:
@@ -193,25 +208,8 @@ def generate_csv(features, output_path):
     for feat in features:
         all_keys.update(feat.get("properties", {}).keys())
 
-    priority_fields = [
-        "OBJECTID",
-        "GlobalID",
-        "CreationDate",
-        "Collect_Name",
-        "POI_Name",
-        "POI_Topic",
-        "POI_Type",
-        "POI_Description",
-        "Latitude",
-        "Longitude",
-        "Collection_date",
-        "Collector",
-        "Date_Point",
-        "attachments"
-    ]
-
-    remaining_fields = sorted([k for k in all_keys if k not in priority_fields])
-    fieldnames = priority_fields + remaining_fields
+    remaining_fields = sorted([k for k in all_keys if k not in PRIORITY_FIELDS])
+    fieldnames = PRIORITY_FIELDS + remaining_fields
 
     with open(output_path, "w", newline="", encoding="utf-8-sig") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -245,30 +243,13 @@ def generate_pdf(features, output_path):
         pdf.set_font("NotoHebrew", size=14)
         pdf.cell(0, 10, fix_hebrew("דוח מפורט - נקודות עניין ומדיה"), ln=True, align="C")
 
-        ordered_fields = [
-            "OBJECTID",
-            "GlobalID",
-            "CreationDate",
-            "Collect_Name",
-            "POI_Name",
-            "POI_Topic",
-            "POI_Type",
-            "POI_Description",
-            "Latitude",
-            "Longitude",
-            "Collection_date",
-            "Collector",
-            "Date_Point",
-            "attachments"
-        ]
-
         for feat in features:
             props = feat.get("properties", {})
             pdf.add_page()
 
             pdf.set_font("NotoHebrew", size=11)
             
-            for key in ordered_fields:
+            for key in PRIORITY_FIELDS:
                 val = get_prop_val(props, key)
                 if isinstance(val, list):
                     val_str = ", ".join([str(x) for x in val])
@@ -308,7 +289,6 @@ def fetch_and_process():
 
     print("1. שליפת GeoJSON מ-ArcGIS...")
     features = fetch_all_features()
-    geojson_data = {"type": "FeatureCollection", "features": features}
 
     object_ids = []
     for feat in features:
@@ -320,16 +300,11 @@ def fetch_and_process():
             props["Longitude"] = coords[0]
             props["Latitude"] = coords[1]
 
-        # 1. קביעת שדה Date_Point
-        raw_date = (
-            get_prop_val(props, "Date_Point") or 
-            get_prop_val(props, "Collection_date") or 
-            get_prop_val(props, "CreationDate") or 
-            get_prop_val(props, "EditDate")
-        )
-        props["Date_Point"] = format_datetime_str(raw_date)
+        # שמירת הערך המקורי למיון מדוייק
+        raw_cdate = get_prop_val(props, "CreationDate") or get_prop_val(props, "Date_Point")
+        props["_sort_date"] = parse_to_datetime(raw_cdate)
 
-        # 2. המרת כל שדות התאריכים בטבלה לפורמט קריא
+        # המרת כל שדות התאריכים בטבלה לפורמט קריא
         for key, val in list(props.items()):
             if any(d_word in key.lower() for d_word in ["date", "time"]) or key in ["Collection_date", "CreationDate", "EditDate"]:
                 if val is not None and str(val).strip() != "":
@@ -380,14 +355,14 @@ def fetch_and_process():
 
     features = [f for f in features if not is_empty_feature(f)]
 
-    # מיון כרונולוגי לפי השדה CreationDate מהישן ביותר לחדש ביותר
-    def get_sort_key(f):
-        props = f.get("properties", {})
-        cdate = get_prop_val(props, "CreationDate") or get_prop_val(props, "Date_Point")
-        return parse_to_datetime(cdate)
+    # מיון כרונולוגי לפי CreationDate מהישן לחדש
+    features.sort(key=lambda f: f.get("properties", {}).get("_sort_date", datetime.max))
 
-    features.sort(key=get_sort_key)
-    geojson_data["features"] = features
+    # ניקוי שדה העזר של המיון
+    for f in features:
+        f.get("properties", {}).pop("_sort_date", None)
+
+    geojson_data = {"type": "FeatureCollection", "features": features}
     print(f"לאחר עיבוד ומיון לפי CreationDate נותרו {len(features)} נקודות בסדר כרונולוגי (מהישן לחדש).")
 
     output_geojson = os.path.join(DATA_DIR, "pois.geojson")

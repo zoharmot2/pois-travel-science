@@ -3,56 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POIs Travel Science</title>
+    <title>מפת נקודות עניין - יומן מסע</title>
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
     <style>
-        body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
-        #map { width: 100vw; height: 100vh; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            height: 100%;
+            width: 100%;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+            background-color: #f4f4f9;
+        }
+
+        #app {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #1a252f;
+            color: #ffffff;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        #map {
+            flex-grow: 1;
+            width: 100%;
+            z-index: 1;
+        }
+
+        /* עיצוב הפופאפ במפה */
+        .leaflet-popup-content-wrapper {
+            border-radius: 8px;
+            padding: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            direction: rtl;
+            text-align: right;
+        }
+
+        .leaflet-popup-content {
+            margin: 12px;
+            max-width: 300px !important;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #2c3e50;
+        }
+
+        .popup-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 4px;
+            margin-bottom: 8px;
+        }
+
+        .popup-field {
+            margin-bottom: 4px;
+            word-wrap: break-word;
+        }
+
+        .popup-field strong {
+            color: #34495e;
+        }
+
+        .popup-gallery {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .popup-gallery img {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
-    <div id="map"></div>
+    <div id="app">
+        <header>
+            <h1>תצוגת נקודות עניין (POIs)</h1>
+        </header>
+        <div id="map"></div>
+        <div id="loading" class="loading-overlay">טוען נתונים...</div>
+    </div>
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <script>
         // אתחול המפה במרכז ישראל
-        const map = L.map('map').setView([31.5, 34.75], 8);
+        const map = L.map('map').setView([31.5, 34.85], 8);
 
-        // הוספת מפת בסיס מבית OpenStreetMap
+        // הוספת שכבת מפה (OpenStreetMap)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // טעינת ה-GeoJSON שנשמר על ידי ה-Workflow
-        fetch('./data/pois.geojson')
-            .then(response => response.json())
-            .then(data => {
-                const geojsonLayer = L.geoJSON(data, {
-                    onEachFeature: function (feature, layer) {
-                        // בניית חלונית מידע (Popup) עבור כל נכס/נקודה שנאספה
-                        let props = feature.properties;
-                        let popupContent = '<div>';
-                        for (let key in props) {
-                            if (props[key] !== null) {
-                                popupContent += `<strong>${key}:</strong> ${props[key]}<br>`;
-                            }
+        // רשימת השדות להצגה בטולטיפ/פופאפ לפי הסדר המבוקש
+        const FIELDS_TO_SHOW = [
+            { key: 'OBJECTID', label: 'OBJECTID' },
+            { key: 'GlobalID', label: 'GlobalID' },
+            { key: 'CreationDate', label: 'CreationDate' },
+            { key: 'Collect_Name', label: 'Collect_Name' },
+            { key: 'POI_Name', label: 'POI_Name' },
+            { key: 'POI_Topic', label: 'POI_Topic' },
+            { key: 'POI_Type', label: 'POI_Type' },
+            { key: 'POI_Description', label: 'POI_Description' },
+            { key: 'Latitude', label: 'Latitude' },
+            { key: 'Longitude', label: 'Longitude' }
+        ];
+
+        // פונקציה ליצירת תוכן ה-Popup לכל נקודה
+        function buildPopupContent(properties) {
+            let html = '<div class="popup-container">';
+
+            // כותרת הפופאפ (שם הנקודה במידה וקיים)
+            if (properties.POI_Name) {
+                html += `<div class="popup-title">${properties.POI_Name}</div>`;
+            }
+
+            // הצגת השדות המוגדרים
+            FIELDS_TO_SHOW.forEach(field => {
+                const value = properties[field.key];
+                if (value !== undefined && value !== null && value !== '') {
+                    html += `<div class="popup-field"><strong>${field.label}:</strong> ${value}</div>`;
+                }
+            });
+
+            // טיפול בהצגת תמונות בשדה attachments
+            let attachments = properties.attachments;
+            if (attachments) {
+                // המרה למערך במידה והתקבל כמחרוזת
+                if (typeof attachments === 'string') {
+                    attachments = attachments.split(',').map(s => s.trim()).filter(Boolean);
+                }
+
+                if (Array.isArray(attachments) && attachments.length > 0) {
+                    html += '<div class="popup-gallery">';
+                    attachments.forEach(imgPath => {
+                        if (imgPath && imgPath.trim() !== '') {
+                            html += `<a href="${imgPath}" target="_blank" title="לחץ להגדלה">
+                                        <img src="${imgPath}" alt="תמונה מצורפת" loading="lazy" />
+                                     </a>`;
                         }
-                        popupContent += '</div>';
-                        layer.bindPopup(popupContent);
+                    });
+                    html += '</div>';
+                }
+            }
+
+            html += '</div>';
+            return html;
+        }
+
+        // טעינת קובץ GeoJSON
+        fetch('data/pois.geojson')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('שגיאה שטעינת הקובץ: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('loading').style.display = 'none';
+
+                // יצירת שכבת GeoJSON והוספה למפה
+                const geojsonLayer = L.geojson(data, {
+                    onEachFeature: function (feature, layer) {
+                        if (feature.properties) {
+                            const popupContent = buildPopupContent(feature.properties);
+                            layer.bindPopup(popupContent);
+                        }
                     }
                 }).addTo(map);
 
-                // התאמת זום המפה לגבולות כל הנקודות שנמצאו
-                if (data.features && data.features.length > 0) {
-                    map.fitBounds(geojsonLayer.getBounds());
+                // התאמת זום המפה לגבולות הנקודות הקיימות
+                if (geojsonLayer.getBounds().isValid()) {
+                    map.fitBounds(geojsonLayer.getBounds(), { padding: [50, 50] });
                 }
             })
-            .catch(err => console.error('שגיאה שטעינת ה-GeoJSON:', err));
+            .catch(error => {
+                console.error('שגיאה:', error);
+                document.getElementById('loading').innerHTML = 'שגיאה בטעינת הנתונים';
+            });
     </script>
 </body>
 </html>
