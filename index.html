@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +8,6 @@
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
-
     <style>
         * {
             box-sizing: border-box;
@@ -20,133 +15,64 @@
             padding: 0;
         }
 
-        body {
-            font-family: 'Assistant', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
+        body, html {
+            height: 100%;
+            width: 100%;
+            font-family: Arial, sans-serif;
             overflow: hidden;
             background-color: #f8f9fa;
         }
 
-        header {
-            background-color: #1e293b;
-            color: #ffffff;
-            padding: 12px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            z-index: 1000;
-        }
-
-        header h1 {
-            font-size: 1.25rem;
-            font-weight: 700;
-        }
-
-        .poi-count-badge {
-            background-color: #8B261D;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 16px;
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-
         #map {
-            flex: 1;
             width: 100%;
-            height: 100%;
-            z-index: 1;
+            height: 100vh;
         }
 
-        /* עיצוב הפופאפ/טולטיפ */
+        /* עיצוב הפופאפ במפה - יישור לשמאל LTR */
         .leaflet-popup-content-wrapper {
-            border-radius: 10px;
-            padding: 6px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            font-family: 'Assistant', sans-serif;
+            border-radius: 8px;
+            padding: 4px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
 
         .leaflet-popup-content {
-            margin: 12px 14px;
-            line-height: 1.4;
-            max-width: 300px;
-            dir: ltr; /* יישור שמאל לשדות באנגלית ולמספרים */
+            margin: 12px;
+            max-width: 280px !important;
+            font-size: 13px;
+            line-height: 1.45;
+            color: #222;
+            direction: ltr !important;
+            text-align: left !important;
+        }
+
+        .popup-field {
+            margin-bottom: 3px;
+            word-wrap: break-word;
+            word-break: break-all;
+            direction: ltr;
             text-align: left;
         }
 
-        .popup-container {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            font-size: 13.5px;
-            color: #1e293b;
-        }
-
-        .popup-row {
-            display: flex;
-            word-break: break-word;
-        }
-
-        .popup-label {
-            font-weight: 700;
-            color: #0f172a;
-            margin-right: 6px;
-            white-space: nowrap;
-        }
-
-        .popup-value {
-            color: #334155;
-        }
-
-        .popup-images {
-            margin-top: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+        .popup-field strong {
+            color: #000;
         }
 
         .popup-img {
             width: 100%;
-            max-height: 260px;
+            max-width: 260px;
+            height: auto;
+            max-height: 220px;
             object-fit: cover;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-        }
-
-        /* מקרא המפה */
-        .map-legend {
-            background: white;
-            padding: 10px 14px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-            font-size: 13px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #334155;
-        }
-
-        .legend-circle {
-            width: 14px;
-            height: 14px;
-            background-color: #8B261D;
-            border: 2px solid #ffffff;
-            border-radius: 50%;
-            box-shadow: 0 0 0 1px #8B261D;
+            border-radius: 6px;
+            display: block;
+            margin-top: 8px;
+            border: 1px solid #ddd;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+            image-orientation: from-image;
         }
     </style>
 </head>
 <body>
-
-    <header>
-        <h1>מפת נקודות עניין (POI)</h1>
-        <div id="poiCount" class="poi-count-badge">טוען נתונים...</div>
-    </header>
 
     <div id="map"></div>
 
@@ -155,24 +81,15 @@
 
     <script>
         // 1. אתחול המפה
-        const map = L.map('map').setView([31.5, 34.8], 8);
+        const map = L.map('map').setView([31.5, 34.85], 8);
 
-        // 2. הוספת שכבת בסיס OpenStreetMap
+        // 2. טעינת אריחי OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // מקרא למפה
-        const legend = L.control({ position: 'bottomright' });
-        legend.onAdd = function () {
-            const div = L.DomUtil.create('div', 'map-legend');
-            div.innerHTML = '<span class="legend-circle"></span> נקודת עניין (POI)';
-            return div;
-        };
-        legend.addTo(map);
-
-        // סדר השדות להצגה בטולטיפ/פופאפ
+        // רשימת השדות המבוקשת בסדר המדויק
         const displayFields = [
             { key: "OBJECTID", label: "OBJECTID" },
             { key: "GlobalID", label: "GlobalID" },
@@ -186,77 +103,48 @@
             { key: "Longitude", label: "Longitude" }
         ];
 
-        // פונקציה לבניית תוכן הפופאפ
-        function createPopupContent(properties) {
-            let container = document.createElement('div');
-            container.className = 'popup-container';
+        // פונקציית יצירת תוכן ה-Popup
+        function buildPopupContent(properties) {
+            let html = '<div style="direction: ltr; text-align: left;">';
 
-            // הוספת הטקסטים
+            // הוספת השדות
             displayFields.forEach(field => {
                 const val = properties[field.key];
                 if (val !== undefined && val !== null && val !== "") {
-                    const row = document.createElement('div');
-                    row.className = 'popup-row';
-                    
-                    const labelSpan = document.createElement('span');
-                    labelSpan.className = 'popup-label';
-                    labelSpan.textContent = field.label + ':';
-
-                    const valueSpan = document.createElement('span');
-                    valueSpan.className = 'popup-value';
-                    valueSpan.textContent = val;
-
-                    row.appendChild(labelSpan);
-                    row.appendChild(valueSpan);
-                    container.appendChild(row);
+                    html += `<div class="popup-field"><strong>${field.label}:</strong> ${val}</div>`;
                 }
             });
 
-            // הוספת תמונות מצורפות
+            // הוספת התמונות המצורפות
             let attachments = properties.attachments;
             if (attachments) {
-                if (typeof attachments === 'string') {
-                    attachments = attachments.split(',').map(s => s.trim());
+                let imgList = [];
+                if (Array.isArray(attachments)) {
+                    imgList = attachments;
+                } else if (typeof attachments === 'string') {
+                    imgList = attachments.split(',').map(s => s.trim()).filter(Boolean);
                 }
 
-                if (Array.isArray(attachments) && attachments.length > 0) {
-                    const imgContainer = document.createElement('div');
-                    imgContainer.className = 'popup-images';
-
-                    attachments.forEach(src => {
-                        if (src && (src.endsWith('.jpg') || src.endsWith('.jpeg') || src.endsWith('.png') || src.endsWith('.gif') || src.endsWith('.webp') || src.includes('data/attachments/'))) {
-                            const img = document.createElement('img');
-                            img.src = src;
-                            img.alt = properties.POI_Name || 'תמונה מצורפת';
-                            img.className = 'popup-img';
-                            img.loading = 'lazy';
-                            imgContainer.appendChild(img);
-                        }
-                    });
-
-                    if (imgContainer.children.length > 0) {
-                        container.appendChild(imgContainer);
+                imgList.forEach(imgPath => {
+                    if (imgPath) {
+                        html += `
+                            <a href="${imgPath}" target="_blank">
+                                <img src="${imgPath}" alt="POI Image" class="popup-img" />
+                            </a>`;
                     }
-                }
+                });
             }
 
-            return container;
+            html += '</div>';
+            return html;
         }
 
-        // 3. טעינת קובץ data/pois.geojson והצגתו במפה
+        // 3. טעינת ה-GeoJSON מתוך data/pois.geojson
         fetch('data/pois.geojson')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('שגיאה בטעינת הקובץ: ' + response.statusText);
-                }
-                return response.json();
-            })
+            .then(res => res.json())
             .then(data => {
-                let count = data.features ? data.features.length : 0;
-                document.getElementById('poiCount').textContent = count + ' נקודות';
-
                 const geojsonLayer = L.geoJSON(data, {
-                    // עיצוב הסימבולוגיה בעגולים אדומים-חומים (#8B261D)
+                    // עיגולים בצבע אדום-חום #8B261D
                     pointToLayer: function (feature, latlng) {
                         return L.circleMarker(latlng, {
                             radius: 7,
@@ -268,13 +156,10 @@
                         });
                     },
 
-                    // הצגת הפופאפ ואפקט Hover
+                    // חיבור פופאפ ואפקט מעבר עכבר
                     onEachFeature: function (feature, layer) {
                         if (feature.properties) {
-                            const popupNode = createPopupContent(feature.properties);
-                            layer.bindPopup(popupNode, {
-                                maxWidth: 320
-                            });
+                            layer.bindPopup(buildPopupContent(feature.properties));
                         }
 
                         layer.on({
@@ -282,7 +167,7 @@
                                 e.target.setStyle({
                                     radius: 9,
                                     fillColor: "#A63228",
-                                    weight: 2.5
+                                    weight: 2
                                 });
                             },
                             mouseout: function (e) {
@@ -296,15 +181,12 @@
                     }
                 }).addTo(map);
 
-                // התאמת גבולות המפה אוטומטית לכל הנקודות
+                // התאמת זום למיקומי הנקודות
                 if (geojsonLayer.getBounds().isValid()) {
-                    map.fitBounds(geojsonLayer.getBounds(), { padding: [30, 30] });
+                    map.fitBounds(geojsonLayer.getBounds(), { padding: [40, 40] });
                 }
             })
-            .catch(error => {
-                console.error('שגיאה בטעינת ה-GeoJSON:', error);
-                document.getElementById('poiCount').textContent = 'שגיאה בטעינת הנתונים';
-            });
+            .catch(err => console.error("שגיאה בטעינת הנתונים:", err));
     </script>
 </body>
 </html>
