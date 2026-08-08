@@ -20,7 +20,6 @@ except ImportError:
     IMAGE_OPTIMIZE_SUPPORT = False
 
 BASE_URL = "https://services5.arcgis.com/eJYUV73IZAY87Jwy/arcgis/rest/services/POI_Feature_Layer_view/FeatureServer/0"
-GEOJSON_URL = f"{BASE_URL}/query?where=1%3D1&outFields=*&f=geojson&outSR=4326&returnGeometry=true"
 
 DATA_DIR = "data"
 ATTACHMENTS_DIR = os.path.join(DATA_DIR, "attachments")
@@ -33,6 +32,30 @@ def fetch_json(url):
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
     with urllib.request.urlopen(req) as response:
         return json.loads(response.read().decode("utf-8"))
+
+def fetch_all_features():
+    """שליפת כל הנקודות מ-ArcGIS בלולאה כדי למנוע מגבלת כמות תוצאות (Pagination)"""
+    all_features = []
+    offset = 0
+    record_count = 1000
+    while True:
+        url = (
+            f"{BASE_URL}/query?where=1%3D1&outFields=*&f=geojson&outSR=4326"
+            f"&returnGeometry=true&resultOffset={offset}&resultRecordCount={record_count}"
+        )
+        try:
+            data = fetch_json(url)
+            features = data.get("features", [])
+            if not features:
+                break
+            all_features.extend(features)
+            if len(features) < record_count:
+                break
+            offset += len(features)
+        except Exception as e:
+            print(f"שגיאה בשליפת נתונים ב-offset {offset}: {e}")
+            break
+    return all_features
 
 def download_file(url, save_path):
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
@@ -87,78 +110,78 @@ def get_prop_val(props, key_name):
             return v
     return ""
 
-def format_datetime_str(val):
-    if val is None or str(val).strip() == "":
-        return ""
+def parse_to_datetime(val):
+    """המרת ערך תאריך מכל סוג לאובייקט datetime לצורך מיון מדויק"""
+    if val is None or str(val).strip() in ("", "None", "null"):
+        return datetime.max
+    
     if isinstance(val, (int, float)):
+        ts = val / 1000.0 if val > 2.5e9 else val
         try:
-            if val > 1e11:
-                val = val / 1000.0
-            return datetime.fromtimestamp(val).strftime("%Y-%m-%d %H:%M:%S")
+            return datetime.fromtimestamp(ts)
         except Exception:
-            return str(val)
-    if isinstance(val, str):
-        if val.isdigit():
-            try:
-                ts = float(val)
-                if ts > 1e11:
-                    ts = ts / 1000.0
-                return datetime.fromtimestamp(ts).strftime("%Y-%m-%d %H:%M:%S")
-            except Exception:
-                pass
+            return datetime.max
+            
+    val_str = str(val).strip()
+    if val_str.isdigit():
+        ts = float(val_str)
+        ts = ts / 1000.0 if ts > 2.5e9 else ts
         try:
-            dt = datetime.fromisoformat(val.replace("Z", "+00:00"))
-            return dt.strftime("%Y-%m-%d %H:%M:%S")
+            return datetime.fromtimestamp(ts)
         except Exception:
-            return str(val)
-    return str(val)
+            return datetime.max
+
+    for fmt in ("%d/%m/%Y %H:%M:%S", "%d/%m/%Y %H:%M", "%Y-%m-%d %H:%M:%S", "%Y-%m-%d", "%d/%m/%Y"):
+        try:
+            return datetime.strptime(val_str, fmt)
+        except ValueError:
+            pass
+
+    try:
+        return datetime.fromisoformat(val_str.replace("Z", "+00:00"))
+    except Exception:
+        return datetime.max
+
+def format_datetime_str(val):
+    """עיצוב תאריך לתצוגה נוחה בפורמט DD/MM/YYYY HH:MM"""
+    dt = parse_to_datetime(val)
+    if dt == datetime.max:
+        return str(val) if val is not None else ""
+    return dt.strftime("%d/%m/%Y %H:%M")
 
 def is_empty_feature(feature):
-    """סינון נקודות ריקות"""
+    """סינון בטוח: רלוונטי רק אם אין קואורדינטות וכל השדות ריקים לחלוטין"""
     props = feature.get("properties", {})
-    name = str(get_prop_val(props, "POI_Name") or get_prop_val(props, "name")).strip()
-    topic = str(get_prop_val(props, "POI_Topic")).strip()
-    desc = str(get_prop_val(props, "POI_Description")).strip()
-    atts = props.get("attachments", [])
-    return not name and not topic and not desc and not atts
+    geom = feature.get("geometry", {})
+    coords = geom.get("coordinates", []) if geom else []
+    
+    if coords and len(coords) >= 2:
+        return False
+
+    for v in props.values():
+        if v is not None and str(v).strip() not in ("", "None", "null"):
+            return False
+
+    return True
 
 def get_attachments_map(object_ids):
     attachments_map = {}
     if not object_ids:
         return attachments_map
 
-    url_def = f"{BASE_URL}/queryAttachments?definitionExpression=1%3D1&f=json"
-    try:
-        data = fetch_json(url_def)
-        if "attachmentGroups" in data:
-            for group in data.get("attachmentGroups", []):
-                pid = group.get("parentObjectId")
-                attachments_map[pid] = group.get("attachmentInfos", [])
-            return attachments_map
-    except Exception as e:
-        print(f"ניסיון 1 נכשל: {e}")
-
-    ids_str = ",".join(map(str, object_ids))
-    url_ids = f"{BASE_URL}/queryAttachments?objectIds={ids_str}&f=json"
-    try:
-        data = fetch_json(url_ids)
-        if "attachmentGroups" in data:
-            for group in data.get("attachmentGroups", []):
-                pid = group.get("parentObjectId")
-                attachments_map[pid] = group.get("attachmentInfos", [])
-            return attachments_map
-    except Exception as e:
-        print(f"ניסיון 2 נכשל: {e}")
-
-    for oid in object_ids:
-        single_url = f"{BASE_URL}/{oid}/attachments?f=json"
+    chunk_size = 100
+    for i in range(0, len(object_ids), chunk_size):
+        chunk_ids = object_ids[i:i + chunk_size]
+        ids_str = ",".join(map(str, chunk_ids))
+        url_ids = f"{BASE_URL}/queryAttachments?objectIds={ids_str}&f=json"
         try:
-            data = fetch_json(single_url)
-            infos = data.get("attachmentInfos", [])
-            if infos:
-                attachments_map[oid] = infos
-        except Exception:
-            pass
+            data = fetch_json(url_ids)
+            if "attachmentGroups" in data:
+                for group in data.get("attachmentGroups", []):
+                    pid = group.get("parentObjectId")
+                    attachments_map[pid] = group.get("attachmentInfos", [])
+        except Exception as e:
+            print(f"שגיאה בשליפת נספחים בקבוצה {i}: {e}")
 
     return attachments_map
 
@@ -171,7 +194,6 @@ def generate_csv(features, output_path):
     for feat in features:
         all_keys.update(feat.get("properties", {}).keys())
 
-    # סדר העמודות בראש קובץ ה-CSV
     priority_fields = [
         "OBJECTID",
         "GlobalID",
@@ -214,7 +236,6 @@ def generate_pdf(features, output_path):
         except TypeError:
             pdf.add_font("NotoHebrew", "", FONT_PATH, uni=True)
 
-        # דף פתיחה
         pdf.add_page()
         pdf.ln(80)
         pdf.set_font("NotoHebrew", size=32)
@@ -222,7 +243,6 @@ def generate_pdf(features, output_path):
         pdf.set_font("NotoHebrew", size=14)
         pdf.cell(0, 10, fix_hebrew("דוח מפורט - נקודות עניין ומדיה"), ln=True, align="C")
 
-        # 11 השדות הנדרשים לכל נקודה
         ordered_fields = [
             "OBJECTID",
             "GlobalID",
@@ -252,11 +272,10 @@ def generate_pdf(features, output_path):
 
                 line_text = f"{key}: {val_str}"
                 
-                pdf.set_x(10)  # יישור לשמאל
+                pdf.set_x(10)
                 pdf.multi_cell(0, 7, fix_hebrew(line_text), align="L")
                 pdf.ln(1)
 
-            # הצגת תמונות
             attachments = props.get("attachments", [])
             if attachments:
                 images = [att for att in attachments if isinstance(att, str) and os.path.exists(att) and att.lower().endswith(IMAGE_EXTENSIONS)]
@@ -283,8 +302,8 @@ def fetch_and_process():
         f.write("")
 
     print("1. שליפת GeoJSON מ-ArcGIS...")
-    geojson_data = fetch_json(GEOJSON_URL)
-    features = geojson_data.get("features", [])
+    features = fetch_all_features()
+    geojson_data = {"type": "FeatureCollection", "features": features}
 
     object_ids = []
     for feat in features:
@@ -296,7 +315,13 @@ def fetch_and_process():
             props["Longitude"] = coords[0]
             props["Latitude"] = coords[1]
 
-        raw_date = get_prop_val(props, "Collection_date") or get_prop_val(props, "CreationDate") or get_prop_val(props, "Date_Point")
+        # מתן קדימות לשדה Date_Point המקורי
+        raw_date = (
+            get_prop_val(props, "Date_Point") or 
+            get_prop_val(props, "Collection_date") or 
+            get_prop_val(props, "CreationDate") or 
+            get_prop_val(props, "EditDate")
+        )
         props["Date_Point"] = format_datetime_str(raw_date)
 
         oid = props.get("OBJECTID") or props.get("objectid") or props.get("FID")
@@ -342,17 +367,17 @@ def fetch_and_process():
         oid = props.get("OBJECTID") or props.get("objectid") or props.get("FID")
         props["attachments"] = attachments_map.get(oid, [])
 
-    # 3. סינון נקודות ריקות מתוכן
+    # 3. סינון בטוח
     features = [f for f in features if not is_empty_feature(f)]
 
-    # 4. מיון לפי Date_Point מהישן לחדש
+    # 4. מיון כרונולוגי מדויק לפי Date_Point מהישן לחדש ביותר
     def get_sort_key(f):
         dp = f.get("properties", {}).get("Date_Point", "")
-        return str(dp) if dp else "9999-99-99 99:99:99"
+        return parse_to_datetime(dp)
 
     features.sort(key=get_sort_key)
     geojson_data["features"] = features
-    print(f"לאחר סינון ומיון כרונולוגי נותרו {len(features)} נקודות.")
+    print(f"לאחר עיבוד נותרו {len(features)} נקודות בסדר כרונולוגי.")
 
     # 5. יצירת הקבצים
     output_geojson = os.path.join(DATA_DIR, "pois.geojson")
