@@ -2,8 +2,8 @@ name: Sync ESRI Data Weekly
 
 on:
   schedule:
-    - cron: '0 0 * * 0' # מורץ מדי יום ראשון בחצות UTC
-  workflow_dispatch: # מאפשר הרצה ידנית מתוך לשונית Actions ב-GitHub
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
 
 jobs:
   sync-data:
@@ -20,12 +20,17 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Fetch Data from ESRI
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install fpdf2 python-bidi
+
+      - name: Fetch Data, Generate CSV and PDF
         run: python scripts/fetch_data.py
 
-      - name: Commit and Push Updated GeoJSON
+      - name: Commit and Push Updated Files
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/pois.geojson
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Automated update of POIs GeoJSON" && git push)
+          git add data/
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Automated update of GeoJSON, CSV, PDF and Attachments" && git push)
