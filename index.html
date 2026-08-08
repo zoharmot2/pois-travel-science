@@ -5,16 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>מפת נקודות עניין</title>
     
+    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body, html { height: 100%; width: 100%; font-family: sans-serif; }
-        #map { height: 100vh; width: 100%; }
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
         
+        body, html { 
+            height: 100%; 
+            width: 100%; 
+            font-family: Arial, Helvetica, sans-serif; 
+        }
+        
+        #map { 
+            height: 100vh; 
+            width: 100%; 
+        }
+
+        /* הגדרת גודל ועיצוב ה-Popup במפה */
+        .leaflet-popup-content-wrapper {
+            border-radius: 8px;
+            padding: 4px;
+        }
+
         .leaflet-popup-content {
-            margin: 10px;
+            margin: 10px 12px;
             max-width: 280px !important;
+            font-size: 13px;
+            line-height: 1.45;
+            color: #222;
+        }
+
+        /* תמונות במפה - תמיכה ביישור כיווניות תמונה */
+        .popup-img {
+            width: 100%;
+            max-width: 260px;
+            height: auto;
+            max-height: 220px;
+            object-fit: cover;
+            border-radius: 6px;
+            display: block;
+            margin-top: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+            image-orientation: from-image; /* גיבוי דפדפנים ליישור תמונה */
+        }
+
+        .popup-field {
+            margin-bottom: 3px;
+            word-wrap: break-word;
+        }
+
+        .popup-field strong {
+            color: #111;
         }
     </style>
 </head>
@@ -22,15 +68,19 @@
 
     <div id="map"></div>
 
+    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        // אתחול המפה מרכזית
         const map = L.map('map').setView([31.5, 34.85], 8);
 
+        // שכבת אריחים (OpenStreetMap)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
+        // השדות המדויקים להצגה ובסדר הישיר המבוקש
         const FIELDS_TO_SHOW = [
             { key: 'OBJECTID', label: 'OBJECTID' },
             { key: 'GlobalID', label: 'GlobalID' },
@@ -44,16 +94,19 @@
             { key: 'Longitude', label: 'Longitude' }
         ];
 
+        // פונקציית יצירת ה-Popup לכל נקודה
         function buildPopupContent(properties) {
-            let html = '<div style="font-family: Arial, sans-serif; font-size: 13px; line-height: 1.4; text-align: left; direction: ltr;">';
+            let html = '<div style="direction: ltr; text-align: left;">';
 
+            // 1. הצגת השדות המוגדרים ברשימה בלבד
             FIELDS_TO_SHOW.forEach(field => {
                 const value = properties[field.key];
                 if (value !== undefined && value !== null && value !== '') {
-                    html += `<div><strong>${field.label}:</strong> ${value}</div>`;
+                    html += `<div class="popup-field"><strong>${field.label}:</strong> ${value}</div>`;
                 }
             });
 
+            // 2. הצגת התמונות ישירות ללא טקסט או נתיב קובץ
             let attachments = properties.attachments;
             if (attachments) {
                 let imgList = [];
@@ -66,11 +119,9 @@
                 imgList.forEach(imgPath => {
                     if (imgPath) {
                         html += `
-                            <div style="margin-top: 8px;">
-                                <a href="${imgPath}" target="_blank">
-                                    <img src="${imgPath}" alt="Image" style="width: 100%; max-width: 260px; height: auto; border-radius: 4px; display: block;" />
-                                </a>
-                            </div>`;
+                            <a href="${imgPath}" target="_blank">
+                                <img src="${imgPath}" alt="Image" class="popup-img" />
+                            </a>`;
                     }
                 });
             }
@@ -79,6 +130,7 @@
             return html;
         }
 
+        // טעינת הנתונים מהקובץ
         fetch('data/pois.geojson')
             .then(res => res.json())
             .then(data => {
@@ -93,7 +145,8 @@
                 if (layer.getBounds().isValid()) {
                     map.fitBounds(layer.getBounds(), { padding: [50, 50] });
                 }
-            });
+            })
+            .catch(err => console.error("שגיאה בטעינת GeoJSON:", err));
     </script>
 </body>
 </html>
