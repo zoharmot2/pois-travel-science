@@ -193,7 +193,6 @@ def generate_csv(features, output_path):
     for feat in features:
         all_keys.update(feat.get("properties", {}).keys())
 
-    # CreationDate הוחלף במיקום של Date_Point, ו-Date_Point הועבר למיקום שבו היה CreationDate
     priority_fields = [
         "OBJECTID",
         "GlobalID",
@@ -381,13 +380,15 @@ def fetch_and_process():
 
     features = [f for f in features if not is_empty_feature(f)]
 
+    # מיון כרונולוגי לפי השדה CreationDate מהישן ביותר לחדש ביותר
     def get_sort_key(f):
-        dp = f.get("properties", {}).get("Date_Point", "")
-        return parse_to_datetime(dp)
+        props = f.get("properties", {})
+        cdate = get_prop_val(props, "CreationDate") or get_prop_val(props, "Date_Point")
+        return parse_to_datetime(cdate)
 
     features.sort(key=get_sort_key)
     geojson_data["features"] = features
-    print(f"לאחר עיבוד נותרו {len(features)} נקודות בסדר כרונולוגי.")
+    print(f"לאחר עיבוד ומיון לפי CreationDate נותרו {len(features)} נקודות בסדר כרונולוגי (מהישן לחדש).")
 
     output_geojson = os.path.join(DATA_DIR, "pois.geojson")
     with open(output_geojson, "w", encoding="utf-8") as f:
