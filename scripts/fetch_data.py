@@ -87,11 +87,34 @@ def get_prop_val(props, key_name):
             return v
     return ""
 
+def format_datetime_str(val):
+    if val is None or str(val).strip() == "":
+        return ""
+    if isinstance(val, (int, float)):
+        try:
+            if val > 1e11:
+                val = val / 1000.0
+            return datetime.fromtimestamp(val).strftime("%Y-%m-%d %H:%M:%S")
+        except Exception:
+            return str(val)
+    if isinstance(val, str):
+        if val.isdigit():
+            try:
+                ts = float(val)
+                if ts > 1e11:
+                    ts = ts / 1000.0
+                return datetime.fromtimestamp(ts).strftime("%Y-%m-%d %H:%M:%S")
+            except Exception:
+                pass
+        try:
+            dt = datetime.fromisoformat(val.replace("Z", "+00:00"))
+            return dt.strftime("%Y-%m-%d %H:%M:%S")
+        except Exception:
+            return str(val)
+    return str(val)
+
 def parse_feature_date(feature):
-    """חילוץ תאריך מהנקודה לצורך מיון כרונולוגי (מהישן לחדש)"""
     props = feature.get("properties", {})
-    
-    # חיפוש שדות תאריך נפוצים במערכות ESRI
     for key, val in props.items():
         if val is not None and any(d_field in key.lower() for d_field in ["date", "time", "created"]):
             if isinstance(val, (int, float)):
@@ -103,9 +126,18 @@ def parse_feature_date(feature):
                     return datetime.fromisoformat(val.replace("Z", "+00:00")).timestamp()
                 except Exception:
                     return val
-                    
-    # ברירת מחדל: מיון לפי OBJECTID אם לא נמצא שדה תאריך
     return props.get("OBJECTID") or props.get("objectid") or 0
+
+def is_empty_feature(feature):
+    """בדיקה האם הנקודה ריקה מתוכן רלוונטי"""
+    props = feature.get("properties", {})
+    name = str(get_prop_val(props, "POI_Name") or get_prop_val(props, "name")).strip()
+    topic = str(get_prop_val(props, "POI_Topic")).strip()
+    desc = str(get_prop_val(props, "POI_Description")).strip()
+    atts = props.get("attachments", [])
+    
+    # אם אין שם, אין נושא, אין תיאור ואין קבצים מצורפים - הנקודה נחשבת ריקה
+    return not name and not topic and not desc and not atts
 
 def get_attachments_map(object_ids):
     attachments_map = {}
@@ -157,12 +189,23 @@ def generate_csv(features, output_path):
         all_keys.update(feat.get("properties", {}).keys())
 
     fieldnames = sorted(list(all_keys))
-    
-    priority_fields = ["OBJECTID", "POI_Name", "POI_Topic", "POI_Type", "POI_Description", "Longitude", "Latitude"]
-    for pf in reversed(priority_fields):
-        if pf in fieldnames:
-            fieldnames.remove(pf)
-            fieldnames.insert(0, pf)
+
+    for col in ["Date_Point", "OBJECTID"]:
+        if col in fieldnames:
+            fieldnames.remove(col)
+            fieldnames.insert(0, col)
+
+    if "attachments" in fieldnames:
+        fieldnames.remove("attachments")
+        target_idx = -1
+        for idx, fn in enumerate(fieldnames):
+            if fn.lower() == "collection_date":
+                target_idx = idx
+                break
+        if target_idx != -1:
+            fieldnames.insert(target_idx + 1, "attachments")
+        else:
+            fieldnames.append("attachments")
 
     with open(output_path, "w", newline="", encoding="utf-8-sig") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -199,6 +242,7 @@ def generate_pdf(features, output_path):
             ("POI_Topic", "נושא:"),
             ("POI_Type", "סוג:"),
             ("POI_Description", "תיאור:"),
+            ("Date_Point", "תאריך:"),
             ("Longitude", "קו אורך (Longitude):"),
             ("Latitude", "קו רוחב (Latitude):")
         ]
@@ -212,6 +256,7 @@ def generate_pdf(features, output_path):
                 val = get_prop_val(props, key_name)
                 if val is not None and str(val).strip() != "":
                     line_text = f"{label} {val}"
+                    pdf.set_x(10)  # יישור קו השוליים הימני לכל השדות
                     if key_name == "POI_Description":
                         pdf.multi_cell(0, 8, fix_hebrew(line_text), align="R")
                         pdf.ln(2)
@@ -231,22 +276,25 @@ def generate_pdf(features, output_path):
                         media_links.append(att)
 
                 if images:
+                    pdf.set_x(10)
                     pdf.set_font("NotoHebrew", size=13)
                     pdf.cell(0, 8, fix_hebrew("צילומים ותמונות:"), ln=True, align="R")
-                    pdf.ln(2)
+                    pdf.ln(3)
                     for img_path in images:
                         try:
-                            pdf.image(img_path, w=100, x=55)
-                            pdf.ln(4)
+                            pdf.image(img_path, w=110, x=50)
+                            pdf.ln(5)
                         except Exception as img_err:
                             print(f"אזהרה: לא ניתן להוסיף תמונה {img_path} ל-PDF: {img_err}")
 
                 if media_links:
                     pdf.ln(3)
+                    pdf.set_x(10)
                     pdf.set_font("NotoHebrew", size=12)
                     pdf.cell(0, 8, fix_hebrew("סרטונים / קבצי מדיה מצורפים:"), ln=True, align="R")
                     pdf.set_font("NotoHebrew", size=10)
                     for link in media_links:
+                        pdf.set_x(10)
                         pdf.cell(0, 6, fix_hebrew(f"קישור ישיר: {link}"), ln=True, align="R")
 
         pdf.output(output_path)
@@ -272,11 +320,14 @@ def fetch_and_process():
             props["Longitude"] = coords[0]
             props["Latitude"] = coords[1]
 
+        raw_date = get_prop_val(props, "Collection_date") or get_prop_val(props, "CreationDate")
+        props["Date_Point"] = format_datetime_str(raw_date)
+
         oid = props.get("OBJECTID") or props.get("objectid") or props.get("FID")
         if oid is not None:
             object_ids.append(oid)
 
-    print(f"נמצאו {len(features)} נקודות.")
+    print(f"נמצאו {len(features)} נקודות בשרת.")
 
     print("2. שליפת קבצים מצורפים (Attachments)...")
     attachments_info_map = get_attachments_map(object_ids)
@@ -315,7 +366,12 @@ def fetch_and_process():
         oid = props.get("OBJECTID") or props.get("objectid") or props.get("FID")
         props["attachments"] = attachments_map.get(oid, [])
 
-    # 3. מיון הנקודות לפי תאריך מהישן לחדש ביותר
+    # 3. סינון נקודות ריקות מתוכן
+    features = [f for f in features if not is_empty_feature(f)]
+    geojson_data["features"] = features
+    print(f"לאחר סינון נקודות ריקות נותרו {len(features)} נקודות.")
+
+    # 4. מיון לפי תאריך מהישן לחדש ביותר
     features.sort(key=parse_feature_date)
 
     output_geojson = os.path.join(DATA_DIR, "pois.geojson")
