@@ -1163,7 +1163,8 @@
         "Longitude": 28.2206100002195,
         "Latitude": 36.4550150001672,
         "attachments": [
-          "data/attachments/1103_901_Photo 1.jpg"
+          "data/attachments/1103_901_Photo 1.jpg",
+          "data/attachments/1103_919_20260731_200727.jpg"
         ]
       }
     },
@@ -6870,8 +6871,8 @@
         "Latitude": 40.6285816668896,
         "attachments": [
           "data/attachments/283_523_Photo 1.jpg",
-          "data/attachments/283_522_Photo 1.jpg",
-          "data/attachments/283_521_Photo 1.jpg"
+          "data/attachments/283_521_Photo 1.jpg",
+          "data/attachments/283_522_Photo 1.jpg"
         ]
       }
     },
@@ -8940,8 +8941,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          28.2279386350721,
-          36.4499826084827
+          28.227886713347,
+          36.4496709794477
         ]
       },
       "properties": {
@@ -8971,7 +8972,7 @@
         "esrignss_h_stddev": null,
         "CreationDate": "05/10/2025 15:06",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "27/01/2026 16:09",
+        "EditDate": "09/08/2026 06:31",
         "Editor": "mzohar_univhaifa25",
         "collector_name": null,
         "ID": null,
@@ -8982,10 +8983,11 @@
         "POI_Name": "Old Port of Rhodes",
         "POI_Topic": "Settlements_Project",
         "Collect_Name": "Motti Zohar",
-        "Longitude": 28.2279386350721,
-        "Latitude": 36.4499826084827,
+        "Longitude": 28.227886713347,
+        "Latitude": 36.4496709794477,
         "attachments": [
           "data/attachments/895_610_Photo 3.jpg",
+          "data/attachments/895_927_20260802_202648.jpg",
           "data/attachments/895_607_Photo 2.jpg",
           "data/attachments/895_606_Photo 1.jpg"
         ]
@@ -11037,8 +11039,8 @@
         "Longitude": 16.3654077343771,
         "Latitude": 48.2103495210139,
         "attachments": [
-          "data/attachments/89_174_IMG_20240417_100954.jpg",
-          "data/attachments/89_173_IMG_20240417_101207.jpg"
+          "data/attachments/89_173_IMG_20240417_101207.jpg",
+          "data/attachments/89_174_IMG_20240417_100954.jpg"
         ]
       }
     },
@@ -40991,7 +40993,8 @@
         "Longitude": 28.2237941515076,
         "Latitude": 36.444269312253,
         "attachments": [
-          "data/attachments/1110_915_20260802_191841.jpg"
+          "data/attachments/1110_915_20260802_191841.jpg",
+          "data/attachments/1110_924_20260802_190520.jpg"
         ]
       }
     },
@@ -42072,6 +42075,230 @@
         "Longitude": 14.4854283705354,
         "Latitude": 40.7491783238947,
         "attachments": []
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1113,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          28.2224489764719,
+          36.4460169826917
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1113,
+        "GlobalID": "7c3d1b3d-a328-4792-ac7a-457738a49327",
+        "esrignss_speed": null,
+        "esrignss_direction": null,
+        "esrisnsr_azimuth": null,
+        "esrignss_positionsourcetype": null,
+        "esrignss_receiver": null,
+        "esrignss_h_rms": null,
+        "esrignss_v_rms": null,
+        "esrignss_latitude": null,
+        "esrignss_longitude": null,
+        "esrignss_altitude": null,
+        "esrignss_pdop": null,
+        "esrignss_hdop": null,
+        "esrignss_vdop": null,
+        "esrignss_fixtype": null,
+        "esrignss_correctionage": null,
+        "esrignss_stationid": null,
+        "esrignss_numsats": null,
+        "esrignss_fixdatetime": null,
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_avg_positions": null,
+        "esrignss_h_stddev": null,
+        "CreationDate": "09/08/2026 06:23",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "09/08/2026 06:27",
+        "Editor": "mzohar_univhaifa25",
+        "collector_name": null,
+        "ID": null,
+        "Collector_ID": null,
+        "Collection_date": "09/08/2026 18:24",
+        "POI_Type": "Site",
+        "POI_Description": null,
+        "POI_Name": "Walls of Old City",
+        "POI_Topic": "Settlements_Project",
+        "Collect_Name": "Motti Zohar",
+        "Longitude": 28.2224489764719,
+        "Latitude": 36.4460169826917,
+        "attachments": [
+          "data/attachments/1113_920_20260802_184155.jpg",
+          "data/attachments/1113_921_20260802_184209.jpg",
+          "data/attachments/1113_922_20260802_184355.jpg"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1114,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          28.2233036893288,
+          36.4458948952194
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1114,
+        "GlobalID": "0b13cc97-8510-4675-a8bf-e8d09fc65440",
+        "esrignss_speed": null,
+        "esrignss_direction": null,
+        "esrisnsr_azimuth": null,
+        "esrignss_positionsourcetype": null,
+        "esrignss_receiver": null,
+        "esrignss_h_rms": null,
+        "esrignss_v_rms": null,
+        "esrignss_latitude": null,
+        "esrignss_longitude": null,
+        "esrignss_altitude": null,
+        "esrignss_pdop": null,
+        "esrignss_hdop": null,
+        "esrignss_vdop": null,
+        "esrignss_fixtype": null,
+        "esrignss_correctionage": null,
+        "esrignss_stationid": null,
+        "esrignss_numsats": null,
+        "esrignss_fixdatetime": null,
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_avg_positions": null,
+        "esrignss_h_stddev": null,
+        "CreationDate": "09/08/2026 06:25",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "09/08/2026 06:26",
+        "Editor": "mzohar_univhaifa25",
+        "collector_name": null,
+        "ID": null,
+        "Collector_ID": null,
+        "Collection_date": "09/08/2026 18:25",
+        "POI_Type": "Site",
+        "POI_Description": null,
+        "POI_Name": "Entrance to Old City",
+        "POI_Topic": "Settlements_Project",
+        "Collect_Name": "Motti Zohar",
+        "Longitude": 28.2233036893288,
+        "Latitude": 36.4458948952194,
+        "attachments": [
+          "data/attachments/1114_923_20260802_184421.jpg"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1115,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          28.2249623117199,
+          36.4439300287076
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1115,
+        "GlobalID": "fa95904f-8ccb-42a5-87a0-32a6679287d4",
+        "esrignss_speed": null,
+        "esrignss_direction": null,
+        "esrisnsr_azimuth": null,
+        "esrignss_positionsourcetype": null,
+        "esrignss_receiver": null,
+        "esrignss_h_rms": null,
+        "esrignss_v_rms": null,
+        "esrignss_latitude": null,
+        "esrignss_longitude": null,
+        "esrignss_altitude": null,
+        "esrignss_pdop": null,
+        "esrignss_hdop": null,
+        "esrignss_vdop": null,
+        "esrignss_fixtype": null,
+        "esrignss_correctionage": null,
+        "esrignss_stationid": null,
+        "esrignss_numsats": null,
+        "esrignss_fixdatetime": null,
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_avg_positions": null,
+        "esrignss_h_stddev": null,
+        "CreationDate": "09/08/2026 06:29",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "09/08/2026 06:30",
+        "Editor": "mzohar_univhaifa25",
+        "collector_name": null,
+        "ID": null,
+        "Collector_ID": null,
+        "Collection_date": "09/08/2026 18:29",
+        "POI_Type": "Structure",
+        "POI_Description": null,
+        "POI_Name": "Remnants in the Old City",
+        "POI_Topic": "Settlements_Project",
+        "Collect_Name": "Motti Zohar",
+        "Longitude": 28.2249623117199,
+        "Latitude": 36.4439300287076,
+        "attachments": [
+          "data/attachments/1115_925_20260802_193719.jpg",
+          "data/attachments/1115_926_20260802_193837.jpg"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1116,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          28.2265515338655,
+          36.4496325248569
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1116,
+        "GlobalID": "3385357e-9479-43a2-8a63-6c2a51deac7b",
+        "esrignss_speed": null,
+        "esrignss_direction": null,
+        "esrisnsr_azimuth": null,
+        "esrignss_positionsourcetype": null,
+        "esrignss_receiver": null,
+        "esrignss_h_rms": null,
+        "esrignss_v_rms": null,
+        "esrignss_latitude": null,
+        "esrignss_longitude": null,
+        "esrignss_altitude": null,
+        "esrignss_pdop": null,
+        "esrignss_hdop": null,
+        "esrignss_vdop": null,
+        "esrignss_fixtype": null,
+        "esrignss_correctionage": null,
+        "esrignss_stationid": null,
+        "esrignss_numsats": null,
+        "esrignss_fixdatetime": null,
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_avg_positions": null,
+        "esrignss_h_stddev": null,
+        "CreationDate": "09/08/2026 06:32",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "09/08/2026 06:33",
+        "Editor": "mzohar_univhaifa25",
+        "collector_name": null,
+        "ID": null,
+        "Collector_ID": null,
+        "Collection_date": "09/08/2026 11:32",
+        "POI_Type": "Site",
+        "POI_Description": null,
+        "POI_Name": "Mandraki Port",
+        "POI_Topic": "Settlements_Project",
+        "Collect_Name": "Motti Zohar",
+        "Longitude": 28.2265515338655,
+        "Latitude": 36.4496325248569,
+        "attachments": [
+          "data/attachments/1116_928_20260803_085710.jpg",
+          "data/attachments/1116_929_20260803_085808.jpg"
+        ]
       }
     },
     {
@@ -45722,10 +45949,10 @@
         "Longitude": 35.2297475460993,
         "Latitude": 31.7780970002716,
         "attachments": [
+          "data/attachments/258_631_Photo 4.jpg",
           "data/attachments/258_493_PA190270.JPG",
           "data/attachments/258_492_PA190269 - Copy.JPG",
-          "data/attachments/258_491_PA190268.JPG",
-          "data/attachments/258_631_Photo 4.jpg"
+          "data/attachments/258_491_PA190268.JPG"
         ]
       }
     },
