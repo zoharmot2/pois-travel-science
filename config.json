@@ -24,13 +24,13 @@
         "visible": true,
         "label": "Historical Earthquakes"
       },
-      "Climate": {
+      "Climate Negev": {
         "color": "#0284C7",
         "radius": 10,
         "visible": true,
         "label": "Climate Negev"
       },
-      "Settlements_Project": {
+      "Settlements": {
         "color": "#1B661A",
         "radius": 10,
         "visible": true,
