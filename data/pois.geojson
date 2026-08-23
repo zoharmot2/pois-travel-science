@@ -52,8 +52,8 @@
         "Longitude": 23.9843234381699,
         "Latitude": 35.5155215660372,
         "attachments": [
-          "data/attachments/27_36_WhatsApp Image 2024-02-01 at 14.00.03.jpeg",
-          "data/attachments/27_37_WhatsApp Image 2024-02-01 at 14.00.02.jpeg"
+          "data/attachments/27_37_WhatsApp Image 2024-02-01 at 14.00.02.jpeg",
+          "data/attachments/27_36_WhatsApp Image 2024-02-01 at 14.00.03.jpeg"
         ]
       }
     },
@@ -218,8 +218,8 @@
         "Longitude": 24.5039223094137,
         "Latitude": 35.3375453073839,
         "attachments": [
-          "data/attachments/30_40_WhatsApp Image 2024-02-01 at 13.58.49.jpeg",
-          "data/attachments/30_41_WhatsApp Image 2024-02-01 at 13.58.48.jpeg"
+          "data/attachments/30_41_WhatsApp Image 2024-02-01 at 13.58.48.jpeg",
+          "data/attachments/30_40_WhatsApp Image 2024-02-01 at 13.58.49.jpeg"
         ]
       }
     },
@@ -260,13 +260,13 @@
         "esrignss_h_stddev": null,
         "CreationDate": "01/02/2024 12:17",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "18/08/2026 04:00",
+        "EditDate": "18/08/2026 13:16",
         "Editor": "mzohar_univhaifa25",
         "collector_name": null,
         "ID": null,
         "Collector_ID": null,
         "Collection_date": "06/10/2023 10:16",
-        "POI_Type": "Cave",
+        "POI_Type": "General Site",
         "POI_Description": null,
         "POI_Name": "Mili Gorge - Old Mill",
         "POI_Topic": "General",
@@ -315,13 +315,13 @@
         "esrignss_h_stddev": null,
         "CreationDate": "01/02/2024 12:18",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "18/08/2026 04:00",
+        "EditDate": "18/08/2026 13:16",
         "Editor": "mzohar_univhaifa25",
         "collector_name": null,
         "ID": null,
         "Collector_ID": null,
         "Collection_date": "06/10/2023 09:18",
-        "POI_Type": "Cave",
+        "POI_Type": "General Site",
         "POI_Description": "Monestary and south entrance",
         "POI_Name": "Mili Gorge",
         "POI_Topic": "General",
@@ -384,8 +384,8 @@
         "Longitude": 24.0167231819665,
         "Latitude": 35.5195101842231,
         "attachments": [
-          "data/attachments/33_44_WhatsApp Image 2024-02-01 at 14.00.52.jpeg",
-          "data/attachments/33_45_WhatsApp Image 2024-02-01 at 14.00.51(1).jpeg"
+          "data/attachments/33_45_WhatsApp Image 2024-02-01 at 14.00.51(1).jpeg",
+          "data/attachments/33_44_WhatsApp Image 2024-02-01 at 14.00.52.jpeg"
         ]
       }
     },
@@ -550,9 +550,9 @@
         "Longitude": 34.9698370524277,
         "Latitude": 32.4748188449903,
         "attachments": [
-          "data/attachments/118_248_Photo 1.jpg",
+          "data/attachments/118_255_Photo 3.jpg",
           "data/attachments/118_249_Photo 2.jpg",
-          "data/attachments/118_255_Photo 3.jpg"
+          "data/attachments/118_248_Photo 1.jpg"
         ]
       }
     },
@@ -607,10 +607,10 @@
         "Longitude": 34.9691210394507,
         "Latitude": 32.4751568038985,
         "attachments": [
-          "data/attachments/119_250_Photo 1.jpg",
-          "data/attachments/119_251_Photo 2.jpg",
+          "data/attachments/119_253_Photo 4.jpg",
           "data/attachments/119_252_Photo 3.jpg",
-          "data/attachments/119_253_Photo 4.jpg"
+          "data/attachments/119_251_Photo 2.jpg",
+          "data/attachments/119_250_Photo 1.jpg"
         ]
       }
     },
@@ -1219,18 +1219,18 @@
         "Longitude": -1.82618249824301,
         "Latitude": 51.1788770902907,
         "attachments": [
-          "data/attachments/76_142_Photo 1.jpg",
-          "data/attachments/76_143_Photo 2.jpg",
-          "data/attachments/76_144_Photo 3.jpg",
-          "data/attachments/76_145_Photo 4.jpg",
-          "data/attachments/76_146_Photo 5.jpg",
-          "data/attachments/76_147_Photo 6.jpg",
-          "data/attachments/76_148_Photo 7.jpg",
-          "data/attachments/76_149_Photo 7.jpg",
-          "data/attachments/76_150_Photo 9.jpg",
-          "data/attachments/76_151_Photo 10.jpg",
+          "data/attachments/76_153_Photo 12.jpg",
           "data/attachments/76_152_Photo 11.jpg",
-          "data/attachments/76_153_Photo 12.jpg"
+          "data/attachments/76_151_Photo 10.jpg",
+          "data/attachments/76_150_Photo 9.jpg",
+          "data/attachments/76_149_Photo 7.jpg",
+          "data/attachments/76_148_Photo 7.jpg",
+          "data/attachments/76_147_Photo 6.jpg",
+          "data/attachments/76_146_Photo 5.jpg",
+          "data/attachments/76_145_Photo 4.jpg",
+          "data/attachments/76_144_Photo 3.jpg",
+          "data/attachments/76_143_Photo 2.jpg",
+          "data/attachments/76_142_Photo 1.jpg"
         ]
       }
     },
@@ -1285,8 +1285,8 @@
         "Longitude": -1.79543166677938,
         "Latitude": 51.0692883333066,
         "attachments": [
-          "data/attachments/77_154_Photo 1.jpg",
-          "data/attachments/77_155_Photo 1.jpg"
+          "data/attachments/77_155_Photo 1.jpg",
+          "data/attachments/77_154_Photo 1.jpg"
         ]
       }
     },
@@ -1341,8 +1341,8 @@
         "Longitude": 35.0424469073069,
         "Latitude": 31.9193640117924,
         "attachments": [
-          "data/attachments/5_3_WhatsApp Image 2023-12-01 at 14.01.09.jpeg",
-          "data/attachments/5_4_WhatsApp Image 2023-12-01 at 14.01.23.jpeg"
+          "data/attachments/5_4_WhatsApp Image 2023-12-01 at 14.01.23.jpeg",
+          "data/attachments/5_3_WhatsApp Image 2023-12-01 at 14.01.09.jpeg"
         ]
       }
     },
@@ -2007,8 +2007,8 @@
         "Longitude": -0.127480000122815,
         "Latitude": 51.5292733331663,
         "attachments": [
-          "data/attachments/78_156_Photo 1.jpg",
-          "data/attachments/78_490_Photo 2.jpg"
+          "data/attachments/78_490_Photo 2.jpg",
+          "data/attachments/78_156_Photo 1.jpg"
         ]
       }
     },
@@ -2118,11 +2118,11 @@
         "Longitude": -0.010478333054584,
         "Latitude": 51.4829183334899,
         "attachments": [
-          "data/attachments/80_158_Photo 1.jpg",
-          "data/attachments/80_159_Photo 1.jpg",
-          "data/attachments/80_160_Photo 2.jpg",
+          "data/attachments/80_162_Photo 5.jpg",
           "data/attachments/80_161_Photo 2.jpg",
-          "data/attachments/80_162_Photo 5.jpg"
+          "data/attachments/80_160_Photo 2.jpg",
+          "data/attachments/80_159_Photo 1.jpg",
+          "data/attachments/80_158_Photo 1.jpg"
         ]
       }
     },
@@ -2232,11 +2232,11 @@
         "Longitude": 14.4260636646483,
         "Latitude": 40.8213756464865,
         "attachments": [
-          "data/attachments/271_593_20250906_155034.jpg",
-          "data/attachments/271_594_20250906_160122.jpg",
-          "data/attachments/271_595_20250906_162238.jpg",
+          "data/attachments/271_597_20250906_173031.jpg",
           "data/attachments/271_596_20250906_171209.jpg",
-          "data/attachments/271_597_20250906_173031.jpg"
+          "data/attachments/271_595_20250906_162238.jpg",
+          "data/attachments/271_594_20250906_160122.jpg",
+          "data/attachments/271_593_20250906_155034.jpg"
         ]
       }
     },
@@ -2291,8 +2291,8 @@
         "Longitude": 28.2282815202351,
         "Latitude": 36.4436503251596,
         "attachments": [
-          "data/attachments/889_598_Photo 1.jpg",
-          "data/attachments/889_599_Photo 2.jpg"
+          "data/attachments/889_599_Photo 2.jpg",
+          "data/attachments/889_598_Photo 1.jpg"
         ]
       }
     },
@@ -2402,11 +2402,11 @@
         "Longitude": 28.2271300003994,
         "Latitude": 36.4456916664222,
         "attachments": [
-          "data/attachments/891_601_Photo 1.jpg",
-          "data/attachments/891_602_Photo 2.jpg",
-          "data/attachments/891_611_WhatsApp Image 2025-10-06 at 14.34.00.jpeg",
+          "data/attachments/891_613_WhatsApp Image 2025-10-06 at 14.34.00(2).jpeg",
           "data/attachments/891_612_WhatsApp Image 2025-10-06 at 14.34.01.jpeg",
-          "data/attachments/891_613_WhatsApp Image 2025-10-06 at 14.34.00(2).jpeg"
+          "data/attachments/891_611_WhatsApp Image 2025-10-06 at 14.34.00.jpeg",
+          "data/attachments/891_602_Photo 2.jpg",
+          "data/attachments/891_601_Photo 1.jpg"
         ]
       }
     },
@@ -5925,8 +5925,8 @@
         "Longitude": -0.122104999790583,
         "Latitude": 51.5122166669075,
         "attachments": [
-          "data/attachments/84_166_Photo 1.jpg",
-          "data/attachments/84_167_Photo 2.jpg"
+          "data/attachments/84_167_Photo 2.jpg",
+          "data/attachments/84_166_Photo 1.jpg"
         ]
       }
     },
@@ -6587,8 +6587,8 @@
         "Longitude": 14.3733923080133,
         "Latitude": 40.6285660938217,
         "attachments": [
-          "data/attachments/278_511_Photo 1.jpg",
-          "data/attachments/278_512_Photo 2.jpg"
+          "data/attachments/278_512_Photo 2.jpg",
+          "data/attachments/278_511_Photo 1.jpg"
         ]
       }
     },
@@ -6643,8 +6643,8 @@
         "Longitude": 14.3759434803011,
         "Latitude": 40.6303119380939,
         "attachments": [
-          "data/attachments/279_513_Photo 1.jpg",
-          "data/attachments/279_583_20250905_182830.jpg"
+          "data/attachments/279_583_20250905_182830.jpg",
+          "data/attachments/279_513_Photo 1.jpg"
         ]
       }
     },
@@ -6699,8 +6699,8 @@
         "Longitude": 14.3747666666177,
         "Latitude": 40.628536666427,
         "attachments": [
-          "data/attachments/280_514_Photo 1.jpg",
-          "data/attachments/280_568_20250905_093312.jpg"
+          "data/attachments/280_568_20250905_093312.jpg",
+          "data/attachments/280_514_Photo 1.jpg"
         ]
       }
     },
@@ -6755,8 +6755,8 @@
         "Longitude": 14.3752933335974,
         "Latitude": 40.62618833311,
         "attachments": [
-          "data/attachments/281_515_Photo 1.jpg",
-          "data/attachments/281_516_Photo 2.jpg"
+          "data/attachments/281_516_Photo 2.jpg",
+          "data/attachments/281_515_Photo 1.jpg"
         ]
       }
     },
@@ -6811,11 +6811,11 @@
         "Longitude": 14.3732666669427,
         "Latitude": 40.6254283336131,
         "attachments": [
-          "data/attachments/282_517_Photo 1.jpg",
-          "data/attachments/282_518_Photo 2.jpg",
-          "data/attachments/282_519_Photo 3.jpg",
+          "data/attachments/282_526_Photo 5.jpg",
           "data/attachments/282_520_Photo 4.jpg",
-          "data/attachments/282_526_Photo 5.jpg"
+          "data/attachments/282_519_Photo 3.jpg",
+          "data/attachments/282_518_Photo 2.jpg",
+          "data/attachments/282_517_Photo 1.jpg"
         ]
       }
     },
@@ -6870,9 +6870,9 @@
         "Longitude": 14.367073333726,
         "Latitude": 40.6285816668896,
         "attachments": [
-          "data/attachments/283_521_Photo 1.jpg",
+          "data/attachments/283_523_Photo 1.jpg",
           "data/attachments/283_522_Photo 1.jpg",
-          "data/attachments/283_523_Photo 1.jpg"
+          "data/attachments/283_521_Photo 1.jpg"
         ]
       }
     },
@@ -7037,28 +7037,28 @@
         "Longitude": 35.3540177614414,
         "Latitude": 31.315596656109,
         "attachments": [
-          "data/attachments/110_212_Photo 1.jpg",
-          "data/attachments/110_213_Photo 1.jpg",
-          "data/attachments/110_214_Photo 1.jpg",
-          "data/attachments/110_215_Photo 4.jpg",
-          "data/attachments/110_216_Photo 5.jpg",
-          "data/attachments/110_217_Photo 5.jpg",
-          "data/attachments/110_218_Photo 5.jpg",
-          "data/attachments/110_219_Photo 5.jpg",
-          "data/attachments/110_220_Photo 9.jpg",
-          "data/attachments/110_221_Photo 9.jpg",
-          "data/attachments/110_222_Photo 9.jpg",
-          "data/attachments/110_223_Photo 12.jpg",
-          "data/attachments/110_224_Photo 12.jpg",
-          "data/attachments/110_225_Photo 12.jpg",
-          "data/attachments/110_226_Photo 13.jpg",
-          "data/attachments/110_227_Photo 16.jpg",
-          "data/attachments/110_228_Photo 17.jpg",
-          "data/attachments/110_229_Photo 18.jpg",
-          "data/attachments/110_230_Photo 19.jpg",
-          "data/attachments/110_231_Photo 20.jpg",
+          "data/attachments/110_233_Photo 22.jpg",
           "data/attachments/110_232_Photo 20.jpg",
-          "data/attachments/110_233_Photo 22.jpg"
+          "data/attachments/110_231_Photo 20.jpg",
+          "data/attachments/110_230_Photo 19.jpg",
+          "data/attachments/110_229_Photo 18.jpg",
+          "data/attachments/110_228_Photo 17.jpg",
+          "data/attachments/110_227_Photo 16.jpg",
+          "data/attachments/110_226_Photo 13.jpg",
+          "data/attachments/110_225_Photo 12.jpg",
+          "data/attachments/110_224_Photo 12.jpg",
+          "data/attachments/110_223_Photo 12.jpg",
+          "data/attachments/110_222_Photo 9.jpg",
+          "data/attachments/110_221_Photo 9.jpg",
+          "data/attachments/110_220_Photo 9.jpg",
+          "data/attachments/110_219_Photo 5.jpg",
+          "data/attachments/110_218_Photo 5.jpg",
+          "data/attachments/110_217_Photo 5.jpg",
+          "data/attachments/110_216_Photo 5.jpg",
+          "data/attachments/110_215_Photo 4.jpg",
+          "data/attachments/110_214_Photo 1.jpg",
+          "data/attachments/110_213_Photo 1.jpg",
+          "data/attachments/110_212_Photo 1.jpg"
         ]
       }
     },
@@ -7113,8 +7113,8 @@
         "Longitude": 35.326615000449,
         "Latitude": 31.1608266666421,
         "attachments": [
-          "data/attachments/111_234_Photo 1.jpg",
-          "data/attachments/111_235_Photo 2.jpg"
+          "data/attachments/111_235_Photo 2.jpg",
+          "data/attachments/111_234_Photo 1.jpg"
         ]
       }
     },
@@ -7222,12 +7222,12 @@
         "Longitude": 34.7863533331397,
         "Latitude": 32.0730216669849,
         "attachments": [
-          "data/attachments/137_258_Photo 1.jpg",
-          "data/attachments/137_259_Photo 2.jpg",
-          "data/attachments/137_260_Photo 3.jpg",
-          "data/attachments/137_261_Photo 4.jpg",
+          "data/attachments/137_263_Photo 6.jpg",
           "data/attachments/137_262_Photo 5.jpg",
-          "data/attachments/137_263_Photo 6.jpg"
+          "data/attachments/137_261_Photo 4.jpg",
+          "data/attachments/137_260_Photo 3.jpg",
+          "data/attachments/137_259_Photo 2.jpg",
+          "data/attachments/137_258_Photo 1.jpg"
         ]
       }
     },
@@ -7665,9 +7665,9 @@
         "Longitude": 14.6029623340518,
         "Latitude": 40.634477728515,
         "attachments": [
-          "data/attachments/287_528_Photo 1.jpg",
+          "data/attachments/287_530_Photo 3.jpg",
           "data/attachments/287_529_Photo 2.jpg",
-          "data/attachments/287_530_Photo 3.jpg"
+          "data/attachments/287_528_Photo 1.jpg"
         ]
       }
     },
@@ -7722,8 +7722,8 @@
         "Longitude": 14.6032913680757,
         "Latitude": 40.6341602226043,
         "attachments": [
-          "data/attachments/288_531_Photo 1.jpg",
-          "data/attachments/288_532_Photo 2.jpg"
+          "data/attachments/288_532_Photo 2.jpg",
+          "data/attachments/288_531_Photo 1.jpg"
         ]
       }
     },
@@ -7778,8 +7778,8 @@
         "Longitude": 14.6046000059339,
         "Latitude": 40.6341011579914,
         "attachments": [
-          "data/attachments/289_533_Photo 1.jpg",
-          "data/attachments/289_534_Photo 2.jpg"
+          "data/attachments/289_534_Photo 2.jpg",
+          "data/attachments/289_533_Photo 1.jpg"
         ]
       }
     },
@@ -8105,10 +8105,10 @@
         "Longitude": 14.568263066453,
         "Latitude": 40.6155775229458,
         "attachments": [
-          "data/attachments/295_572_20250905_150815.jpg",
-          "data/attachments/295_573_20250905_150816.jpg",
+          "data/attachments/295_575_20250905_150822.jpg",
           "data/attachments/295_574_20250905_150818.jpg",
-          "data/attachments/295_575_20250905_150822.jpg"
+          "data/attachments/295_573_20250905_150816.jpg",
+          "data/attachments/295_572_20250905_150815.jpg"
         ]
       }
     },
@@ -8269,8 +8269,8 @@
         "Longitude": 14.5036503,
         "Latitude": 40.6236807,
         "attachments": [
-          "data/attachments/298_576_20250905_151003.jpg",
-          "data/attachments/298_577_20250905_151005.jpg"
+          "data/attachments/298_577_20250905_151005.jpg",
+          "data/attachments/298_576_20250905_151003.jpg"
         ]
       }
     },
@@ -8433,8 +8433,8 @@
         "Longitude": 14.4874183335507,
         "Latitude": 40.6306583331486,
         "attachments": [
-          "data/attachments/301_537_Photo 1.jpg",
-          "data/attachments/301_538_Photo 2.jpg"
+          "data/attachments/301_538_Photo 2.jpg",
+          "data/attachments/301_537_Photo 1.jpg"
         ]
       }
     },
@@ -8489,8 +8489,8 @@
         "Longitude": 14.4873013906181,
         "Latitude": 40.6293187849224,
         "attachments": [
-          "data/attachments/302_579_20250905_152640.jpg",
-          "data/attachments/302_580_20250905_152847.jpg"
+          "data/attachments/302_580_20250905_152847.jpg",
+          "data/attachments/302_579_20250905_152640.jpg"
         ]
       }
     },
@@ -8926,12 +8926,12 @@
         "Longitude": 14.394815000329,
         "Latitude": 40.629143333243,
         "attachments": [
-          "data/attachments/310_542_Photo 1.jpg",
-          "data/attachments/310_584_20250905_191529.jpg",
-          "data/attachments/310_585_20250905_191535.jpg",
-          "data/attachments/310_586_20250905_191549.jpg",
+          "data/attachments/310_588_20250905_191645.jpg",
           "data/attachments/310_587_20250905_191640.jpg",
-          "data/attachments/310_588_20250905_191645.jpg"
+          "data/attachments/310_586_20250905_191549.jpg",
+          "data/attachments/310_585_20250905_191535.jpg",
+          "data/attachments/310_584_20250905_191529.jpg",
+          "data/attachments/310_542_Photo 1.jpg"
         ]
       }
     },
@@ -8986,10 +8986,10 @@
         "Longitude": 28.227886713347,
         "Latitude": 36.4496709794477,
         "attachments": [
-          "data/attachments/895_606_Photo 1.jpg",
-          "data/attachments/895_607_Photo 2.jpg",
           "data/attachments/895_610_Photo 3.jpg",
-          "data/attachments/895_927_20260802_202648.jpg"
+          "data/attachments/895_927_20260802_202648.jpg",
+          "data/attachments/895_607_Photo 2.jpg",
+          "data/attachments/895_606_Photo 1.jpg"
         ]
       }
     },
@@ -10928,8 +10928,8 @@
         "Longitude": 16.3607138686008,
         "Latitude": 48.2130252161404,
         "attachments": [
-          "data/attachments/87_170_IMG_20240417_104202.jpg",
-          "data/attachments/87_171_IMG_20240417_103851.jpg"
+          "data/attachments/87_171_IMG_20240417_103851.jpg",
+          "data/attachments/87_170_IMG_20240417_104202.jpg"
         ]
       }
     },
@@ -11039,8 +11039,8 @@
         "Longitude": 16.3654077343771,
         "Latitude": 48.2103495210139,
         "attachments": [
-          "data/attachments/89_173_IMG_20240417_101207.jpg",
-          "data/attachments/89_174_IMG_20240417_100954.jpg"
+          "data/attachments/89_174_IMG_20240417_100954.jpg",
+          "data/attachments/89_173_IMG_20240417_101207.jpg"
         ]
       }
     },
@@ -36645,8 +36645,8 @@
         "Longitude": 14.2429308300052,
         "Latitude": 40.553269616309,
         "attachments": [
-          "data/attachments/899_615_20250909_155552.jpg",
-          "data/attachments/899_616_20250909_155559.jpg"
+          "data/attachments/899_616_20250909_155559.jpg",
+          "data/attachments/899_615_20250909_155552.jpg"
         ]
       }
     },
@@ -37313,8 +37313,8 @@
         "Longitude": 16.3656790675393,
         "Latitude": 48.1997641088255,
         "attachments": [
-          "data/attachments/90_175_IMG_20240416_170625.jpg",
-          "data/attachments/90_176_IMG_20240416_165421.jpg"
+          "data/attachments/90_176_IMG_20240416_165421.jpg",
+          "data/attachments/90_175_IMG_20240416_170625.jpg"
         ]
       }
     },
@@ -37695,8 +37695,8 @@
         "Longitude": 34.7972109438904,
         "Latitude": 30.8435350364606,
         "attachments": [
-          "data/attachments/97_181_IMG_20230901_184432.jpg",
-          "data/attachments/97_182_IMG_20230901_184717.jpg"
+          "data/attachments/97_182_IMG_20230901_184717.jpg",
+          "data/attachments/97_181_IMG_20230901_184432.jpg"
         ]
       }
     },
@@ -37751,9 +37751,9 @@
         "Longitude": 34.8204899810405,
         "Latitude": 30.861286417865,
         "attachments": [
-          "data/attachments/98_183_IMG_20230902_061717.jpg",
+          "data/attachments/98_185_IMG_20230902_061212.jpg",
           "data/attachments/98_184_IMG_20230902_061212.jpg",
-          "data/attachments/98_185_IMG_20230902_061212.jpg"
+          "data/attachments/98_183_IMG_20230902_061717.jpg"
         ]
       }
     },
@@ -37808,8 +37808,8 @@
         "Longitude": 14.2628966669325,
         "Latitude": 40.8527850003054,
         "attachments": [
-          "data/attachments/799_544_Photo 1.jpg",
-          "data/attachments/799_545_Photo 2.jpg"
+          "data/attachments/799_545_Photo 2.jpg",
+          "data/attachments/799_544_Photo 1.jpg"
         ]
       }
     },
@@ -37864,8 +37864,8 @@
         "Longitude": 14.2620516666604,
         "Latitude": 40.8525799997625,
         "attachments": [
-          "data/attachments/800_546_Photo 1.jpg",
-          "data/attachments/800_547_Photo 2.jpg"
+          "data/attachments/800_547_Photo 2.jpg",
+          "data/attachments/800_546_Photo 1.jpg"
         ]
       }
     },
@@ -40814,7 +40814,7 @@
         "esrignss_h_stddev": null,
         "CreationDate": "08/08/2026 11:03",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "18/08/2026 13:03",
+        "EditDate": "18/08/2026 13:23",
         "Editor": "mzohar_univhaifa25",
         "collector_name": null,
         "ID": null,
@@ -40822,7 +40822,7 @@
         "Collection_date": "08/08/2026 11:56",
         "POI_Type": "Rock/Stone/Soil",
         "POI_Description": null,
-        "POI_Name": "St. George ",
+        "POI_Name": "St. George Church",
         "POI_Topic": "General",
         "Collect_Name": "Motti Zohar",
         "Longitude": 27.8686876412433,
@@ -40924,7 +40924,7 @@
         "esrignss_h_stddev": null,
         "CreationDate": "08/08/2026 11:07",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "18/08/2026 13:06",
+        "EditDate": "18/08/2026 13:22",
         "Editor": "mzohar_univhaifa25",
         "collector_name": null,
         "ID": null,
@@ -40932,7 +40932,7 @@
         "Collection_date": "08/08/2026 15:07",
         "POI_Type": "Structure/Building",
         "POI_Description": null,
-        "POI_Name": "Clock Tower",
+        "POI_Name": "Clock Tower - Symi",
         "POI_Topic": "Settelments",
         "Collect_Name": "Motti Zohar",
         "Longitude": 27.839078224451,
@@ -40979,7 +40979,7 @@
         "esrignss_h_stddev": null,
         "CreationDate": "08/08/2026 11:35",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "18/08/2026 13:06",
+        "EditDate": "18/08/2026 13:22",
         "Editor": "mzohar_univhaifa25",
         "collector_name": null,
         "ID": null,
@@ -40987,7 +40987,7 @@
         "Collection_date": "08/08/2026 18:35",
         "POI_Type": "Structure/Building",
         "POI_Description": null,
-        "POI_Name": "Clock Tower",
+        "POI_Name": "Clock Tower - Rhodes",
         "POI_Topic": "Settelments",
         "Collect_Name": "Motti Zohar",
         "Longitude": 28.2237941515076,
@@ -41091,7 +41091,7 @@
         "esrignss_h_stddev": null,
         "CreationDate": "08/08/2026 11:37",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "18/08/2026 13:06",
+        "EditDate": "18/08/2026 13:22",
         "Editor": "mzohar_univhaifa25",
         "collector_name": null,
         "ID": null,
@@ -41099,7 +41099,7 @@
         "Collection_date": "08/08/2026 18:43",
         "POI_Type": "Structure/Building",
         "POI_Description": null,
-        "POI_Name": "Minaret",
+        "POI_Name": "Suleymaniye Mosque Minaret",
         "POI_Topic": "Settelments",
         "Collect_Name": "Motti Zohar",
         "Longitude": 28.2242312528602,
@@ -41160,10 +41160,10 @@
         "Longitude": 34.8708769554896,
         "Latitude": 31.9317405509207,
         "attachments": [
-          "data/attachments/99_187_IMG_20240427_130729.jpg",
-          "data/attachments/99_188_IMG_20240427_130724.jpg",
+          "data/attachments/99_729_20260124_120138.jpg",
           "data/attachments/99_728_20260124_120117.jpg",
-          "data/attachments/99_729_20260124_120138.jpg"
+          "data/attachments/99_188_IMG_20240427_130724.jpg",
+          "data/attachments/99_187_IMG_20240427_130729.jpg"
         ]
       }
     },
@@ -41204,13 +41204,13 @@
         "esrignss_h_stddev": null,
         "CreationDate": "08/09/2024 06:46",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "18/08/2026 04:00",
+        "EditDate": "18/08/2026 13:16",
         "Editor": "mzohar_univhaifa25",
         "collector_name": null,
         "ID": null,
         "Collector_ID": null,
         "Collection_date": "04/05/2024 09:45",
-        "POI_Type": "Cave",
+        "POI_Type": "General Site",
         "POI_Description": null,
         "POI_Name": "Khirbet Madaras",
         "POI_Topic": "General",
@@ -41273,8 +41273,8 @@
         "Longitude": 35.0007612489322,
         "Latitude": 32.8145800928177,
         "attachments": [
-          "data/attachments/101_190_20240710_182910.jpg",
-          "data/attachments/101_191_20240710_182908.jpg"
+          "data/attachments/101_191_20240710_182908.jpg",
+          "data/attachments/101_190_20240710_182910.jpg"
         ]
       }
     },
@@ -42226,7 +42226,7 @@
         "esrignss_h_stddev": null,
         "CreationDate": "09/08/2026 06:29",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "18/08/2026 13:06",
+        "EditDate": "18/08/2026 13:22",
         "Editor": "mzohar_univhaifa25",
         "collector_name": null,
         "ID": null,
@@ -42234,7 +42234,7 @@
         "Collection_date": "09/08/2026 18:29",
         "POI_Type": "Structure/Building",
         "POI_Description": null,
-        "POI_Name": "Remnants in the Old City",
+        "POI_Name": "Remnants - Old City Rhodes",
         "POI_Topic": "Settelments",
         "Collect_Name": "Motti Zohar",
         "Longitude": 28.2249623117199,
@@ -42407,10 +42407,10 @@
         "Longitude": 14.2059872858226,
         "Latitude": 40.5613281391561,
         "attachments": [
-          "data/attachments/862_589_20250909_125121.jpg",
+          "data/attachments/862_592_20250909_130242.jpg",
           "https://services5.arcgis.com/eJYUV73IZAY87Jwy/arcgis/rest/services/POI_Feature_Layer_view/FeatureServer/0/862/attachments/590",
-          "data/attachments/862_591_20250909_130235.jpg",
-          "data/attachments/862_592_20250909_130242.jpg"
+          "data/attachments/862_589_20250909_125121.jpg",
+          "data/attachments/862_591_20250909_130235.jpg"
         ]
       }
     },
@@ -42840,10 +42840,10 @@
         "Longitude": 14.2427486367524,
         "Latitude": 40.551049914211,
         "attachments": [
-          "data/attachments/870_622_20250909_153117.jpg",
-          "data/attachments/870_623_20250909_153121.jpg",
+          "data/attachments/870_625_20250909_153139.jpg",
           "data/attachments/870_624_20250909_153134.jpg",
-          "data/attachments/870_625_20250909_153139.jpg"
+          "data/attachments/870_623_20250909_153121.jpg",
+          "data/attachments/870_622_20250909_153117.jpg"
         ]
       }
     },
@@ -42898,9 +42898,9 @@
         "Longitude": 14.2421506717801,
         "Latitude": 40.5502843111753,
         "attachments": [
-          "data/attachments/871_617_20250909_153955.jpg",
+          "data/attachments/871_619_20250909_154022.jpg",
           "data/attachments/871_618_20250909_154013.jpg",
-          "data/attachments/871_619_20250909_154022.jpg"
+          "data/attachments/871_617_20250909_153955.jpg"
         ]
       }
     },
@@ -43008,8 +43008,8 @@
         "Longitude": 14.2425734549761,
         "Latitude": 40.5505744926631,
         "attachments": [
-          "data/attachments/873_620_20250909_153447.jpg",
-          "data/attachments/873_621_20250909_153548.jpg"
+          "data/attachments/873_621_20250909_153548.jpg",
+          "data/attachments/873_620_20250909_153447.jpg"
         ]
       }
     },
@@ -43170,9 +43170,9 @@
         "Longitude": 14.253756666446,
         "Latitude": 40.8394966668031,
         "attachments": [
-          "data/attachments/876_554_Photo 1.jpg",
+          "data/attachments/876_559_Photo 2.jpg",
           "data/attachments/876_558_Photo 2.jpg",
-          "data/attachments/876_559_Photo 2.jpg"
+          "data/attachments/876_554_Photo 1.jpg"
         ]
       }
     },
@@ -43227,9 +43227,9 @@
         "Longitude": 14.2691433331276,
         "Latitude": 40.8522083333336,
         "attachments": [
-          "data/attachments/877_555_Photo 1.jpg",
+          "data/attachments/877_557_Photo 3.jpg",
           "data/attachments/877_556_Photo 2.jpg",
-          "data/attachments/877_557_Photo 3.jpg"
+          "data/attachments/877_555_Photo 1.jpg"
         ]
       }
     },
@@ -43284,8 +43284,8 @@
         "Longitude": 35.0351331497077,
         "Latitude": 31.9202292000331,
         "attachments": [
-          "data/attachments/8_7_תמונה 1.jpg",
-          "data/attachments/8_8_תמונה 2.jpg"
+          "data/attachments/8_8_תמונה 2.jpg",
+          "data/attachments/8_7_תמונה 1.jpg"
         ]
       }
     },
@@ -43393,12 +43393,12 @@
         "Longitude": 35.3024280985793,
         "Latitude": 32.824606529903,
         "attachments": [
-          "data/attachments/103_193_Photo 1.jpg",
-          "data/attachments/103_194_Photo 2.jpg",
           "data/attachments/103_195_Photo 3.jpg",
-          "data/attachments/103_199_Photo 4.jpg",
+          "data/attachments/103_194_Photo 2.jpg",
+          "data/attachments/103_193_Photo 1.jpg",
+          "data/attachments/103_202_Photo 6.jpg",
           "data/attachments/103_200_Photo 4.jpg",
-          "data/attachments/103_202_Photo 6.jpg"
+          "data/attachments/103_199_Photo 4.jpg"
         ]
       }
     },
@@ -43439,13 +43439,13 @@
         "esrignss_h_stddev": null,
         "CreationDate": "10/09/2024 13:56",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "18/08/2026 04:00",
+        "EditDate": "18/08/2026 13:16",
         "Editor": "mzohar_univhaifa25",
         "collector_name": null,
         "ID": null,
         "Collector_ID": null,
         "Collection_date": "10/09/2024 13:56",
-        "POI_Type": "Cave",
+        "POI_Type": "General Site",
         "POI_Description": null,
         "POI_Name": "The Pilgrims Cave",
         "POI_Topic": "General",
@@ -43453,8 +43453,8 @@
         "Longitude": 35.3025083334055,
         "Latitude": 32.8234133336599,
         "attachments": [
-          "data/attachments/104_196_Photo 1.jpg",
-          "data/attachments/104_197_Photo 2.jpg"
+          "data/attachments/104_197_Photo 2.jpg",
+          "data/attachments/104_196_Photo 1.jpg"
         ]
       }
     },
@@ -43674,9 +43674,9 @@
         "Longitude": 14.2535521452087,
         "Latitude": 40.8382366518875,
         "attachments": [
-          "data/attachments/879_561_Photo 1.jpg",
+          "data/attachments/879_563_Photo 3.jpg",
           "data/attachments/879_562_Photo 2.jpg",
-          "data/attachments/879_563_Photo 3.jpg"
+          "data/attachments/879_561_Photo 1.jpg"
         ]
       }
     },
@@ -43731,8 +43731,8 @@
         "Longitude": 14.2495683334176,
         "Latitude": 40.8390750001037,
         "attachments": [
-          "data/attachments/880_564_Photo 1.jpg",
-          "data/attachments/880_565_Photo 2.jpg"
+          "data/attachments/880_565_Photo 2.jpg",
+          "data/attachments/880_564_Photo 1.jpg"
         ]
       }
     },
@@ -45047,9 +45047,9 @@
         "Longitude": 35.0395915657179,
         "Latitude": 31.9166291337087,
         "attachments": [
-          "data/attachments/112_236_Photo 1.jpg",
+          "data/attachments/112_238_Photo 1.jpg",
           "data/attachments/112_237_Photo 1.jpg",
-          "data/attachments/112_238_Photo 1.jpg"
+          "data/attachments/112_236_Photo 1.jpg"
         ]
       }
     },
@@ -45104,10 +45104,10 @@
         "Longitude": 35.0372850001904,
         "Latitude": 31.9192633330747,
         "attachments": [
-          "data/attachments/113_239_Photo 1.jpg",
-          "data/attachments/113_240_Photo 1.jpg",
+          "data/attachments/113_242_Photo 2.jpg",
           "data/attachments/113_241_Photo 1.jpg",
-          "data/attachments/113_242_Photo 2.jpg"
+          "data/attachments/113_240_Photo 1.jpg",
+          "data/attachments/113_239_Photo 1.jpg"
         ]
       }
     },
@@ -45555,14 +45555,14 @@
         "Longitude": 16.3725906824536,
         "Latitude": 48.2087227473961,
         "attachments": [
-          "data/attachments/38_50_WhatsApp Image 2024-04-13 at 16.16.46 (1).jpeg",
-          "data/attachments/38_51_WhatsApp Image 2024-04-13 at 16.16.44 (3).jpeg",
-          "data/attachments/38_52_WhatsApp Image 2024-04-13 at 16.16.44 (2).jpeg",
-          "data/attachments/38_53_WhatsApp Image 2024-04-13 at 16.16.44 (1).jpeg",
-          "data/attachments/38_54_WhatsApp Image 2024-04-13 at 16.16.44.jpeg",
           "data/attachments/38_55_WhatsApp Image 2024-04-13 at 16.16.42.jpeg",
-          "data/attachments/38_843_20260501_102327.jpg",
-          "data/attachments/38_844_20260501_110024.jpg"
+          "data/attachments/38_54_WhatsApp Image 2024-04-13 at 16.16.44.jpeg",
+          "data/attachments/38_53_WhatsApp Image 2024-04-13 at 16.16.44 (1).jpeg",
+          "data/attachments/38_52_WhatsApp Image 2024-04-13 at 16.16.44 (2).jpeg",
+          "data/attachments/38_51_WhatsApp Image 2024-04-13 at 16.16.44 (3).jpeg",
+          "data/attachments/38_50_WhatsApp Image 2024-04-13 at 16.16.46 (1).jpeg",
+          "data/attachments/38_844_20260501_110024.jpg",
+          "data/attachments/38_843_20260501_102327.jpg"
         ]
       }
     },
@@ -45782,9 +45782,9 @@
         "Longitude": 35.0354983337353,
         "Latitude": 31.901954999637,
         "attachments": [
-          "data/attachments/143_267_Photo 1.jpg",
+          "data/attachments/143_269_Photo 3.jpg",
           "data/attachments/143_268_Photo 1.jpg",
-          "data/attachments/143_269_Photo 3.jpg"
+          "data/attachments/143_267_Photo 1.jpg"
         ]
       }
     },
@@ -45949,10 +45949,10 @@
         "Longitude": 35.2297475460993,
         "Latitude": 31.7780970002716,
         "attachments": [
-          "data/attachments/258_491_PA190268.JPG",
-          "data/attachments/258_492_PA190269 - Copy.JPG",
+          "data/attachments/258_631_Photo 4.jpg",
           "data/attachments/258_493_PA190270.JPG",
-          "data/attachments/258_631_Photo 4.jpg"
+          "data/attachments/258_492_PA190269 - Copy.JPG",
+          "data/attachments/258_491_PA190268.JPG"
         ]
       }
     },
@@ -46221,10 +46221,10 @@
         "Longitude": 34.772509999964,
         "Latitude": 32.0970616666557,
         "attachments": [
-          "data/attachments/107_203_Photo 1.jpg",
-          "data/attachments/107_204_Photo 2.jpg",
+          "data/attachments/107_206_Photo 4.jpg",
           "data/attachments/107_205_Photo 3.jpg",
-          "data/attachments/107_206_Photo 4.jpg"
+          "data/attachments/107_204_Photo 2.jpg",
+          "data/attachments/107_203_Photo 1.jpg"
         ]
       }
     },
@@ -47108,8 +47108,8 @@
         "Longitude": 35.2291717630184,
         "Latitude": 31.7772304806058,
         "attachments": [
-          "data/attachments/153_279_P1010003.JPG",
-          "data/attachments/153_280_P9201032.JPG"
+          "data/attachments/153_280_P9201032.JPG",
+          "data/attachments/153_279_P1010003.JPG"
         ]
       }
     },
@@ -47270,8 +47270,8 @@
         "Longitude": 35.0075747618806,
         "Latitude": 31.9076686870696,
         "attachments": [
-          "data/attachments/156_281_Photo 1.jpg",
-          "data/attachments/156_282_Photo 2.jpg"
+          "data/attachments/156_282_Photo 2.jpg",
+          "data/attachments/156_281_Photo 1.jpg"
         ]
       }
     },
@@ -47326,8 +47326,8 @@
         "Longitude": 35.0058733329695,
         "Latitude": 31.9068200002321,
         "attachments": [
-          "data/attachments/157_283_Photo 1.jpg",
-          "data/attachments/157_284_Photo 2.jpg"
+          "data/attachments/157_284_Photo 2.jpg",
+          "data/attachments/157_283_Photo 1.jpg"
         ]
       }
     },
@@ -47382,8 +47382,8 @@
         "Longitude": 14.3758986256223,
         "Latitude": 40.6263559317394,
         "attachments": [
-          "data/attachments/887_566_20250904_110213.jpg",
-          "data/attachments/887_567_20250904_110220.jpg"
+          "data/attachments/887_567_20250904_110220.jpg",
+          "data/attachments/887_566_20250904_110213.jpg"
         ]
       }
     },
@@ -47438,8 +47438,8 @@
         "Longitude": 14.6052781198873,
         "Latitude": 40.6364066079061,
         "attachments": [
-          "data/attachments/888_569_20250905_142635.jpg",
-          "data/attachments/888_570_20250905_142640.jpg"
+          "data/attachments/888_570_20250905_142640.jpg",
+          "data/attachments/888_569_20250905_142635.jpg"
         ]
       }
     },
@@ -47928,11 +47928,11 @@
         "Longitude": 34.7688496387563,
         "Latitude": 32.0685685104857,
         "attachments": [
-          "data/attachments/164_288_Photo 1.jpg",
-          "data/attachments/164_289_Photo 2.jpg",
-          "data/attachments/164_290_Photo 3.jpg",
+          "data/attachments/164_297_photo1.jpg",
           "data/attachments/164_296_photo2.jpg",
-          "data/attachments/164_297_photo1.jpg"
+          "data/attachments/164_290_Photo 3.jpg",
+          "data/attachments/164_289_Photo 2.jpg",
+          "data/attachments/164_288_Photo 1.jpg"
         ]
       }
     },
@@ -48311,9 +48311,9 @@
         "Longitude": -0.0900915152282085,
         "Latitude": 51.5051834510134,
         "attachments": [
-          "data/attachments/253_481_Photo 1.jpg",
+          "data/attachments/253_483_Photo 3.jpg",
           "data/attachments/253_482_Photo 2.jpg",
-          "data/attachments/253_483_Photo 3.jpg"
+          "data/attachments/253_481_Photo 1.jpg"
         ]
       }
     },
@@ -48354,7 +48354,7 @@
         "esrignss_h_stddev": null,
         "CreationDate": "16/08/2026 16:23",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "18/08/2026 13:04",
+        "EditDate": "18/08/2026 13:22",
         "Editor": "mzohar_univhaifa25",
         "collector_name": null,
         "ID": null,
@@ -48362,7 +48362,7 @@
         "Collection_date": "16/08/2026 16:22",
         "POI_Type": "Scenary View",
         "POI_Description": "HaTzuk Beach",
-        "POI_Name": "Sunset",
+        "POI_Name": "Sunset - Tel Aviv",
         "POI_Topic": "General",
         "Collect_Name": "Motti Zohar",
         "Longitude": 34.7912266666065,
@@ -48534,9 +48534,9 @@
         "Longitude": 34.8260499996309,
         "Latitude": 32.0509400000665,
         "attachments": [
-          "data/attachments/173_298_Photo 1.jpg",
+          "data/attachments/173_300_Photo 3.jpg",
           "data/attachments/173_299_Photo 2.jpg",
-          "data/attachments/173_300_Photo 3.jpg"
+          "data/attachments/173_298_Photo 1.jpg"
         ]
       }
     },
@@ -48699,9 +48699,9 @@
         "Longitude": -0.118828390030503,
         "Latitude": 51.5113163295647,
         "attachments": [
-          "data/attachments/254_484_20250518_102531.jpg",
+          "data/attachments/254_486_20250518_102518.jpg",
           "data/attachments/254_485_20250518_102511.jpg",
-          "data/attachments/254_486_20250518_102518.jpg"
+          "data/attachments/254_484_20250518_102531.jpg"
         ]
       }
     },
@@ -49469,10 +49469,10 @@
         "Longitude": 35.2290571675892,
         "Latitude": 31.7717452494223,
         "attachments": [
-          "data/attachments/17_20_P2100335.JPG",
-          "data/attachments/17_21_P2100333.JPG",
+          "data/attachments/17_23_P2100330.JPG",
           "data/attachments/17_22_P2100332.JPG",
-          "data/attachments/17_23_P2100330.JPG"
+          "data/attachments/17_21_P2100333.JPG",
+          "data/attachments/17_20_P2100335.JPG"
         ]
       }
     },
@@ -49527,12 +49527,12 @@
         "Longitude": 35.5408103213711,
         "Latitude": 32.790138884971,
         "attachments": [
-          "data/attachments/18_24_8.JPG",
-          "data/attachments/18_25_9.JPG",
-          "data/attachments/18_26_10.JPG",
           "data/attachments/18_27_11.JPG",
+          "data/attachments/18_768_Photo 6.jpg",
           "data/attachments/18_495_WhatsApp Image 2025-07-31 at 14.05.20.jpeg",
-          "data/attachments/18_768_Photo 6.jpg"
+          "data/attachments/18_26_10.JPG",
+          "data/attachments/18_25_9.JPG",
+          "data/attachments/18_24_8.JPG"
         ]
       }
     },
@@ -49587,9 +49587,9 @@
         "Longitude": 34.7784916667436,
         "Latitude": 31.4928266664229,
         "attachments": [
-          "data/attachments/176_302_Photo 1.jpg",
+          "data/attachments/176_304_Photo 3.jpg",
           "data/attachments/176_303_Photo 2.jpg",
-          "data/attachments/176_304_Photo 3.jpg"
+          "data/attachments/176_302_Photo 1.jpg"
         ]
       }
     },
@@ -49699,10 +49699,10 @@
         "Longitude": 34.7853160260232,
         "Latitude": 31.2453412713279,
         "attachments": [
-          "data/attachments/178_306_Photo 1.jpg",
-          "data/attachments/178_307_Photo 2.jpg",
+          "data/attachments/178_309_Photo 4.jpg",
           "data/attachments/178_308_Photo 3.jpg",
-          "data/attachments/178_309_Photo 4.jpg"
+          "data/attachments/178_307_Photo 2.jpg",
+          "data/attachments/178_306_Photo 1.jpg"
         ]
       }
     },
@@ -49757,12 +49757,12 @@
         "Longitude": 34.7849143524287,
         "Latitude": 31.2455690468455,
         "attachments": [
-          "data/attachments/179_310_Photo 1.jpg",
-          "data/attachments/179_311_Photo 2.jpg",
-          "data/attachments/179_312_Photo 3.jpg",
-          "data/attachments/179_313_Photo 4.jpg",
+          "data/attachments/179_315_Photo 6.jpg",
           "data/attachments/179_314_Photo 5.jpg",
-          "data/attachments/179_315_Photo 6.jpg"
+          "data/attachments/179_313_Photo 4.jpg",
+          "data/attachments/179_312_Photo 3.jpg",
+          "data/attachments/179_311_Photo 2.jpg",
+          "data/attachments/179_310_Photo 1.jpg"
         ]
       }
     },
@@ -49817,10 +49817,10 @@
         "Longitude": 34.7842303554085,
         "Latitude": 31.245627236361,
         "attachments": [
-          "data/attachments/180_316_Photo 1.jpg",
-          "data/attachments/180_317_Photo 2.jpg",
+          "data/attachments/180_319_Photo 4.jpg",
           "data/attachments/180_318_Photo 3.jpg",
-          "data/attachments/180_319_Photo 4.jpg"
+          "data/attachments/180_317_Photo 2.jpg",
+          "data/attachments/180_316_Photo 1.jpg"
         ]
       }
     },
@@ -49875,9 +49875,9 @@
         "Longitude": 34.7868947989654,
         "Latitude": 31.2393271187713,
         "attachments": [
-          "data/attachments/181_320_Photo 1.jpg",
+          "data/attachments/181_322_Photo 3.jpg",
           "data/attachments/181_321_Photo 2.jpg",
-          "data/attachments/181_322_Photo 3.jpg"
+          "data/attachments/181_320_Photo 1.jpg"
         ]
       }
     },
@@ -49932,9 +49932,9 @@
         "Longitude": 34.7865311357855,
         "Latitude": 31.2395466705241,
         "attachments": [
-          "data/attachments/182_323_Photo 1.jpg",
+          "data/attachments/182_325_Photo 3.jpg",
           "data/attachments/182_324_Photo 2.jpg",
-          "data/attachments/182_325_Photo 3.jpg"
+          "data/attachments/182_323_Photo 1.jpg"
         ]
       }
     },
@@ -49989,10 +49989,10 @@
         "Longitude": 34.7866896471107,
         "Latitude": 31.2391006838419,
         "attachments": [
-          "data/attachments/183_326_Photo 1.jpg",
-          "data/attachments/183_327_Photo 2.jpg",
+          "data/attachments/183_329_Photo 4.jpg",
           "data/attachments/183_328_Photo 3.jpg",
-          "data/attachments/183_329_Photo 4.jpg"
+          "data/attachments/183_327_Photo 2.jpg",
+          "data/attachments/183_326_Photo 1.jpg"
         ]
       }
     },
@@ -50047,9 +50047,9 @@
         "Longitude": 34.7896571112775,
         "Latitude": 31.2377892367973,
         "attachments": [
-          "data/attachments/184_330_Photo 1.jpg",
+          "data/attachments/184_332_Photo 3.jpg",
           "data/attachments/184_331_Photo 2.jpg",
-          "data/attachments/184_332_Photo 3.jpg"
+          "data/attachments/184_330_Photo 1.jpg"
         ]
       }
     },
@@ -50104,8 +50104,8 @@
         "Longitude": 34.790981936777,
         "Latitude": 31.2357297822188,
         "attachments": [
-          "data/attachments/185_333_Photo 1.jpg",
-          "data/attachments/185_334_Photo 2.jpg"
+          "data/attachments/185_334_Photo 2.jpg",
+          "data/attachments/185_333_Photo 1.jpg"
         ]
       }
     },
@@ -50160,9 +50160,9 @@
         "Longitude": 34.7883300220234,
         "Latitude": 31.2415651970533,
         "attachments": [
-          "data/attachments/186_335_Photo 1.jpg",
+          "data/attachments/186_339_Photo 3.jpg",
           "data/attachments/186_336_Photo 2.jpg",
-          "data/attachments/186_339_Photo 3.jpg"
+          "data/attachments/186_335_Photo 1.jpg"
         ]
       }
     },
@@ -50217,8 +50217,8 @@
         "Longitude": 34.7889669940352,
         "Latitude": 31.2412199069387,
         "attachments": [
-          "data/attachments/187_337_Photo 1.jpg",
-          "data/attachments/187_338_Photo 2.jpg"
+          "data/attachments/187_338_Photo 2.jpg",
+          "data/attachments/187_337_Photo 1.jpg"
         ]
       }
     },
@@ -50328,10 +50328,10 @@
         "Longitude": 35.0647344457298,
         "Latitude": 31.0247149374127,
         "attachments": [
-          "data/attachments/189_341_Photo 1.jpg",
-          "data/attachments/189_342_Photo 2.jpg",
+          "data/attachments/189_344_Photo 4.jpg",
           "data/attachments/189_343_Photo 3.jpg",
-          "data/attachments/189_344_Photo 4.jpg"
+          "data/attachments/189_342_Photo 2.jpg",
+          "data/attachments/189_341_Photo 1.jpg"
         ]
       }
     },
@@ -50386,9 +50386,9 @@
         "Longitude": 35.0647264974362,
         "Latitude": 31.024788941225,
         "attachments": [
-          "data/attachments/190_345_Photo 1.jpg",
+          "data/attachments/190_347_Photo 3.jpg",
           "data/attachments/190_346_Photo 2.jpg",
-          "data/attachments/190_347_Photo 3.jpg"
+          "data/attachments/190_345_Photo 1.jpg"
         ]
       }
     },
@@ -50443,8 +50443,8 @@
         "Longitude": 35.065073669344,
         "Latitude": 31.0247201451559,
         "attachments": [
-          "data/attachments/191_348_Photo 1.jpg",
-          "data/attachments/191_349_Photo 2.jpg"
+          "data/attachments/191_349_Photo 2.jpg",
+          "data/attachments/191_348_Photo 1.jpg"
         ]
       }
     },
@@ -50499,9 +50499,9 @@
         "Longitude": 35.0648562258413,
         "Latitude": 31.0240706307718,
         "attachments": [
-          "data/attachments/192_350_Photo 1.jpg",
+          "data/attachments/192_352_Photo 3.jpg",
           "data/attachments/192_351_Photo 2.jpg",
-          "data/attachments/192_352_Photo 3.jpg"
+          "data/attachments/192_350_Photo 1.jpg"
         ]
       }
     },
@@ -50611,8 +50611,8 @@
         "Longitude": 35.0649383336549,
         "Latitude": 31.0253799997041,
         "attachments": [
-          "data/attachments/194_354_Photo 1.jpg",
-          "data/attachments/194_355_Photo 1.jpg"
+          "data/attachments/194_355_Photo 1.jpg",
+          "data/attachments/194_354_Photo 1.jpg"
         ]
       }
     },
@@ -50667,9 +50667,9 @@
         "Longitude": 35.0650121383403,
         "Latitude": 31.0270653142262,
         "attachments": [
-          "data/attachments/195_356_Photo 1.jpg",
+          "data/attachments/195_358_Photo 3.jpg",
           "data/attachments/195_357_Photo 2.jpg",
-          "data/attachments/195_358_Photo 3.jpg"
+          "data/attachments/195_356_Photo 1.jpg"
         ]
       }
     },
@@ -50724,9 +50724,9 @@
         "Longitude": 35.065041666862,
         "Latitude": 31.0259350003113,
         "attachments": [
-          "data/attachments/196_359_Photo 1.jpg",
+          "data/attachments/196_361_Photo 3.jpg",
           "data/attachments/196_360_Photo 2.jpg",
-          "data/attachments/196_361_Photo 3.jpg"
+          "data/attachments/196_359_Photo 1.jpg"
         ]
       }
     },
@@ -50781,12 +50781,12 @@
         "Longitude": 35.0494183336289,
         "Latitude": 30.9632350002852,
         "attachments": [
-          "data/attachments/197_362_Photo 1.jpg",
-          "data/attachments/197_363_Photo 1.jpg",
-          "data/attachments/197_364_Photo 1.jpg",
-          "data/attachments/197_365_Photo 2.jpg",
+          "data/attachments/197_367_Photo 4.jpg",
           "data/attachments/197_366_Photo 3.jpg",
-          "data/attachments/197_367_Photo 4.jpg"
+          "data/attachments/197_365_Photo 2.jpg",
+          "data/attachments/197_364_Photo 1.jpg",
+          "data/attachments/197_363_Photo 1.jpg",
+          "data/attachments/197_362_Photo 1.jpg"
         ]
       }
     },
@@ -51006,11 +51006,11 @@
         "Longitude": 34.9283233339668,
         "Latitude": 30.9885629316159,
         "attachments": [
-          "data/attachments/201_371_Photo 1.jpg",
-          "data/attachments/201_372_Photo 1.jpg",
-          "data/attachments/201_373_Photo 2.jpg",
+          "data/attachments/201_375_Photo 3.jpg",
           "data/attachments/201_374_Photo 2.jpg",
-          "data/attachments/201_375_Photo 3.jpg"
+          "data/attachments/201_373_Photo 2.jpg",
+          "data/attachments/201_372_Photo 1.jpg",
+          "data/attachments/201_371_Photo 1.jpg"
         ]
       }
     },
@@ -51120,10 +51120,10 @@
         "Longitude": 34.8995883336788,
         "Latitude": 30.9889599999055,
         "attachments": [
-          "data/attachments/203_377_Photo 1.jpg",
-          "data/attachments/203_378_Photo 1.jpg",
+          "data/attachments/203_380_Photo 2.jpg",
           "data/attachments/203_379_Photo 2.jpg",
-          "data/attachments/203_380_Photo 2.jpg"
+          "data/attachments/203_378_Photo 1.jpg",
+          "data/attachments/203_377_Photo 1.jpg"
         ]
       }
     },
@@ -51178,8 +51178,8 @@
         "Longitude": 34.8960633337242,
         "Latitude": 30.9898099999423,
         "attachments": [
-          "data/attachments/204_381_Photo 1.jpg",
-          "data/attachments/204_382_Photo 2.jpg"
+          "data/attachments/204_382_Photo 2.jpg",
+          "data/attachments/204_381_Photo 1.jpg"
         ]
       }
     },
@@ -51234,10 +51234,10 @@
         "Longitude": 34.9048833336452,
         "Latitude": 30.9850349997655,
         "attachments": [
-          "data/attachments/205_383_Photo 1.jpg",
-          "data/attachments/205_384_Photo 1.jpg",
+          "data/attachments/205_386_Photo 2.jpg",
           "data/attachments/205_385_Photo 2.jpg",
-          "data/attachments/205_386_Photo 2.jpg"
+          "data/attachments/205_384_Photo 1.jpg",
+          "data/attachments/205_383_Photo 1.jpg"
         ]
       }
     },
@@ -51348,6 +51348,61 @@
         "Latitude": 30.970468468143,
         "attachments": [
           "data/attachments/207_388_WhatsApp Image 2025-04-21 at 20.31.48.jpeg"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1118,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          34.8484016667313,
+          32.0920216663628
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1118,
+        "GlobalID": "643eb8b7-ddc1-414c-815e-854ed166e272",
+        "esrignss_speed": 1.1111999999904,
+        "esrignss_direction": 0,
+        "esrisnsr_azimuth": 106.55851207161015,
+        "esrignss_positionsourcetype": 2,
+        "esrignss_receiver": "Samsung SM-A256E",
+        "esrignss_h_rms": 1.8800000000000001,
+        "esrignss_v_rms": 2.82,
+        "esrignss_latitude": 32.09202166666667,
+        "esrignss_longitude": 34.848401666666675,
+        "esrignss_altitude": 38.1,
+        "esrignss_pdop": 0.8,
+        "esrignss_hdop": 0.4,
+        "esrignss_vdop": 0.6,
+        "esrignss_fixtype": 1,
+        "esrignss_correctionage": null,
+        "esrignss_stationid": null,
+        "esrignss_numsats": 32,
+        "esrignss_fixdatetime": "21/08/2026 16:35",
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_avg_positions": null,
+        "esrignss_h_stddev": null,
+        "CreationDate": "21/08/2026 16:36",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "21/08/2026 16:36",
+        "Editor": "mzohar_univhaifa25",
+        "collector_name": null,
+        "ID": null,
+        "Collector_ID": null,
+        "Collection_date": "21/08/2026 16:35",
+        "POI_Type": "Scenary View",
+        "POI_Description": null,
+        "POI_Name": "Pirates Matalon",
+        "POI_Topic": "General",
+        "Collect_Name": "Motti Zohar",
+        "Longitude": 34.8484016667313,
+        "Latitude": 32.0920216663628,
+        "attachments": [
+          "data/attachments/1118_931_Photo 1.jpg"
         ]
       }
     },
@@ -51572,9 +51627,9 @@
         "Longitude": 35.0296322466248,
         "Latitude": 30.9504908702404,
         "attachments": [
-          "data/attachments/210_469_WhatsApp Image 2025-04-24 at 18.13.24.jpeg",
+          "data/attachments/210_471_WhatsApp Image 2025-04-24 at 18.13.27.jpeg",
           "data/attachments/210_470_WhatsApp Image 2025-04-24 at 18.13.26.jpeg",
-          "data/attachments/210_471_WhatsApp Image 2025-04-24 at 18.13.27.jpeg"
+          "data/attachments/210_469_WhatsApp Image 2025-04-24 at 18.13.24.jpeg"
         ]
       }
     },
@@ -51746,12 +51801,12 @@
         "Longitude": 35.0691557190055,
         "Latitude": 30.8535070804088,
         "attachments": [
-          "data/attachments/213_433_WhatsApp Image 2025-04-24 at 17.53.40.jpeg",
-          "data/attachments/213_434_WhatsApp Image 2025-04-24 at 17.53.36.jpeg",
           "data/attachments/213_435_WhatsApp Image 2025-04-24 at 17.53.34.jpeg",
           "data/attachments/213_436_WhatsApp Image 2025-04-24 at 17.53.32.jpeg",
           "data/attachments/213_437_WhatsApp Image 2025-04-24 at 17.53.30.jpeg",
-          "data/attachments/213_438_WhatsApp Image 2025-04-24 at 17.53.28.jpeg"
+          "data/attachments/213_438_WhatsApp Image 2025-04-24 at 17.53.28.jpeg",
+          "data/attachments/213_434_WhatsApp Image 2025-04-24 at 17.53.36.jpeg",
+          "data/attachments/213_433_WhatsApp Image 2025-04-24 at 17.53.40.jpeg"
         ]
       }
     },
@@ -51861,12 +51916,12 @@
         "Longitude": 34.7749150001853,
         "Latitude": 30.7936600003322,
         "attachments": [
-          "data/attachments/215_390_Photo 1.jpg",
-          "data/attachments/215_391_Photo 1.jpg",
-          "data/attachments/215_392_Photo 2.jpg",
-          "data/attachments/215_393_Photo 2.jpg",
+          "data/attachments/215_395_Photo 3.jpg",
           "data/attachments/215_394_Photo 2.jpg",
-          "data/attachments/215_395_Photo 3.jpg"
+          "data/attachments/215_393_Photo 2.jpg",
+          "data/attachments/215_392_Photo 2.jpg",
+          "data/attachments/215_391_Photo 1.jpg",
+          "data/attachments/215_390_Photo 1.jpg"
         ]
       }
     },
@@ -51921,9 +51976,9 @@
         "Longitude": 34.774849999888,
         "Latitude": 30.793664999967,
         "attachments": [
-          "data/attachments/216_396_Photo 1.jpg",
+          "data/attachments/216_398_Photo 3.jpg",
           "data/attachments/216_397_Photo 2.jpg",
-          "data/attachments/216_398_Photo 3.jpg"
+          "data/attachments/216_396_Photo 1.jpg"
         ]
       }
     },
@@ -51978,10 +52033,10 @@
         "Longitude": 34.774076666311,
         "Latitude": 30.7943616667203,
         "attachments": [
-          "data/attachments/217_399_Photo 1.jpg",
-          "data/attachments/217_400_Photo 2.jpg",
+          "data/attachments/217_402_Photo 4.jpg",
           "data/attachments/217_401_Photo 3.jpg",
-          "data/attachments/217_402_Photo 4.jpg"
+          "data/attachments/217_400_Photo 2.jpg",
+          "data/attachments/217_399_Photo 1.jpg"
         ]
       }
     },
@@ -52201,8 +52256,8 @@
         "Longitude": 34.8013066669012,
         "Latitude": 30.6186733333676,
         "attachments": [
-          "data/attachments/221_406_Photo 1.jpg",
-          "data/attachments/221_407_Photo 1.jpg"
+          "data/attachments/221_407_Photo 1.jpg",
+          "data/attachments/221_406_Photo 1.jpg"
         ]
       }
     },
@@ -52257,8 +52312,8 @@
         "Longitude": 34.8012933341058,
         "Latitude": 30.6190389431238,
         "attachments": [
-          "data/attachments/222_408_Photo 1.jpg",
-          "data/attachments/222_409_Photo 2.jpg"
+          "data/attachments/222_409_Photo 2.jpg",
+          "data/attachments/222_408_Photo 1.jpg"
         ]
       }
     },
@@ -52313,12 +52368,12 @@
         "Longitude": 35.0011600002345,
         "Latitude": 30.2806016665888,
         "attachments": [
-          "data/attachments/223_410_Photo 1.jpg",
-          "data/attachments/223_411_Photo 2.jpg",
-          "data/attachments/223_412_Photo 3.jpg",
-          "data/attachments/223_413_Photo 3.jpg",
+          "data/attachments/223_415_Photo 5.jpg",
           "data/attachments/223_414_Photo 4.jpg",
-          "data/attachments/223_415_Photo 5.jpg"
+          "data/attachments/223_413_Photo 3.jpg",
+          "data/attachments/223_412_Photo 3.jpg",
+          "data/attachments/223_411_Photo 2.jpg",
+          "data/attachments/223_410_Photo 1.jpg"
         ]
       }
     },
@@ -52373,8 +52428,8 @@
         "Longitude": 35.0208769526241,
         "Latitude": 30.2770667604929,
         "attachments": [
-          "data/attachments/224_416_Photo 1.jpg",
-          "data/attachments/224_417_Photo 2.jpg"
+          "data/attachments/224_417_Photo 2.jpg",
+          "data/attachments/224_416_Photo 1.jpg"
         ]
       }
     },
@@ -52429,10 +52484,10 @@
         "Longitude": 34.8924633334264,
         "Latitude": 29.5700916668761,
         "attachments": [
-          "data/attachments/225_418_Photo 1.jpg",
-          "data/attachments/225_419_Photo 2.jpg",
+          "data/attachments/225_421_Photo 4.jpg",
           "data/attachments/225_420_Photo 3.jpg",
-          "data/attachments/225_421_Photo 4.jpg"
+          "data/attachments/225_419_Photo 2.jpg",
+          "data/attachments/225_418_Photo 1.jpg"
         ]
       }
     },
@@ -52487,9 +52542,9 @@
         "Longitude": 34.9603486403583,
         "Latitude": 29.549970177864,
         "attachments": [
-          "data/attachments/226_422_Photo 1.jpg",
+          "data/attachments/226_424_Photo 2.jpg",
           "data/attachments/226_423_Photo 2.jpg",
-          "data/attachments/226_424_Photo 2.jpg"
+          "data/attachments/226_422_Photo 1.jpg"
         ]
       }
     },
@@ -52544,8 +52599,8 @@
         "Longitude": 34.961516995505,
         "Latitude": 29.5530132947764,
         "attachments": [
-          "data/attachments/227_425_Photo 1.jpg",
-          "data/attachments/227_426_Photo 1.jpg"
+          "data/attachments/227_426_Photo 1.jpg",
+          "data/attachments/227_425_Photo 1.jpg"
         ]
       }
     },
@@ -52653,8 +52708,8 @@
         "Longitude": 34.9539716663447,
         "Latitude": 29.7886283330697,
         "attachments": [
-          "data/attachments/229_427_Photo 1.jpg",
-          "data/attachments/229_428_Photo 2.jpg"
+          "data/attachments/229_428_Photo 2.jpg",
+          "data/attachments/229_427_Photo 1.jpg"
         ]
       }
     },
@@ -54377,8 +54432,8 @@
         "Longitude": 35.0141749995816,
         "Latitude": 31.8751233336596,
         "attachments": [
-          "data/attachments/114_243_Photo 1.jpg",
-          "data/attachments/114_244_Photo 2.jpg"
+          "data/attachments/114_244_Photo 2.jpg",
+          "data/attachments/114_243_Photo 1.jpg"
         ]
       }
     },
@@ -55245,8 +55300,8 @@
         "Longitude": -6.26027781957938,
         "Latitude": 53.3498485627765,
         "attachments": [
-          "data/attachments/42_59_Photo 1.jpg",
-          "data/attachments/42_103_Photo 2.jpg"
+          "data/attachments/42_103_Photo 2.jpg",
+          "data/attachments/42_59_Photo 1.jpg"
         ]
       }
     },
@@ -55411,9 +55466,9 @@
         "Longitude": -6.26418333331197,
         "Latitude": 53.3456283332511,
         "attachments": [
-          "data/attachments/45_62_Photo 1.jpg",
+          "data/attachments/45_64_Photo 3.jpg",
           "data/attachments/45_63_Photo 2.jpg",
-          "data/attachments/45_64_Photo 3.jpg"
+          "data/attachments/45_62_Photo 1.jpg"
         ]
       }
     },
@@ -55468,10 +55523,10 @@
         "Longitude": -6.26032666637125,
         "Latitude": 53.3444750001925,
         "attachments": [
-          "data/attachments/46_65_Photo 1.jpg",
-          "data/attachments/46_66_Photo 2.jpg",
+          "data/attachments/46_74_Photo 4.jpg",
           "data/attachments/46_73_Photo 3.jpg",
-          "data/attachments/46_74_Photo 4.jpg"
+          "data/attachments/46_66_Photo 2.jpg",
+          "data/attachments/46_65_Photo 1.jpg"
         ]
       }
     },
@@ -55526,12 +55581,12 @@
         "Longitude": -6.25793333346881,
         "Latitude": 53.3444514776826,
         "attachments": [
-          "data/attachments/47_67_Photo 1.jpg",
-          "data/attachments/47_68_Photo 2.jpg",
-          "data/attachments/47_69_Photo 3.jpg",
-          "data/attachments/47_70_Photo 4.jpg",
+          "data/attachments/47_72_Photo 6.jpg",
           "data/attachments/47_71_Photo 5.jpg",
-          "data/attachments/47_72_Photo 6.jpg"
+          "data/attachments/47_70_Photo 4.jpg",
+          "data/attachments/47_69_Photo 3.jpg",
+          "data/attachments/47_68_Photo 2.jpg",
+          "data/attachments/47_67_Photo 1.jpg"
         ]
       }
     },
@@ -55806,10 +55861,10 @@
         "Longitude": 34.996451666624,
         "Latitude": 31.8426300002439,
         "attachments": [
-          "data/attachments/108_207_Photo 1.jpg",
-          "data/attachments/108_208_Photo 2.jpg",
+          "data/attachments/108_210_Photo 4.jpg",
           "data/attachments/108_209_Photo 3.jpg",
-          "data/attachments/108_210_Photo 4.jpg"
+          "data/attachments/108_208_Photo 2.jpg",
+          "data/attachments/108_207_Photo 1.jpg"
         ]
       }
     },
@@ -56302,8 +56357,8 @@
         "Longitude": 24.4776507945466,
         "Latitude": 35.3701881917971,
         "attachments": [
-          "data/attachments/25_33_WhatsApp Image 2024-01-29 at 16.13.15.jpeg",
-          "data/attachments/25_34_WhatsApp Image 2024-01-29 at 16.13.14.jpeg"
+          "data/attachments/25_34_WhatsApp Image 2024-01-29 at 16.13.14.jpeg",
+          "data/attachments/25_33_WhatsApp Image 2024-01-29 at 16.13.15.jpeg"
         ]
       }
     },
@@ -56468,8 +56523,8 @@
         "Longitude": -6.26613833327153,
         "Latitude": 53.3440749999176,
         "attachments": [
-          "data/attachments/52_79_Photo 1.jpg",
-          "data/attachments/52_80_Photo 2.jpg"
+          "data/attachments/52_80_Photo 2.jpg",
+          "data/attachments/52_79_Photo 1.jpg"
         ]
       }
     },
@@ -56524,11 +56579,11 @@
         "Longitude": -6.26721166642415,
         "Latitude": 53.3432099999595,
         "attachments": [
-          "data/attachments/53_81_Photo 1.jpg",
-          "data/attachments/53_82_Photo 2.jpg",
-          "data/attachments/53_83_Photo 3.jpg",
+          "data/attachments/53_85_Photo 5.jpg",
           "data/attachments/53_84_Photo 4.jpg",
-          "data/attachments/53_85_Photo 5.jpg"
+          "data/attachments/53_83_Photo 3.jpg",
+          "data/attachments/53_82_Photo 2.jpg",
+          "data/attachments/53_81_Photo 1.jpg"
         ]
       }
     },
@@ -56583,8 +56638,8 @@
         "Longitude": -6.28066999963539,
         "Latitude": 53.3421266666475,
         "attachments": [
-          "data/attachments/54_86_Photo 1.jpg",
-          "data/attachments/54_87_Photo 2.jpg"
+          "data/attachments/54_87_Photo 2.jpg",
+          "data/attachments/54_86_Photo 1.jpg"
         ]
       }
     },
@@ -56804,14 +56859,14 @@
         "Longitude": -6.25983166680194,
         "Latitude": 53.34641333355,
         "attachments": [
-          "data/attachments/58_91_Photo 1.jpg",
-          "data/attachments/58_92_Photo 2.jpg",
-          "data/attachments/58_93_Photo 3.jpg",
-          "data/attachments/58_94_Photo 4.jpg",
-          "data/attachments/58_95_Photo 5.jpg",
-          "data/attachments/58_96_Photo 6.jpg",
+          "data/attachments/58_98_Photo 8.jpg",
           "data/attachments/58_97_Photo 7.jpg",
-          "data/attachments/58_98_Photo 8.jpg"
+          "data/attachments/58_96_Photo 6.jpg",
+          "data/attachments/58_95_Photo 5.jpg",
+          "data/attachments/58_94_Photo 4.jpg",
+          "data/attachments/58_93_Photo 3.jpg",
+          "data/attachments/58_92_Photo 2.jpg",
+          "data/attachments/58_91_Photo 1.jpg"
         ]
       }
     },
@@ -56866,8 +56921,8 @@
         "Longitude": -6.26059666670798,
         "Latitude": 53.3458683332744,
         "attachments": [
-          "data/attachments/59_99_Photo 1.jpg",
-          "data/attachments/59_100_Photo 2.jpg"
+          "data/attachments/59_100_Photo 2.jpg",
+          "data/attachments/59_99_Photo 1.jpg"
         ]
       }
     },
@@ -57032,12 +57087,12 @@
         "Longitude": -6.25904333315636,
         "Latitude": 53.3469683335687,
         "attachments": [
-          "data/attachments/62_104_Photo 1.jpg",
-          "data/attachments/62_105_Photo 2.jpg",
-          "data/attachments/62_106_Photo 2.jpg",
-          "data/attachments/62_107_Photo 3.jpg",
+          "data/attachments/62_109_Photo 6.jpg",
           "data/attachments/62_108_Photo 4.jpg",
-          "data/attachments/62_109_Photo 6.jpg"
+          "data/attachments/62_107_Photo 3.jpg",
+          "data/attachments/62_106_Photo 2.jpg",
+          "data/attachments/62_105_Photo 2.jpg",
+          "data/attachments/62_104_Photo 1.jpg"
         ]
       }
     },
@@ -57092,8 +57147,8 @@
         "Longitude": -6.24248166648987,
         "Latitude": 53.3476483333326,
         "attachments": [
-          "data/attachments/63_110_Photo 1.jpg",
-          "data/attachments/63_111_Photo 2.jpg"
+          "data/attachments/63_111_Photo 2.jpg",
+          "data/attachments/63_110_Photo 1.jpg"
         ]
       }
     },
@@ -57631,7 +57686,7 @@
         "esrignss_h_stddev": null,
         "CreationDate": "30/06/2026 19:57",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "18/08/2026 13:01",
+        "EditDate": "18/08/2026 13:22",
         "Editor": "mzohar_univhaifa25",
         "collector_name": null,
         "ID": null,
@@ -57639,7 +57694,7 @@
         "Collection_date": "26/06/2026 16:56",
         "POI_Type": "Iron Rails/Reinforcement",
         "POI_Description": null,
-        "POI_Name": "Rails",
+        "POI_Name": "Iron Rails",
         "POI_Topic": "Historical Earthquakes",
         "Collect_Name": "Motti Zohar",
         "Longitude": -0.124638748355086,
@@ -57811,8 +57866,8 @@
         "Longitude": -0.134393333039774,
         "Latitude": 51.510059999954,
         "attachments": [
-          "data/attachments/64_112_Photo 1.jpg",
-          "data/attachments/64_113_Photo 2.jpg"
+          "data/attachments/64_113_Photo 2.jpg",
+          "data/attachments/64_112_Photo 1.jpg"
         ]
       }
     },
@@ -57867,12 +57922,12 @@
         "Longitude": -0.136719612994496,
         "Latitude": 51.51339444069,
         "attachments": [
-          "data/attachments/65_114_Photo 1.jpg",
-          "data/attachments/65_115_Photo 2.jpg",
-          "data/attachments/65_116_Photo 3.jpg",
-          "data/attachments/65_117_Photo 4.jpg",
+          "data/attachments/65_119_Photo 6.jpg",
           "data/attachments/65_118_Photo 5.jpg",
-          "data/attachments/65_119_Photo 6.jpg"
+          "data/attachments/65_117_Photo 4.jpg",
+          "data/attachments/65_116_Photo 3.jpg",
+          "data/attachments/65_115_Photo 2.jpg",
+          "data/attachments/65_114_Photo 1.jpg"
         ]
       }
     },
@@ -57927,8 +57982,8 @@
         "Longitude": -0.129963333436982,
         "Latitude": 51.5121800000884,
         "attachments": [
-          "data/attachments/66_120_Photo 1.jpg",
-          "data/attachments/66_121_Photo 2.jpg"
+          "data/attachments/66_121_Photo 2.jpg",
+          "data/attachments/66_120_Photo 1.jpg"
         ]
       }
     },
@@ -58038,8 +58093,8 @@
         "Longitude": 35.0063487169263,
         "Latitude": 31.8386511163551,
         "attachments": [
-          "data/attachments/14_14_תמונה 1.jpg",
-          "data/attachments/14_15_תמונה 2.jpg"
+          "data/attachments/14_15_תמונה 2.jpg",
+          "data/attachments/14_14_תמונה 1.jpg"
         ]
       }
     },
@@ -58094,8 +58149,8 @@
         "Longitude": 35.0036018996545,
         "Latitude": 31.8388068999861,
         "attachments": [
-          "data/attachments/15_16_תמונה 1.jpg",
-          "data/attachments/15_17_תמונה 2.jpg"
+          "data/attachments/15_17_תמונה 2.jpg",
+          "data/attachments/15_16_תמונה 1.jpg"
         ]
       }
     },
@@ -58150,8 +58205,8 @@
         "Longitude": 34.9966122390701,
         "Latitude": 31.8426005569208,
         "attachments": [
-          "data/attachments/16_18_תמונה 1.jpg",
-          "data/attachments/16_19_תמונה 2.jpg"
+          "data/attachments/16_19_תמונה 2.jpg",
+          "data/attachments/16_18_תמונה 1.jpg"
         ]
       }
     },
@@ -58424,8 +58479,8 @@
         "Longitude": -0.207759999935218,
         "Latitude": 51.5196766666449,
         "attachments": [
-          "data/attachments/67_122_Photo 1.jpg",
-          "data/attachments/67_123_Photo 2.jpg"
+          "data/attachments/67_123_Photo 2.jpg",
+          "data/attachments/67_122_Photo 1.jpg"
         ]
       }
     },
@@ -58590,8 +58645,8 @@
         "Longitude": -0.1351716666396,
         "Latitude": 51.5023200000803,
         "attachments": [
-          "data/attachments/70_126_Photo 1.jpg",
-          "data/attachments/70_127_Photo 2.jpg"
+          "data/attachments/70_127_Photo 2.jpg",
+          "data/attachments/70_126_Photo 1.jpg"
         ]
       }
     },
@@ -58646,8 +58701,8 @@
         "Longitude": -0.140784999898221,
         "Latitude": 51.5017616668283,
         "attachments": [
-          "data/attachments/71_128_Photo 1.jpg",
-          "data/attachments/71_129_Photo 2.jpg"
+          "data/attachments/71_129_Photo 2.jpg",
+          "data/attachments/71_128_Photo 1.jpg"
         ]
       }
     },
@@ -58702,8 +58757,8 @@
         "Longitude": -0.124184694894745,
         "Latitude": 51.4995515116329,
         "attachments": [
-          "data/attachments/72_130_Photo 1.jpg",
-          "data/attachments/72_131_Photo 2.jpg"
+          "data/attachments/72_131_Photo 2.jpg",
+          "data/attachments/72_130_Photo 1.jpg"
         ]
       }
     },
@@ -58813,14 +58868,14 @@
         "Longitude": -0.143553333617723,
         "Latitude": 51.5006616665214,
         "attachments": [
-          "data/attachments/74_133_Photo 1.jpg",
-          "data/attachments/74_134_Photo 2.jpg",
-          "data/attachments/74_135_Photo 3.jpg",
-          "data/attachments/74_136_Photo 4.jpg",
-          "data/attachments/74_137_Photo 4.jpg",
-          "data/attachments/74_138_Photo 6.jpg",
+          "data/attachments/74_140_Photo 8.jpg",
           "data/attachments/74_139_Photo 7.jpg",
-          "data/attachments/74_140_Photo 8.jpg"
+          "data/attachments/74_138_Photo 6.jpg",
+          "data/attachments/74_137_Photo 4.jpg",
+          "data/attachments/74_136_Photo 4.jpg",
+          "data/attachments/74_135_Photo 3.jpg",
+          "data/attachments/74_134_Photo 2.jpg",
+          "data/attachments/74_133_Photo 1.jpg"
         ]
       }
     },
