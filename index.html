@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מפת נקודות עניין (POI)</title>
+    <title>מפת נקודות עניין (POI) - v1.2.0</title>
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -65,18 +65,19 @@
             z-index: 1;
         }
 
-        /* עיצוב המקרא - בצד שמאל, מיושר לשמאל LTR */
+        /* עיצוב המקרא הדינמי - שמאל למעלה */
         .map-legend {
-            background: white;
-            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 12px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.15);
             font-size: 13px;
             line-height: 1.5;
             color: #1e293b;
-            min-width: 170px;
+            min-width: 180px;
             direction: ltr !important;
             text-align: left !important;
+            user-select: none;
         }
 
         .map-legend h4 {
@@ -92,17 +93,30 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
             justify-content: flex-start;
+            cursor: pointer;
+            transition: opacity 0.2s, filter 0.2s;
+            padding: 2px 4px;
+            border-radius: 4px;
         }
 
-        .legend-icon {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            border: 1.5px solid #ffffff;
-            box-shadow: 0 0 0 1px rgba(0,0,0,0.25);
-            display: inline-block;
+        .legend-item:hover {
+            background-color: #f1f5f9;
+        }
+
+        .legend-item.disabled {
+            opacity: 0.35;
+            text-decoration: line-through;
+            filter: grayscale(80%);
+        }
+
+        .legend-icon-container {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             flex-shrink: 0;
         }
 
@@ -112,7 +126,7 @@
             padding: 4px 8px;
             border-radius: 6px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            font-family: monospace, monospace;
+            font-family: monospace;
             font-size: 11px;
             color: #334155;
             direction: ltr !important;
@@ -121,7 +135,58 @@
             margin-top: 6px !important;
         }
 
-        /* עיצוב הפופאפ במפה */
+        /* עיצוב בקרי העזר בצד ימין למעלה */
+        .custom-control-box {
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            padding: 6px;
+            margin-top: 6px !important;
+            direction: ltr !important;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .search-input {
+            padding: 5px 8px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-size: 12px;
+            width: 150px;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: #0284c7;
+        }
+
+        .btn-control {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 11px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #334155;
+            transition: all 0.2s;
+        }
+
+        .btn-control:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-control.active {
+            background: #0284c7;
+            color: white;
+            border-color: #0284c7;
+        }
+
+        /* עיצוב ה-Popup במפה */
         .leaflet-popup-content-wrapper {
             border-radius: 8px;
             padding: 4px;
@@ -141,11 +206,10 @@
         .popup-field {
             margin-bottom: 3px;
             word-wrap: break-word;
-            word-break: break-all;
         }
 
         .popup-field strong {
-            color: #000;
+            color: #0f172a;
         }
 
         .popup-img {
@@ -160,6 +224,11 @@
             border: 1px solid #ddd;
             box-shadow: 0 1px 4px rgba(0,0,0,0.15);
         }
+
+        .custom-svg-icon {
+            background: transparent;
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -173,6 +242,8 @@
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Leaflet Terminator (Day/Night Overlay) -->
+    <script src="https://unpkg.com/@joergdietrich/leaflet.terminator"></script>
 
     <script>
         // 1. Embed Mode
@@ -181,10 +252,10 @@
             document.body.classList.add('embed-mode');
         }
 
-        // 2. שכבות בסיס
+        // 2. הגדרת 5 מפות בסיס
         const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
-            attribution: '© OpenStreetMap contributors'
+            attribution: '© OpenStreetMap'
         });
 
         const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
@@ -192,56 +263,128 @@
             attribution: 'Tiles © Esri'
         });
 
+        const topoLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 19,
+            attribution: 'Tiles © Esri'
+        });
+
+        const positronLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 16,
+            attribution: 'Tiles © Esri'
+        });
+
+        const historicalLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 16,
+            attribution: 'National Geographic, Esri'
+        });
+
         const map = L.map('map', {
             layers: [osmLayer]
         });
 
-        // בקר שכבות בצד שמאל למעלה
+        // בקר מפות הבסיס בפינה הימנית העליונה
         const baseMaps = {
             "OpenStreetMap": osmLayer,
-            "צילום אוויר (Satellite)": satelliteLayer
+            "צילום אוויר (Satellite)": satelliteLayer,
+            "מפה טופוגרפית (Esri Topo)": topoLayer,
+            "מפה בהירה (Esri Light)": positronLayer,
+            "מפה היסטורית (NatGeo/Historic)": historicalLayer
         };
-        L.control.layers(baseMaps, null, { position: 'topleft' }).addTo(map);
+        L.control.layers(baseMaps, null, { position: 'topright' }).addTo(map);
 
-        // 3. חלונית קואורדינטות בצד שמאל למעלה (תופיע תחת המקרא)
+        // בקר יום/לילה ואזורי זמן
+        let terminatorLayer = null;
+        let timezonesLayer = null;
+
+        const extraControls = L.control({ position: 'topright' });
+        extraControls.onAdd = function () {
+            const div = L.DomUtil.create('div', 'custom-control-box');
+            div.innerHTML = `
+                <div class="search-container" style="margin-bottom: 6px;">
+                    <input type="text" id="poiSearchInput" class="search-input" placeholder="חפש נקודה לפי שם..." />
+                </div>
+                <div style="display: flex; gap: 4px;">
+                    <button id="btnDayNight" class="btn-control">יום/לילה</button>
+                    <button id="btnTimezones" class="btn-control">אזורי זמן</button>
+                </div>
+            `;
+            L.DomEvent.disableClickPropagation(div);
+            return div;
+        };
+        extraControls.addTo(map);
+
+        // חלונית קואורדינטות מתחת למקרא
         const coordsControl = L.control({ position: 'topleft' });
         coordsControl.onAdd = function () {
             const div = L.DomUtil.create('div', 'coords-box');
             div.id = 'coordsDisplay';
-            div.innerHTML = 'Lat: -- | Lng: --';
+            div.innerHTML = 'Lat: -- | Lon: --';
             return div;
         };
 
-        // 4. עדכון קואורדינטות בתנועת העכבר
         map.on('mousemove', function (e) {
             const el = document.getElementById('coordsDisplay');
             if (el) {
-                el.innerHTML = `Lat: ${e.latlng.lat.toFixed(5)} | Lng: ${e.latlng.lng.toFixed(5)}`;
+                el.innerHTML = `Lat: ${e.latlng.lat.toFixed(5)} | Lon: ${e.latlng.lng.toFixed(5)}`;
             }
         });
 
-        // שדות פופאפ
-        const displayFields = [
-            { key: "OBJECTID", label: "OBJECTID" },
-            { key: "GlobalID", label: "GlobalID" },
-            { key: "CreationDate", label: "CreationDate" },
-            { key: "Collect_Name", label: "Collect_Name" },
-            { key: "POI_Name", label: "POI_Name" },
-            { key: "POI_Topic", label: "POI_Topic" },
-            { key: "POI_Type", label: "POI_Type" },
-            { key: "POI_Description", label: "POI_Description" },
-            { key: "Latitude", label: "Latitude" },
-            { key: "Longitude", label: "Longitude" }
-        ];
+        // מחולל SVG בצורות שונות
+        function createShapeSVG(shape, color, size = 20) {
+            const stroke = "#FFFFFF";
+            const sw = 2;
+            let svgContent = '';
 
+            switch (shape) {
+                case 'square':
+                    svgContent = `<rect x="3" y="3" width="14" height="14" fill="${color}" stroke="${stroke}" stroke-width="${sw}" rx="2" />`;
+                    break;
+                case 'triangle':
+                    svgContent = `<polygon points="10,2 18,17 2,17" fill="${color}" stroke="${stroke}" stroke-width="${sw}" />`;
+                    break;
+                case 'diamond':
+                    svgContent = `<polygon points="10,2 18,10 10,18 2,10" fill="${color}" stroke="${stroke}" stroke-width="${sw}" />`;
+                    break;
+                case 'circle':
+                default:
+                    svgContent = `<circle cx="10" cy="10" r="7" fill="${color}" stroke="${stroke}" stroke-width="${sw}" />`;
+                    break;
+            }
+
+            return `<svg width="${size}" height="${size}" viewBox="0 0 20 20">${svgContent}</svg>`;
+        }
+
+        function createCustomIcon(shape, color) {
+            return L.divIcon({
+                className: 'custom-svg-icon',
+                html: createShapeSVG(shape, color, 20),
+                iconSize: [20, 20],
+                iconAnchor: [10, 10],
+                popupAnchor: [0, -10]
+            });
+        }
+
+        // עיצוב חלון הפופאפ
         function buildPopupContent(properties) {
             let html = '<div style="direction: ltr; text-align: left;">';
-            displayFields.forEach(field => {
-                const val = properties[field.key];
-                if (val !== undefined && val !== null && val !== "") {
-                    html += `<div class="popup-field"><strong>${field.label}:</strong> ${val}</div>`;
-                }
-            });
+            
+            const name = properties.POI_Name || properties.Name;
+            const topic = properties.POI_Topic || properties.Topic;
+            const type = properties.POI_Type || properties.Type;
+            const desc = properties.POI_Description || properties.Description;
+            const date = properties.CreationDate;
+
+            if (name) html += `<div class="popup-field"><strong>Name:</strong> ${name}</div>`;
+            if (topic) html += `<div class="popup-field"><strong>Topic:</strong> ${topic}</div>`;
+            if (type) html += `<div class="popup-field"><strong>Type:</strong> ${type}</div>`;
+            if (desc) html += `<div class="popup-field"><strong>Description:</strong> ${desc}</div>`;
+            if (date) html += `<div class="popup-field"><strong>CreationDate:</strong> ${date}</div>`;
+
+            let lat = parseFloat(properties.Latitude);
+            let lon = parseFloat(properties.Longitude);
+            if (!isNaN(lat) && !isNaN(lon)) {
+                html += `<div class="popup-field"><strong>Lat:</strong> ${lat.toFixed(5)} | <strong>Lon:</strong> ${lon.toFixed(5)}</div>`;
+            }
 
             let attachments = properties.attachments;
             if (attachments) {
@@ -256,108 +399,185 @@
             return html;
         }
 
-        // 5. טעינת ההגדרות והנתונים
-        Promise.all([
-    fetch('config.json?t=' + new Date().getTime(), { cache: "no-store" }).then(res => {
-        if (!res.ok) throw new Error("קובץ config.json לא נמצא או אינו תקין");
-        return res.json();
-    }),
-    fetch('data/pois.geojson?t=' + new Date().getTime(), { cache: "no-store" }).then(res => res.json())
-]).then(([config, geojsonData]) => {
+        let geojsonLayer = null;
+        let allFeaturesData = null;
+        let activeTopicsState = {};
+        let topicSettingsGlobal = {};
+        let defaultStyleGlobal = {};
+
+        function refreshMapFeatures() {
+            if (!geojsonLayer || !allFeaturesData) return;
+
+            geojsonLayer.clearLayers();
             
+            const filteredData = allFeaturesData.features.filter(feature => {
+                const topicVal = feature.properties ? feature.properties.POI_Topic : null;
+                return activeTopicsState[topicVal] !== false;
+            });
+
+            geojsonLayer.addData({
+                type: "FeatureCollection",
+                features: filteredData
+            });
+
+            document.getElementById('poiCount').textContent = filteredData.length + ' נקודות';
+        }
+
+        // טעינת ההגדרות והנתונים
+        Promise.all([
+            fetch('config.json?t=' + new Date().getTime(), { cache: "no-store" }).then(res => res.json()),
+            fetch('data/pois.geojson?t=' + new Date().getTime(), { cache: "no-store" }).then(res => res.json())
+        ]).then(([config, geojsonData]) => {
+            
+            allFeaturesData = geojsonData;
             const symbologyConfig = config.symbology || {};
-            const topicSettings = symbologyConfig.topics || {};
-            const defaultStyle = symbologyConfig.default || { color: "#666666", radius: 6, visible: true, label: "Other" };
+            topicSettingsGlobal = symbologyConfig.topics || {};
+            defaultStyleGlobal = symbologyConfig.default || { color: "#64748B", shape: "circle", label: "Other" };
 
-            function getFeatureStyle(topicValue) {
-                const setting = topicSettings[topicValue] || defaultStyle;
-                return {
-                    radius: setting.radius || 7,
-                    fillColor: setting.color || "#8B261D",
-                    color: "#FFFFFF",
-                    weight: 1.5,
-                    opacity: 1,
-                    fillOpacity: 0.85
-                };
-            }
+            Object.keys(topicSettingsGlobal).forEach(key => {
+                activeTopicsState[key] = topicSettingsGlobal[key].visible !== false;
+            });
 
-            function isFeatureVisible(feature) {
-                const topicVal = feature.properties ? feature.properties[symbologyConfig.field || "POI_Topic"] : null;
-                const setting = topicSettings[topicVal] || defaultStyle;
-                return setting.visible !== false;
-            }
-
-            const geojsonLayer = L.geoJSON(geojsonData, {
-                filter: isFeatureVisible,
+            geojsonLayer = L.geoJSON(null, {
                 pointToLayer: function (feature, latlng) {
                     const topicVal = feature.properties ? feature.properties.POI_Topic : null;
-                    return L.circleMarker(latlng, getFeatureStyle(topicVal));
+                    const setting = topicSettingsGlobal[topicVal] || defaultStyleGlobal;
+                    const icon = createCustomIcon(setting.shape || 'circle', setting.color || '#64748B');
+                    return L.marker(latlng, { icon: icon });
                 },
                 onEachFeature: function (feature, layer) {
                     if (feature.properties) {
                         layer.bindPopup(buildPopupContent(feature.properties));
                     }
-                    layer.on({
-                        mouseover: function (e) {
-                            const topicVal = feature.properties ? feature.properties.POI_Topic : null;
-                            const currentStyle = getFeatureStyle(topicVal);
-                            e.target.setStyle({
-                                radius: currentStyle.radius + 2,
-                                weight: 2.5
-                            });
-                        },
-                        mouseout: function (e) {
-                            const topicVal = feature.properties ? feature.properties.POI_Topic : null;
-                            e.target.setStyle(getFeatureStyle(topicVal));
-                        }
-                    });
                 }
             }).addTo(map);
 
-            // מונה נקודות מוצגות
-            document.getElementById('poiCount').textContent = geojsonLayer.getLayers().length + ' נקודות';
+            refreshMapFeatures();
 
-            // Extent פתיחה מדויק מדרום (דימונה) לצפון (צפת)
             if (config.mapConfig && config.mapConfig.initialExtent && config.mapConfig.initialExtent.useCustomExtent) {
                 map.fitBounds(config.mapConfig.initialExtent.bounds);
             } else if (geojsonLayer.getBounds().isValid()) {
                 map.fitBounds(geojsonLayer.getBounds(), { padding: [40, 40] });
             }
 
-            // 6. מקרא בצד שמאל למעלה (תחת בקר השכבות)
+            // מקרא אינטראקטיבי
             const legend = L.control({ position: 'topleft' });
             legend.onAdd = function () {
                 const div = L.DomUtil.create('div', 'map-legend');
                 div.innerHTML = '<h4>מקרא</h4>';
 
-                Object.keys(topicSettings).forEach(topicKey => {
-                    const item = topicSettings[topicKey];
-                    if (item.visible !== false) {
-                        div.innerHTML += `
-                            <div class="legend-item">
-                                <span class="legend-icon" style="background-color: ${item.color};"></span>
-                                <span>${item.label || topicKey}</span>
-                            </div>`;
-                    }
+                Object.keys(topicSettingsGlobal).forEach(topicKey => {
+                    const item = topicSettingsGlobal[topicKey];
+                    const isVis = activeTopicsState[topicKey] !== false;
+                    const svgIcon = createShapeSVG(item.shape || 'circle', item.color, 18);
+
+                    const itemEl = L.DomUtil.create('div', `legend-item ${isVis ? '' : 'disabled'}`, div);
+                    itemEl.dataset.topic = topicKey;
+                    itemEl.innerHTML = `
+                        <span class="legend-icon-container">${svgIcon}</span>
+                        <span>${item.label || topicKey}</span>
+                    `;
+
+                    L.DomEvent.on(itemEl, 'click', function (e) {
+                        e.stopPropagation();
+                        const topic = this.dataset.topic;
+                        activeTopicsState[topic] = !activeTopicsState[topic];
+                        
+                        if (activeTopicsState[topic]) {
+                            this.classList.remove('disabled');
+                        } else {
+                            this.classList.add('disabled');
+                        }
+                        refreshMapFeatures();
+                    });
                 });
 
-                if (defaultStyle.visible !== false) {
-                    div.innerHTML += `
-                        <div class="legend-item">
-                            <span class="legend-icon" style="background-color: ${defaultStyle.color};"></span>
-                            <span>${defaultStyle.label}</span>
-                        </div>`;
-                }
-
+                L.DomEvent.disableClickPropagation(div);
                 return div;
             };
             legend.addTo(map);
 
-            // הוספת חלונית הקואורדינטות בסוף כדי שתופיע מתחת למקרא
             coordsControl.addTo(map);
 
+            // חיפוש נקודות
+            document.getElementById('poiSearchInput').addEventListener('input', function (e) {
+                const query = e.target.value.toLowerCase().trim();
+                if (!query) return;
+
+                geojsonLayer.eachLayer(layer => {
+                    const props = layer.feature.properties;
+                    const name = (props.POI_Name || props.Name || '').toLowerCase();
+                    if (name.includes(query)) {
+                        map.setView(layer.getLatLng(), 14);
+                        layer.openPopup();
+                    }
+                });
+            });
+
+            // יום/לילה
+            document.getElementById('btnDayNight').addEventListener('click', function () {
+                if (!terminatorLayer) {
+                    terminatorLayer = L.terminator({ fillOpacity: 0.35 });
+                    terminatorLayer.addTo(map);
+                    this.classList.add('active');
+                } else {
+                    map.removeLayer(terminatorLayer);
+                    terminatorLayer = null;
+                    this.classList.remove('active');
+                }
+            });
+
+            // אזורי זמן עם מנגנון גיבוי (Fallback)
+            document.getElementById('btnTimezones').addEventListener('click', function () {
+                const btn = this;
+                if (!timezonesLayer) {
+                    btn.textContent = 'טוען...';
+                    
+                    fetch('https://cdn.jsdelivr.net/gh/nvkelso/natural-earth-vector@master/geojson/ne_10m_time_zones.geojson')
+                        .then(r => {
+                            if (!r.ok) throw new Error('HTTP status ' + r.status);
+                            return r.json();
+                        })
+                        .then(tzData => {
+                            timezonesLayer = L.geoJSON(tzData, {
+                                style: {
+                                    color: '#0284c7',
+                                    weight: 1.5,
+                                    opacity: 0.75,
+                                    fillColor: '#38bdf8',
+                                    fillOpacity: 0.12
+                                },
+                                onEachFeature: function (feature, layer) {
+                                    if (feature.properties) {
+                                        const tzName = feature.properties.name || feature.properties.NAME || feature.properties.utc_format || '';
+                                        if (tzName) {
+                                            layer.bindTooltip(`UTC: ${tzName}`, { sticky: true });
+                                        }
+                                    }
+                                }
+                            }).addTo(map);
+                            btn.classList.add('active');
+                            btn.textContent = 'אזורי זמן';
+                        })
+                        .catch(err => {
+                            console.warn('GeoJSON fetch failed, falling back to Esri TileLayer:', err);
+                            timezonesLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Time_Zones/MapServer/tile/{z}/{y}/{x}', {
+                                maxZoom: 18,
+                                opacity: 0.8,
+                                attribution: 'Tiles © Esri'
+                            }).addTo(map);
+                            btn.classList.add('active');
+                            btn.textContent = 'אזורי זמן';
+                        });
+                } else {
+                    map.removeLayer(timezonesLayer);
+                    timezonesLayer = null;
+                    btn.classList.remove('active');
+                }
+            });
+
         }).catch(err => {
-            console.error("שגיאה בטעינה:", err);
+            console.error("שגיאה בטעינת קבצי הנתונים:", err);
             document.getElementById('poiCount').textContent = 'שגיאה בטעינה';
         });
     </script>

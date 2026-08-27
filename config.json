@@ -3,8 +3,8 @@
     "initialExtent": {
       "useCustomExtent": true,
       "bounds": [
-        [31.00, 33.50],
-        [33.00, 36.50]
+        [30.98, 34.30],
+        [33.05, 35.70]
       ]
     },
     "defaultBasemap": "OSM"
@@ -13,31 +13,71 @@
     "field": "POI_Topic",
     "default": {
       "color": "#64748B",
-      "radius": 8,
+      "shape": "circle",
+      "radius": 7,
       "visible": true,
       "label": "Other"
     },
     "topics": {
-      "Historical Earthquakes": {
-        "color": "#8B261D",
+      "General": {
+        "color": "#B350ED",
+        "shape": "square",
+        "radius": 8,
+        "visible": true,
+        "label": "General"
+      },
+      "Aqueducts": {
+        "color": "#88CAE7",
+        "shape": "circle",
         "radius": 10,
         "visible": true,
-        "label": "Historical Earthquakes"
+        "label": "Aqueducts"
       },
       "Climate Negev": {
-        "color": "#0284C7",
+        "color": "#B0D190",
+        "shape": "circle",
         "radius": 10,
         "visible": true,
         "label": "Climate Negev"
       },
-      "Settlements": {
-        "color": "#1B661A",
+      "Historical Earthquakes": {
+        "color": "#E43449",
+        "shape": "circle",
         "radius": 10,
         "visible": true,
-        "label": "Settlements"
+        "label": "Historical Earthquakes"
+      },
+      "Ottoman Jerusalem": {
+        "color": "#E0DF3C",
+        "shape": "circle",
+        "radius": 10,
+        "visible": true,
+        "label": "Ottoman Jerusalem"
+      },
+      "Settelments": {
+        "color": "#875E3B",
+        "shape": "circle",
+        "radius": 10,
+        "visible": true,
+        "label": "Settelments"
+      },
+      "Volcanos GIS": {
+        "color": "#E19859",
+        "shape": "circle",
+        "radius": 10,
+        "visible": true,
+        "label": "Volcanos GIS"
+      },
+      "UFOs": {
+        "color": "#856F5E",
+        "shape": "diamond",
+        "radius": 7,
+        "visible": true,
+        "label": "UFOs"
       },
       "TBV": {
-        "color": "#189299",
+        "color": "#E26DC0",
+        "shape": "triangle",
         "radius": 10,
         "visible": true,
         "label": "TBV"
