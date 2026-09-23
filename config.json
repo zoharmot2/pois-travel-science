@@ -61,12 +61,12 @@
         "visible": true,
         "label": "Settlements"
       },
-      "Volcanos GIS": {
+      "Volcanoes GIS": {
         "color": "#E19859",
         "shape": "circle",
         "radius": 10,
         "visible": true,
-        "label": "Volcanos GIS"
+        "label": "Volcanoes GIS"
       },
       "UFOs & Planetary": {
         "color": "#856F5E",
@@ -75,20 +75,20 @@
         "visible": true,
         "label": "UFOs & Planetary"
       },
-      "TBV": {
-        "color": "#E26DC0",
-        "shape": "triangle",
-        "radius": 10,
-        "visible": true,
-        "label": "TBV"
-      },
-      "Cartography": {
+	"Cartography": {
         "color": "#64748B",
         "shape": "circle",
         "radius": 7,
         "visible": true,
         "label": "Cartography"
-      }
+      },
+         "TBV": {
+        "color": "#E26DC0",
+        "shape": "triangle",
+        "radius": 10,
+        "visible": true,
+        "label": "TBV"
+      }     
     }
   }
 }

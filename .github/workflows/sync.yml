@@ -40,6 +40,9 @@ jobs:
       - name: Validate Generated Data
         run: python scripts/qa_data.py --baseline-root .qa-baseline
 
+      - name: Validate Frontend Regression Structure
+        run: python scripts/qa_frontend.py
+
       - name: Upload QA Report
         if: always()
         uses: actions/upload-artifact@v4

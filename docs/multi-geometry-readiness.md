@@ -1,88 +1,100 @@
-# Multi-Geometry Readiness — v1.3 Stage 8
+# Multi-Geometry Readiness — v1.3 Foundation
 
-Stage 8 prepares the website architecture for the existing ArcGIS Online line and polygon collection layers without publishing those layers yet and without changing ArcGIS Online / Field Maps.
+Version 1.3 prepares the website architecture for the existing ArcGIS Online line and polygon collection layers without publishing those layers yet and without changing ArcGIS Online / Field Maps.
 
-## Scope
+## Current scope
 
-Stage 8 is an architectural readiness step. The live data source remains:
+The live website data source remains:
 
 ```text
 data/pois.geojson → points
 ```
 
-No line or polygon GeoJSON file is fetched by the website in v1.3, and the GitHub Actions export workflow is not changed in this stage.
+The ArcGIS line and polygon layers already exist as collection layers, but their records are not yet exported by `fetch_data.py` and are not yet published by the website.
 
-## What is now geometry-agnostic
+The QA configuration already reserves optional future inputs:
 
-The application now supports a common rendering/navigation contract for:
+```text
+data/lines.geojson
+data/polygons.geojson
+```
+
+Missing optional files do not currently warn or fail.
+
+## What is geometry-agnostic
+
+The application supports a common normalization/navigation contract for:
 
 - Point / MultiPoint
 - LineString / MultiLineString
 - Polygon / MultiPolygon
 
-The following components no longer assume that every Entity is a marker:
+The following components no longer assume that every Entity is a point marker:
 
-- Entity normalization
-- geographic bounds and representative map position
-- data-source combination
-- Topic-based map styling
-- popup/detail binding
-- search navigation
-- Detail Panel location summary
-- map fitting and initial bounds
-- stable-ID indexing
-- Topic and Type filtering
+- Entity normalization;
+- geographic bounds and representative map position;
+- data-source combination;
+- Topic-based map styling policy;
+- popup/detail binding;
+- search navigation;
+- Detail Panel location summary;
+- map fitting and initial bounds;
+- stable-ID indexing;
+- Topic and Type filtering;
+- QA validation and cross-dataset stable-ID uniqueness.
 
 ## Rendering policy
 
-Points retain the existing topic marker shape/color configured in `config.json`.
+Points retain the existing Topic marker shape/color configured in `config.json`.
 
-Future line geometries use the Topic color as the stroke color. Future polygons use the Topic color for both outline and a low-opacity fill. Missing Topic styling continues to use the existing default style.
+Future lines use the Topic color as stroke color. Future polygons use the Topic color for outline and a low-opacity fill. A missing Topic style uses the configured default style and is reported as a QA warning rather than hiding the Entity.
 
-This does not activate line/polygon publication; it only defines safe behavior once those datasets are exported later.
+This policy does not activate line/polygon publication; it defines safe default behavior once those datasets are added.
 
 ## Navigation policy
 
-Search and Detail Panel navigation now use the geometry type exposed by the Leaflet layer:
+Search and Detail Panel navigation are geometry-aware:
 
-- point-like marker → focus by `getLatLng()`
-- line/polygon → fit the geometry `getBounds()`
-- fallback → use the Entity `representativePoint`
+- point-like layer → focus by `getLatLng()`;
+- line/polygon → fit layer `getBounds()`;
+- fallback → use the Entity `representativePoint`.
 
-For non-single-point geometries, the Entity `representativePoint` is the center of the geometry bounding box. This is a UI/navigation helper only and is not an analytical centroid.
+For non-single-point geometries, `representativePoint` is the center of the geometry bounding box. It is a UI/navigation helper only and must not be treated as a scientific centroid.
 
 ## Data-source policy
 
-`js/data.js` now defines spatial exports as named sources. Stage 8 activates only:
+`js/data.js` treats spatial exports as named sources. Version 1.3 activates only the `points` source.
 
-```js
-{ sourceDataset: 'points', path: 'data/pois.geojson' }
-```
+Future activation should extend the source list after the export pipeline generates the new files. The rest of the application should not require structural rewriting.
 
-Later integration of line/polygon exports can extend this source list after the GitHub Actions pipeline is updated. The rest of the application should not need a structural rewrite.
+## Stable IDs across geometry families
 
-## Detail Panel behavior
+ArcGIS `GlobalID` remains the canonical identity for all geometry families. Data QA enforces global uniqueness across every active point, line, and polygon dataset, not merely uniqueness inside each file.
 
-Single Points continue to display their actual coordinates.
+This is required so metadata, future Trips/Collections/Routes, deep links, and public pages can resolve one ID to exactly one Entity.
 
-Future MultiPoint/line/polygon entities can display:
+## Future activation checklist
 
-- geometry type
-- derived map center
-- geographic extent
-- source dataset
+When line or polygon publication is implemented:
 
-The derived map center is clearly labelled as derived.
+1. identify and verify the authoritative ArcGIS layer endpoint;
+2. extend `fetch_data.py` to export the layer without disrupting point export;
+3. confirm every published feature has a valid `GlobalID`;
+4. confirm field mapping into the Entity model;
+5. generate the intended GeoJSON file;
+6. activate the named source in `js/data.js`;
+7. run `qa_data.py` and `qa_frontend.py`;
+8. perform standalone/embedded browser regression QA;
+9. verify rendering, filtering, search focus, and Detail Panel behavior for the new geometry family.
 
-## Explicitly not included
+## Explicitly not included in v1.3
 
-Stage 8 does **not**:
+Version 1.3 does not:
 
-- modify ArcGIS Online fields, domains, relationships, or Field Maps
-- export line/polygon data from ArcGIS
-- add line/polygon files to GitHub Actions
-- publish line/polygon layers on the live site
-- add analytical length/area/centroid calculations
-- change the official version from 1.2.0 during development
+- modify ArcGIS Online fields, domains, relationships, or Field Maps behavior;
+- export line/polygon data from ArcGIS;
+- publish line/polygon layers on the live site;
+- add analytical length/area/centroid calculations;
+- use derived navigation centers as scientific measurements.
 
-Actual line/polygon publication remains a later implementation task after the collection/export workflow is ready.
+Actual line/polygon export and publication remains a later implementation task.
