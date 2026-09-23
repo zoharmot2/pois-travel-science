@@ -9,14 +9,14 @@ try:
     from bidi.algorithm import get_display
     PDF_SUPPORT = True
 except ImportError as e:
-    print(f"אזהרה: ספריות PDF חסרות ({e}). הקובץ PDF לא ייווצר.")
+    print(f"Warning: PDF libraries are missing ({e}). The PDF file will not be generated.")
     PDF_SUPPORT = False
 
 try:
     from PIL import Image, ImageOps
     IMAGE_OPTIMIZE_SUPPORT = True
 except ImportError:
-    print("אזהרה: ספרית Pillow חסרה. התמונות יישמרו בגודלן המקורי.")
+    print("Warning: Pillow is missing. Images will be kept at their original size.")
     IMAGE_OPTIMIZE_SUPPORT = False
 
 BASE_URL = "https://services5.arcgis.com/eJYUV73IZAY87Jwy/arcgis/rest/services/POI_Feature_Layer_view/FeatureServer/0"
@@ -28,7 +28,7 @@ FONT_URL = "https://github.com/googlefonts/noto-fonts/raw/main/hinted/ttf/NotoSa
 
 IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.gif', '.webp')
 
-# סדר השדות הראשיים המבוקש ב-CSV
+# Preferred leading field order in the CSV export
 PRIORITY_FIELDS = [
     "OBJECTID",
     "GlobalID",
@@ -49,7 +49,7 @@ def fetch_json(url):
         return json.loads(response.read().decode("utf-8"))
 
 def fetch_all_features():
-    """שליפת כל הנקודות מ-ArcGIS בלולאה למניעת מגבלת כמות תוצאות (Pagination)"""
+    """Fetch all point features from ArcGIS using pagination."""
     all_features = []
     offset = 0
     record_count = 1000
@@ -68,7 +68,7 @@ def fetch_all_features():
                 break
             offset += len(features)
         except Exception as e:
-            print(f"שגיאה בשליפת נתונים ב-offset {offset}: {e}")
+            print(f"Error fetching data at offset {offset}: {e}")
             break
     return all_features
 
@@ -78,12 +78,12 @@ def download_file(url, save_path):
         out_file.write(response.read())
 
 def optimize_image(image_path, max_dim=600, quality=45):
-    """דחיסת תמונות ויישור זווית אוטומטי לפי נתוני EXIF"""
+    """Compress images and apply EXIF-based orientation correction."""
     if not IMAGE_OPTIMIZE_SUPPORT or not os.path.exists(image_path):
         return
     try:
         with Image.open(image_path) as img:
-            # יישור התמונה פיזית בדיסק לפי חיישן המצלמה (EXIF)
+            # Apply the camera EXIF orientation before saving the image.
             img = ImageOps.exif_transpose(img)
 
             if img.mode in ("RGBA", "P"):
@@ -101,15 +101,15 @@ def optimize_image(image_path, max_dim=600, quality=45):
             
             img.save(image_path, "JPEG", optimize=True, quality=quality)
     except Exception as e:
-        print(f"אזהרה: לא ניתן היה לבצע אופטימיזציה/יישור לתמונה {image_path}: {e}")
+        print(f"Warning: could not optimize/orient image {image_path}: {e}")
 
 def ensure_hebrew_font():
     if not os.path.exists(FONT_PATH):
-        print("מוריד פונט עברי עבור ה-PDF...")
+        print("Downloading PDF font...")
         try:
             download_file(FONT_URL, FONT_PATH)
         except Exception as e:
-            print(f"שגיאה בהורדת הפונט: {e}")
+            print(f"Error downloading PDF font: {e}")
 
 def fix_hebrew(text):
     if text is None:
@@ -161,7 +161,7 @@ def parse_to_datetime(val):
         return datetime.max
 
 def format_datetime_str(val):
-    """המרת ערך תאריך לפורמט קריא DD/MM/YYYY HH:MM"""
+    """Convert a date value to readable DD/MM/YYYY HH:MM format."""
     dt = parse_to_datetime(val)
     if dt == datetime.max:
         return str(val) if val is not None else ""
@@ -198,12 +198,12 @@ def get_attachments_map(object_ids):
                     pid = group.get("parentObjectId")
                     attachments_map[pid] = group.get("attachmentInfos", [])
         except Exception as e:
-            print(f"שגיאה בשליפת נספחים בקבוצה {i}: {e}")
+            print(f"Error fetching attachments for batch {i}: {e}")
 
     return attachments_map
 
 def generate_csv(features, output_path):
-    print("יוצר קובץ CSV...")
+    print("Generating CSV...")
     if not features:
         return
 
@@ -225,10 +225,10 @@ def generate_csv(features, output_path):
 
 def generate_pdf(features, output_path):
     if not PDF_SUPPORT:
-        print("מדלג על יצירת PDF (חסרות ספריות תומכות).")
+        print("Skipping PDF generation because supporting libraries are missing.")
         return
 
-    print("יוצר קובץ PDF...")
+    print("Generating PDF...")
     ensure_hebrew_font()
 
     try:
@@ -242,9 +242,9 @@ def generate_pdf(features, output_path):
         pdf.add_page()
         pdf.ln(80)
         pdf.set_font("NotoHebrew", size=32)
-        pdf.cell(0, 20, fix_hebrew("יומן מסע"), ln=True, align="C")
+        pdf.cell(0, 20, fix_hebrew("Travel Journal"), ln=True, align="C")
         pdf.set_font("NotoHebrew", size=14)
-        pdf.cell(0, 10, fix_hebrew("דוח מפורט - נקודות עניין ומדיה"), ln=True, align="C")
+        pdf.cell(0, 10, fix_hebrew("Detailed Report - Points of Interest and Media"), ln=True, align="C")
 
         for feat in features:
             props = feat.get("properties", {})
@@ -272,25 +272,25 @@ def generate_pdf(features, output_path):
                     pdf.ln(4)
                     pdf.set_x(10)
                     pdf.set_font("NotoHebrew", size=12)
-                    pdf.cell(0, 8, fix_hebrew("תמונות מצורפות:"), ln=True, align="L")
+                    pdf.cell(0, 8, fix_hebrew("Attached images:"), ln=True, align="L")
                     pdf.ln(2)
                     for img_path in images:
                         try:
                             pdf.image(img_path, w=110, x=10)
                             pdf.ln(4)
                         except Exception as img_err:
-                            print(f"אזהרה: לא ניתן להוסיף תמונה {img_path} ל-PDF: {img_err}")
+                            print(f"Warning: could not add image {img_path} to PDF: {img_err}")
 
         pdf.output(output_path)
     except Exception as pdf_err:
-        print(f"שגיאה ביצירת ה-PDF: {pdf_err}")
+        print(f"Error generating PDF: {pdf_err}")
 
 def fetch_and_process():
     os.makedirs(ATTACHMENTS_DIR, exist_ok=True)
     with open(os.path.join(ATTACHMENTS_DIR, ".gitkeep"), "w") as f:
         f.write("")
 
-    print("1. שליפת GeoJSON מ-ArcGIS...")
+    print("1. Fetching GeoJSON from ArcGIS...")
     features = fetch_all_features()
 
     object_ids = []
@@ -303,11 +303,11 @@ def fetch_and_process():
             props["Longitude"] = coords[0]
             props["Latitude"] = coords[1]
 
-        # שמירת הערך המקורי למיון מדויק
+        # Preserve the original date value for accurate sorting.
         raw_cdate = get_prop_val(props, "CreationDate") or get_prop_val(props, "Date_Point")
         props["_sort_date"] = parse_to_datetime(raw_cdate)
 
-        # המרת כל שדות התאריכים בטבלה לפורמט קריא
+        # Convert date/time fields to a readable format.
         for key, val in list(props.items()):
             if any(d_word in key.lower() for d_word in ["date", "time"]) or key in ["Collection_date", "CreationDate", "EditDate"]:
                 if val is not None and str(val).strip() != "":
@@ -317,9 +317,9 @@ def fetch_and_process():
         if oid is not None:
             object_ids.append(oid)
 
-    print(f"נמצאו {len(features)} נקודות בשרת.")
+    print(f"Found {len(features)} point features on the server.")
 
-    print("2. שליפת קבצים מצורפים (Attachments)...")
+    print("2. Fetching attachments...")
     attachments_info_map = get_attachments_map(object_ids)
 
     attachments_map = {}
@@ -338,18 +338,18 @@ def fetch_and_process():
                 relative_path = f"data/attachments/{safe_filename}"
 
                 if not os.path.exists(local_path):
-                    print(f"מוריד תמונה: {safe_filename}...")
+                    print(f"Downloading image: {safe_filename}...")
                     try:
                         download_file(download_url, local_path)
                     except Exception as err:
-                        print(f"שגיאה בהורדת {download_url}: {err}")
+                        print(f"Error downloading {download_url}: {err}")
                         continue
 
-                # אופטימיזציה ויישור זווית ה-EXIF מבוצעים תמיד (גם עבור קבצים שכבר הורדו בעבר)
+                # Always optimize and apply EXIF orientation, including previously downloaded files.
                 optimize_image(local_path, max_dim=600, quality=45)
                 attachments_map[oid].append(relative_path)
             else:
-                print(f"מדלג על הורדת קובץ מדיה ({att_name}), שומר קישור ישיר.")
+                print(f"Skipping non-image media download ({att_name}); keeping the direct URL.")
                 attachments_map[oid].append(download_url)
 
     for feature in features:
@@ -359,15 +359,15 @@ def fetch_and_process():
 
     features = [f for f in features if not is_empty_feature(f)]
 
-    # מיון כרונולוגי לפי CreationDate מהישן לחדש
+    # Sort chronologically by CreationDate, oldest to newest.
     features.sort(key=lambda f: f.get("properties", {}).get("_sort_date", datetime.max))
 
-    # ניקוי שדה העזר של המיון
+    # Remove the temporary sort helper field.
     for f in features:
         f.get("properties", {}).pop("_sort_date", None)
 
     geojson_data = {"type": "FeatureCollection", "features": features}
-    print(f"לאחר עיבוד ומיון לפי CreationDate נותרו {len(features)} נקודות בסדר כרונולוגי (מהישן לחדש).")
+    print(f"After processing and sorting by CreationDate, {len(features)} point features remain in chronological order (oldest to newest).")
 
     output_geojson = os.path.join(DATA_DIR, "pois.geojson")
     with open(output_geojson, "w", encoding="utf-8") as f:
@@ -376,7 +376,7 @@ def fetch_and_process():
     generate_csv(features, os.path.join(DATA_DIR, "pois.csv"))
     generate_pdf(features, os.path.join(DATA_DIR, "pois.pdf"))
 
-    print("התהליך הסתיים בהצלחה!")
+    print("Process completed successfully!")
 
 if __name__ == "__main__":
     fetch_and_process()

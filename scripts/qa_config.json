@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "reportPath": "data/derived/qa-report.json",
+  "stableIdField": "GlobalID",
+  "topicField": "POI_Topic",
+  "typeField": "POI_Type",
+  "nameField": "POI_Name",
+  "attachmentField": "attachments",
+  "topicConfigPath": "config.json",
+  "metadataSidecarPath": "data/site/poi-meta.json",
+  "requiredFiles": [
+    "data/pois.geojson",
+    "data/pois.csv",
+    "data/pois.pdf",
+    "data/site/poi-meta.json"
+  ],
+  "datasets": [
+    {
+      "name": "points",
+      "path": "data/pois.geojson",
+      "required": true,
+      "expectedGeometryFamilies": ["point"]
+    },
+    {
+      "name": "lines",
+      "path": "data/lines.geojson",
+      "required": false,
+      "expectedGeometryFamilies": ["line"]
+    },
+    {
+      "name": "polygons",
+      "path": "data/polygons.geojson",
+      "required": false,
+      "expectedGeometryFamilies": ["polygon"]
+    }
+  ]
+}

@@ -25,8 +25,29 @@ jobs:
           python -m pip install --upgrade pip
           pip install fpdf2 python-bidi Pillow
 
+      - name: Preserve Previous Spatial Data for QA
+        run: |
+          for file in data/pois.geojson data/lines.geojson data/polygons.geojson; do
+            if [ -f "$file" ]; then
+              mkdir -p ".qa-baseline/$(dirname "$file")"
+              cp "$file" ".qa-baseline/$file"
+            fi
+          done
+
       - name: Fetch Data, Generate CSV and PDF
         run: python scripts/fetch_data.py
+
+      - name: Validate Generated Data
+        run: python scripts/qa_data.py --baseline-root .qa-baseline
+
+      - name: Upload QA Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: data-qa-report-${{ github.run_number }}
+          path: data/derived/qa-report.json
+          if-no-files-found: ignore
+          retention-days: 30
 
       - name: Commit and Push Updated Files
         run: |
@@ -35,4 +56,5 @@ jobs:
           git config --global http.postBuffer 524288000
           git config --global http.maxRequestBuffer 100M
           git add data/
+          git reset -- data/derived/qa-report.json
           git diff --quiet && git diff --staged --quiet || (git commit -m "Automated update of GeoJSON, CSV, PDF and Attachments" && git push)
