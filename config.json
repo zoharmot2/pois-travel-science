@@ -54,12 +54,12 @@
         "visible": true,
         "label": "Ottoman Jerusalem"
       },
-      "Settelments": {
+      "Settlements": {
         "color": "#875E3B",
         "shape": "circle",
         "radius": 10,
         "visible": true,
-        "label": "Settelments"
+        "label": "Settlements"
       },
       "Volcanos GIS": {
         "color": "#E19859",
@@ -68,12 +68,12 @@
         "visible": true,
         "label": "Volcanos GIS"
       },
-      "UFOs": {
+      "UFOs & Planetary": {
         "color": "#856F5E",
         "shape": "diamond",
         "radius": 7,
         "visible": true,
-        "label": "UFOs"
+        "label": "UFOs & Planetary"
       },
       "TBV": {
         "color": "#E26DC0",
@@ -81,6 +81,13 @@
         "radius": 10,
         "visible": true,
         "label": "TBV"
+      },
+      "Cartography": {
+        "color": "#64748B",
+        "shape": "circle",
+        "radius": 7,
+        "visible": true,
+        "label": "Cartography"
       }
     }
   }
