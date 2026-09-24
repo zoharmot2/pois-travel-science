@@ -38,39 +38,12 @@ export function createMap() {
     return map;
 }
 
-export function addUtilityControls(map) {
-    const extraControls = L.control({ position: 'topright' });
-    extraControls.onAdd = function () {
-        const div = L.DomUtil.create('div', 'custom-control-box');
-        div.innerHTML = `
-            <div class="search-container" style="margin-bottom: 6px;">
-                <input type="text" id="poiSearchInput" class="search-input" placeholder="Search POI by name..." />
-            </div>
-            <div style="display: flex; gap: 4px;">
-                <button id="btnDayNight" class="btn-control">Day/Night</button>
-                <button id="btnTimezones" class="btn-control">Time Zones</button>
-            </div>
-        `;
-        L.DomEvent.disableClickPropagation(div);
-        return div;
-    };
-    extraControls.addTo(map);
-}
-
-export function addCoordinateControl(map) {
-    const coordsControl = L.control({ position: 'topleft' });
-    coordsControl.onAdd = function () {
-        const div = L.DomUtil.create('div', 'coords-box');
-        div.id = 'coordsDisplay';
-        div.innerHTML = 'Lat: -- | Lon: --';
-        return div;
-    };
-    coordsControl.addTo(map);
-
+/** Attach coordinate updates to the display hosted inside the v1.4 map panel. */
+export function attachCoordinateDisplay(map) {
     map.on('mousemove', function (event) {
         const element = document.getElementById('coordsDisplay');
         if (element) {
-            element.innerHTML = `Lat: ${event.latlng.lat.toFixed(5)} | Lon: ${event.latlng.lng.toFixed(5)}`;
+            element.textContent = `Lat: ${event.latlng.lat.toFixed(5)} | Lon: ${event.latlng.lng.toFixed(5)}`;
         }
     });
 }
@@ -213,7 +186,11 @@ export function attachOverlayHandlers(map) {
     let terminatorLayer = null;
     let timezonesLayer = null;
 
-    document.getElementById('btnDayNight').addEventListener('click', function () {
+    const dayNightButton = document.getElementById('btnDayNight');
+    const timezonesButton = document.getElementById('btnTimezones');
+    if (!dayNightButton || !timezonesButton) return;
+
+    dayNightButton.addEventListener('click', function () {
         if (!terminatorLayer) {
             terminatorLayer = L.terminator({ fillOpacity: 0.35 });
             terminatorLayer.addTo(map);
@@ -225,7 +202,7 @@ export function attachOverlayHandlers(map) {
         }
     });
 
-    document.getElementById('btnTimezones').addEventListener('click', function () {
+    timezonesButton.addEventListener('click', function () {
         const button = this;
 
         if (!timezonesLayer) {

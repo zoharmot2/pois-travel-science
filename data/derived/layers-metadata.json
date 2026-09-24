@@ -1,0 +1,521 @@
+{
+  "schemaVersion": 1,
+  "featureServerUrl": "https://services5.arcgis.com/eJYUV73IZAY87Jwy/arcgis/rest/services/POI_Feature_Layer_view/FeatureServer",
+  "datasets": {
+    "points": {
+      "layerId": 0,
+      "layerName": "POI_Point_Layer",
+      "sourceDataset": "points",
+      "sourceUrl": "https://services5.arcgis.com/eJYUV73IZAY87Jwy/arcgis/rest/services/POI_Feature_Layer_view/FeatureServer/0",
+      "geometryFamily": "point",
+      "esriGeometryType": "esriGeometryPoint",
+      "entityCount": 1198,
+      "hasAttachments": true,
+      "maxRecordCount": 1000,
+      "objectIdField": "OBJECTID",
+      "globalIdField": "GlobalID",
+      "fieldNames": [
+        "OBJECTID",
+        "GlobalID",
+        "esrignss_speed",
+        "esrignss_direction",
+        "esrisnsr_azimuth",
+        "esrignss_positionsourcetype",
+        "esrignss_receiver",
+        "esrignss_h_rms",
+        "esrignss_v_rms",
+        "esrignss_latitude",
+        "esrignss_longitude",
+        "esrignss_altitude",
+        "esrignss_pdop",
+        "esrignss_hdop",
+        "esrignss_vdop",
+        "esrignss_fixtype",
+        "esrignss_correctionage",
+        "esrignss_stationid",
+        "esrignss_numsats",
+        "esrignss_fixdatetime",
+        "esrignss_avg_h_rms",
+        "esrignss_avg_v_rms",
+        "esrignss_avg_positions",
+        "esrignss_h_stddev",
+        "CreationDate",
+        "Creator",
+        "EditDate",
+        "Editor",
+        "Collection_date",
+        "POI_Type",
+        "POI_Description",
+        "POI_Name",
+        "POI_Topic",
+        "Collect_Name"
+      ],
+      "commonFieldAvailability": {
+        "GlobalID": true,
+        "OBJECTID": true,
+        "POI_Name": true,
+        "POI_Type": true,
+        "POI_Topic": true,
+        "POI_Description": true,
+        "Collection_date": true,
+        "Collect_Name": true,
+        "CreationDate": true,
+        "Creator": true,
+        "EditDate": true,
+        "Editor": true
+      },
+      "domains": {
+        "POI_Type": [
+          {
+            "code": "General Site",
+            "label": "General Site"
+          },
+          {
+            "code": "Earthquake Damage/Env.Effect",
+            "label": "Earthquake Damage/Env.Effect"
+          },
+          {
+            "code": "Graffiti/Wall Painting/Statue",
+            "label": "Graffiti/Wall Painting/Statue"
+          },
+          {
+            "code": "Iron Rails/Reinforcement",
+            "label": "Iron Rails/Reinforcement"
+          },
+          {
+            "code": "Old map/Globe/Model",
+            "label": "Old map/Globe/Model"
+          },
+          {
+            "code": "Religious/Faith",
+            "label": "Religious/Faith"
+          },
+          {
+            "code": "River/Lake/Delta",
+            "label": "River/Lake/Delta"
+          },
+          {
+            "code": "Rock/Stone/Soil",
+            "label": "Rock/Stone/Soil"
+          },
+          {
+            "code": "Scenary View",
+            "label": "Scenary View"
+          },
+          {
+            "code": "Spring/Pool/Cistern",
+            "label": "Spring/Pool/Cistern"
+          },
+          {
+            "code": "Structure/Building",
+            "label": "Structure/Building"
+          },
+          {
+            "code": "Wilson Benchmark",
+            "label": "Wilson Benchmark"
+          }
+        ],
+        "POI_Topic": [
+          {
+            "code": "General",
+            "label": "General"
+          },
+          {
+            "code": "Aqueducts",
+            "label": "Aqueducts"
+          },
+          {
+            "code": "Cartography",
+            "label": "Cartography"
+          },
+          {
+            "code": "Climate Negev",
+            "label": "Climate Negev"
+          },
+          {
+            "code": "Historical Earthquakes",
+            "label": "Historical Earthquakes"
+          },
+          {
+            "code": "Ottoman Jerusalem",
+            "label": "Ottoman Jerusalem"
+          },
+          {
+            "code": "Settlements",
+            "label": "Settlements"
+          },
+          {
+            "code": "Volcanoes GIS",
+            "label": "Volcanoes GIS"
+          },
+          {
+            "code": "UFOs & Planetary",
+            "label": "UFOs & Planetary"
+          },
+          {
+            "code": "TBV",
+            "label": "TBV"
+          }
+        ],
+        "Collect_Name": [
+          {
+            "code": "Motti Zohar",
+            "label": "Motti Zohar"
+          }
+        ]
+      },
+      "observedValues": {
+        "POI_Type": [
+          "Earthquake Damage/Env.Effect",
+          "General Site",
+          "Graffiti/Wall Painting/Statue",
+          "Iron Rails/Reinforcement",
+          "Old map/Globe/Model",
+          "Religious/Faith",
+          "River/Lake/Delta",
+          "Rock/Stone/Soil",
+          "Scenary View",
+          "Spring/Pool/Cistern",
+          "Structure/Building",
+          "Wilson Benchmark"
+        ],
+        "POI_Topic": [
+          "Aqueducts",
+          "Cartography",
+          "Climate Negev",
+          "General",
+          "Historical Earthquakes",
+          "Ottoman Jerusalem",
+          "Settlements",
+          "TBV",
+          "UFOs & Planetary",
+          "Volcanoes GIS"
+        ],
+        "Collect_Name": [
+          "Motti Zohar"
+        ]
+      }
+    },
+    "lines": {
+      "layerId": 1,
+      "layerName": "POI_Line_Layer",
+      "sourceDataset": "lines",
+      "sourceUrl": "https://services5.arcgis.com/eJYUV73IZAY87Jwy/arcgis/rest/services/POI_Feature_Layer_view/FeatureServer/1",
+      "geometryFamily": "line",
+      "esriGeometryType": "esriGeometryPolyline",
+      "entityCount": 6,
+      "hasAttachments": true,
+      "maxRecordCount": 1000,
+      "objectIdField": "OBJECTID",
+      "globalIdField": "GlobalID",
+      "fieldNames": [
+        "OBJECTID",
+        "GlobalID",
+        "esrignss_avg_h_rms",
+        "esrignss_avg_v_rms",
+        "esrignss_worst_h_rms",
+        "esrignss_worst_v_rms",
+        "esrignss_worst_fixtype",
+        "esrignss_manual_locations",
+        "Shape__Length",
+        "CreationDate",
+        "Creator",
+        "EditDate",
+        "Editor",
+        "Title",
+        "Collection_date",
+        "POI_Type",
+        "POI_Description",
+        "POI_Name",
+        "POI_Topic",
+        "Collect_Name"
+      ],
+      "commonFieldAvailability": {
+        "GlobalID": true,
+        "OBJECTID": true,
+        "POI_Name": true,
+        "POI_Type": true,
+        "POI_Topic": true,
+        "POI_Description": true,
+        "Collection_date": true,
+        "Collect_Name": true,
+        "CreationDate": true,
+        "Creator": true,
+        "EditDate": true,
+        "Editor": true
+      },
+      "domains": {
+        "POI_Type": [
+          {
+            "code": "General Site",
+            "label": "General Site"
+          },
+          {
+            "code": "Earthquake Damage/Env.Effect",
+            "label": "Earthquake Damage/Env.Effect"
+          },
+          {
+            "code": "Graffiti/Wall Painting/Statue",
+            "label": "Graffiti/Wall Painting/Statue"
+          },
+          {
+            "code": "Iron Rails/Reinforcement",
+            "label": "Iron Rails/Reinforcement"
+          },
+          {
+            "code": "Old map/Globe/Model",
+            "label": "Old map/Globe/Model"
+          },
+          {
+            "code": "Religious/Faith",
+            "label": "Religious/Faith"
+          },
+          {
+            "code": "River/Lake/Delta",
+            "label": "River/Lake/Delta"
+          },
+          {
+            "code": "Rock/Stone/Soil",
+            "label": "Rock/Stone/Soil"
+          },
+          {
+            "code": "Scenary View",
+            "label": "Scenary View"
+          },
+          {
+            "code": "Spring/Pool/Cistern",
+            "label": "Spring/Pool/Cistern"
+          },
+          {
+            "code": "Structure/Building",
+            "label": "Structure/Building"
+          },
+          {
+            "code": "Wilson Benchmark",
+            "label": "Wilson Benchmark"
+          }
+        ],
+        "POI_Topic": [
+          {
+            "code": "General",
+            "label": "General"
+          },
+          {
+            "code": "Aqueducts",
+            "label": "Aqueducts"
+          },
+          {
+            "code": "Cartography",
+            "label": "Cartography"
+          },
+          {
+            "code": "Climate Negev",
+            "label": "Climate Negev"
+          },
+          {
+            "code": "Historical Earthquakes",
+            "label": "Historical Earthquakes"
+          },
+          {
+            "code": "Ottoman Jerusalem",
+            "label": "Ottoman Jerusalem"
+          },
+          {
+            "code": "Settlements",
+            "label": "Settlements"
+          },
+          {
+            "code": "Volcanoes GIS",
+            "label": "Volcanoes GIS"
+          },
+          {
+            "code": "UFOs & Planetary",
+            "label": "UFOs & Planetary"
+          },
+          {
+            "code": "TBV",
+            "label": "TBV"
+          }
+        ],
+        "Collect_Name": [
+          {
+            "code": "Motti Zohar",
+            "label": "Motti Zohar"
+          }
+        ]
+      },
+      "observedValues": {
+        "POI_Type": [
+          "General Site",
+          "Religious/Faith"
+        ],
+        "POI_Topic": [
+          "General"
+        ],
+        "Collect_Name": [
+          "Motti Zohar"
+        ]
+      }
+    },
+    "polygons": {
+      "layerId": 2,
+      "layerName": "POI_Polygon_Layer",
+      "sourceDataset": "polygons",
+      "sourceUrl": "https://services5.arcgis.com/eJYUV73IZAY87Jwy/arcgis/rest/services/POI_Feature_Layer_view/FeatureServer/2",
+      "geometryFamily": "polygon",
+      "esriGeometryType": "esriGeometryPolygon",
+      "entityCount": 2,
+      "hasAttachments": true,
+      "maxRecordCount": 1000,
+      "objectIdField": "OBJECTID",
+      "globalIdField": "GlobalID",
+      "fieldNames": [
+        "OBJECTID",
+        "GlobalID",
+        "esrignss_avg_h_rms",
+        "esrignss_avg_v_rms",
+        "esrignss_worst_h_rms",
+        "esrignss_worst_v_rms",
+        "esrignss_worst_fixtype",
+        "esrignss_manual_locations",
+        "Shape__Area",
+        "Shape__Length",
+        "CreationDate",
+        "Creator",
+        "EditDate",
+        "Editor",
+        "Collection_date",
+        "POI_Type",
+        "POI_Description",
+        "POI_Name",
+        "POI_Topic",
+        "Collect_Name"
+      ],
+      "commonFieldAvailability": {
+        "GlobalID": true,
+        "OBJECTID": true,
+        "POI_Name": true,
+        "POI_Type": true,
+        "POI_Topic": true,
+        "POI_Description": true,
+        "Collection_date": true,
+        "Collect_Name": true,
+        "CreationDate": true,
+        "Creator": true,
+        "EditDate": true,
+        "Editor": true
+      },
+      "domains": {
+        "POI_Type": [
+          {
+            "code": "General Site",
+            "label": "General Site"
+          },
+          {
+            "code": "Earthquake Damage/Env.Effect",
+            "label": "Earthquake Damage/Env.Effect"
+          },
+          {
+            "code": "Graffiti/Wall Painting/Statue",
+            "label": "Graffiti/Wall Painting/Statue"
+          },
+          {
+            "code": "Iron Rails/Reinforcement",
+            "label": "Iron Rails/Reinforcement"
+          },
+          {
+            "code": "Old map/Globe/Model",
+            "label": "Old map/Globe/Model"
+          },
+          {
+            "code": "Religious/Faith",
+            "label": "Religious/Faith"
+          },
+          {
+            "code": "River/Lake/Delta",
+            "label": "River/Lake/Delta"
+          },
+          {
+            "code": "Rock/Stone/Soil",
+            "label": "Rock/Stone/Soil"
+          },
+          {
+            "code": "Scenary View",
+            "label": "Scenary View"
+          },
+          {
+            "code": "Spring/Pool/Cistern",
+            "label": "Spring/Pool/Cistern"
+          },
+          {
+            "code": "Structure/Building",
+            "label": "Structure/Building"
+          },
+          {
+            "code": "Wilson Benchmark",
+            "label": "Wilson Benchmark"
+          }
+        ],
+        "POI_Topic": [
+          {
+            "code": "General",
+            "label": "General"
+          },
+          {
+            "code": "Aqueducts",
+            "label": "Aqueducts"
+          },
+          {
+            "code": "Cartography",
+            "label": "Cartography"
+          },
+          {
+            "code": "Climate Negev",
+            "label": "Climate Negev"
+          },
+          {
+            "code": "Historical Earthquakes",
+            "label": "Historical Earthquakes"
+          },
+          {
+            "code": "Ottoman Jerusalem",
+            "label": "Ottoman Jerusalem"
+          },
+          {
+            "code": "Settlements",
+            "label": "Settlements"
+          },
+          {
+            "code": "Volcanoes GIS",
+            "label": "Volcanoes GIS"
+          },
+          {
+            "code": "UFOs & Planetary",
+            "label": "UFOs & Planetary"
+          },
+          {
+            "code": "TBV",
+            "label": "TBV"
+          }
+        ],
+        "Collect_Name": [
+          {
+            "code": "Motti Zohar",
+            "label": "Motti Zohar"
+          }
+        ]
+      },
+      "observedValues": {
+        "POI_Type": [
+          "Scenary View"
+        ],
+        "POI_Topic": [
+          "General"
+        ],
+        "Collect_Name": [
+          "Motti Zohar"
+        ]
+      }
+    }
+  }
+}

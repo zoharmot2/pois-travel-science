@@ -136,6 +136,7 @@ class QaReport:
             "localAttachmentCount": 0,
             "remoteAttachmentCount": 0,
             "missingAttachmentCount": 0,
+            "orphanAttachmentCount": 0,
             "warningCount": 0,
             "errorCount": 0,
         }
@@ -203,32 +204,33 @@ class QaReport:
         return result
 
 
-def load_configured_topics(repo_root: Path, config: dict[str, Any], report: QaReport) -> set[str]:
-    rel = config.get("topicConfigPath", "config.json")
+def load_configured_types(repo_root: Path, config: dict[str, Any], report: QaReport) -> set[str]:
+    rel = config.get("symbologyConfigPath", config.get("topicConfigPath", "config.json"))
     path = repo_root / rel
     if not path.exists():
-        report.add_issue("ERROR", "TOPIC_CONFIG_MISSING", f"Topic configuration file is missing: {rel}")
+        report.add_issue("ERROR", "SYMBOL_CONFIG_MISSING", f"Symbology configuration file is missing: {rel}")
         return set()
     try:
         site_config = read_json(path)
     except Exception as exc:
-        report.add_issue("ERROR", "TOPIC_CONFIG_INVALID", f"Cannot parse {rel}: {exc}")
+        report.add_issue("ERROR", "SYMBOL_CONFIG_INVALID", f"Cannot parse {rel}: {exc}")
         return set()
 
-    configured_field = site_config.get("symbology", {}).get("field")
-    expected_field = config.get("topicField", "POI_Topic")
-    if configured_field and configured_field != expected_field:
+    symbology = site_config.get("symbology", {})
+    configured_field = symbology.get("field")
+    expected_field = config.get("typeField", "POI_Type")
+    if configured_field != expected_field:
         report.add_issue(
             "ERROR",
-            "TOPIC_FIELD_MISMATCH",
+            "SYMBOL_FIELD_MISMATCH",
             f"config.json symbology.field is {configured_field!r}, expected {expected_field!r}.",
         )
 
-    topics = site_config.get("symbology", {}).get("topics", {})
-    if not isinstance(topics, dict):
-        report.add_issue("ERROR", "TOPIC_CONFIG_INVALID", "config.json symbology.topics must be an object.")
+    types = symbology.get("types", {})
+    if not isinstance(types, dict):
+        report.add_issue("ERROR", "TYPE_CONFIG_INVALID", "config.json symbology.types must be an object.")
         return set()
-    return {str(key) for key in topics}
+    return {str(key) for key in types}
 
 
 def load_dataset(path: Path) -> tuple[list[dict[str, Any]] | None, str | None]:
@@ -391,7 +393,7 @@ def validate(repo_root: Path, qa_config_path: Path, baseline_root: Path | None =
         if not (repo_root / rel).exists():
             report.add_issue("ERROR", "REQUIRED_FILE_MISSING", f"Required file is missing: {rel}")
 
-    configured_topics = load_configured_topics(repo_root, config, report)
+    configured_types = load_configured_types(repo_root, config, report)
     stable_id_field = config.get("stableIdField", "GlobalID")
     topic_field = config.get("topicField", "POI_Topic")
     type_field = config.get("typeField", "POI_Type")
@@ -402,6 +404,7 @@ def validate(repo_root: Path, qa_config_path: Path, baseline_root: Path | None =
     current_ids_by_dataset: dict[str, set[str]] = {}
     observed_topics: Counter[str] = Counter()
     observed_types: Counter[str] = Counter()
+    referenced_local_attachments: set[str] = set()
 
     specs = config.get("datasets", [])
     report.summary["datasetCount"] = len(specs)
@@ -532,6 +535,8 @@ def validate(repo_root: Path, qa_config_path: Path, baseline_root: Path | None =
                 if path_error or local_path is None:
                     unsafe_attachment_paths.append(ref)
                     continue
+                normalized_ref = str(local_path.relative_to(repo_root)).replace("\\", "/")
+                referenced_local_attachments.add(normalized_ref)
                 if local_path.exists() and local_path.is_file():
                     report.summary["localAttachmentCount"] += 1
                 else:
@@ -611,6 +616,26 @@ def validate(repo_root: Path, qa_config_path: Path, baseline_root: Path | None =
 
         report.datasets.append(dataset_result)
 
+    attachments_root = repo_root / "data" / "attachments"
+    orphan_local_attachments: list[str] = []
+    if attachments_root.exists() and attachments_root.is_dir():
+        for local_file in attachments_root.rglob("*"):
+            if not local_file.is_file() or local_file.name == ".gitkeep":
+                continue
+            rel = str(local_file.relative_to(repo_root)).replace("\\", "/")
+            if rel not in referenced_local_attachments:
+                orphan_local_attachments.append(rel)
+
+    report.summary["orphanAttachmentCount"] = len(orphan_local_attachments)
+    if orphan_local_attachments:
+        report.add_issue(
+            "ERROR",
+            "ATTACHMENT_FILE_ORPHAN",
+            "Local attachment files exist but are not referenced by any current exported entity.",
+            count=len(orphan_local_attachments),
+            examples=orphan_local_attachments,
+        )
+
     duplicate_ids = {key: refs for key, refs in all_ids.items() if len(refs) > 1}
     report.summary["stableIdCount"] = len(all_ids)
     if duplicate_ids:
@@ -621,13 +646,13 @@ def validate(repo_root: Path, qa_config_path: Path, baseline_root: Path | None =
             count=len(duplicate_ids), examples=examples,
         )
 
-    unconfigured_topics = sorted(set(observed_topics) - configured_topics)
-    if unconfigured_topics:
+    unconfigured_types = sorted(set(observed_types) - configured_types)
+    if unconfigured_types:
         report.add_issue(
-            "WARNING", "TOPIC_STYLE_MISSING",
-            "Research Topics exist in exported data but have no explicit style in config.json; the website will use its default style.",
-            count=len(unconfigured_topics),
-            examples=[{"value": topic, "count": observed_topics[topic]} for topic in unconfigured_topics],
+            "WARNING", "TYPE_STYLE_MISSING",
+            "POI Types exist in exported data but have no explicit style in config.json; the website will use its default style.",
+            count=len(unconfigured_types),
+            examples=[{"value": value, "count": observed_types[value]} for value in unconfigured_types],
         )
 
     validate_sidecar(
@@ -664,6 +689,7 @@ def markdown_summary(report: QaReport) -> str:
         f"| Stable IDs | {report.summary['stableIdCount']} |",
         f"| Attachment references | {report.summary['attachmentReferenceCount']} |",
         f"| Missing local attachments | {report.summary['missingAttachmentCount']} |",
+        f"| Orphan local attachments | {report.summary['orphanAttachmentCount']} |",
         f"| Warnings | {report.summary['warningCount']} |",
         f"| Errors | {report.summary['errorCount']} |",
     ]

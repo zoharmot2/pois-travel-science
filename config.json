@@ -10,85 +10,98 @@
     "defaultBasemap": "OSM"
   },
   "symbology": {
-    "field": "POI_Topic",
+    "field": "POI_Type",
     "default": {
       "color": "#64748B",
-      "shape": "circle",
-      "radius": 7,
       "visible": true,
-      "label": "Other"
+      "label": "Other Type",
+      "point": {
+        "shape": "circle",
+        "radius": 7
+      },
+      "line": {
+        "weight": 4,
+        "opacity": 0.85
+      },
+      "polygon": {
+        "weight": 2,
+        "opacity": 0.9,
+        "fillOpacity": 0.18
+      }
     },
-    "topics": {
-      "General": {
-        "color": "#B350ED",
-        "shape": "square",
-        "radius": 8,
-        "visible": true,
-        "label": "General"
-      },
-      "Aqueducts": {
-        "color": "#88CAE7",
-        "shape": "circle",
-        "radius": 10,
-        "visible": true,
-        "label": "Aqueducts"
-      },
-      "Climate Negev": {
-        "color": "#B0D190",
-        "shape": "circle",
-        "radius": 10,
-        "visible": true,
-        "label": "Climate Negev"
-      },
-      "Historical Earthquakes": {
-        "color": "#E43449",
-        "shape": "circle",
-        "radius": 10,
-        "visible": true,
-        "label": "Historical Earthquakes"
-      },
-      "Ottoman Jerusalem": {
-        "color": "#E0DF3C",
-        "shape": "circle",
-        "radius": 10,
-        "visible": true,
-        "label": "Ottoman Jerusalem"
-      },
-      "Settlements": {
-        "color": "#875E3B",
-        "shape": "circle",
-        "radius": 10,
-        "visible": true,
-        "label": "Settlements"
-      },
-      "Volcanoes GIS": {
-        "color": "#E19859",
-        "shape": "circle",
-        "radius": 10,
-        "visible": true,
-        "label": "Volcanoes GIS"
-      },
-      "UFOs & Planetary": {
-        "color": "#856F5E",
-        "shape": "diamond",
-        "radius": 7,
-        "visible": true,
-        "label": "UFOs & Planetary"
-      },
-	"Cartography": {
+    "types": {
+      "General Site": {
         "color": "#64748B",
-        "shape": "circle",
-        "radius": 7,
         "visible": true,
-        "label": "Cartography"
+        "label": "General Site",
+        "point": { "shape": "circle", "radius": 7 }
       },
-         "TBV": {
-        "color": "#E26DC0",
-        "shape": "triangle",
-        "radius": 10,
+      "Earthquake Damage/Env.Effect": {
+        "color": "#D64545",
         "visible": true,
-        "label": "TBV"
-      }     
+        "label": "Earthquake Damage/Env.Effect",
+        "point": { "shape": "diamond", "radius": 8 }
+      },
+      "Graffiti/Wall Painting/Statue": {
+        "color": "#A855F7",
+        "visible": true,
+        "label": "Graffiti/Wall Painting/Statue",
+        "point": { "shape": "square", "radius": 8 }
+      },
+      "Iron Rails/Reinforcement": {
+        "color": "#475569",
+        "visible": true,
+        "label": "Iron Rails/Reinforcement",
+        "point": { "shape": "square", "radius": 8 }
+      },
+      "Old map/Globe/Model": {
+        "color": "#C47F17",
+        "visible": true,
+        "label": "Old map/Globe/Model",
+        "point": { "shape": "square", "radius": 8 }
+      },
+      "Religious/Faith": {
+        "color": "#7C3AED",
+        "visible": true,
+        "label": "Religious/Faith",
+        "point": { "shape": "triangle", "radius": 8 }
+      },
+      "River/Lake/Delta": {
+        "color": "#0284C7",
+        "visible": true,
+        "label": "River/Lake/Delta",
+        "point": { "shape": "circle", "radius": 8 }
+      },
+      "Rock/Stone/Soil": {
+        "color": "#8B7355",
+        "visible": true,
+        "label": "Rock/Stone/Soil",
+        "point": { "shape": "diamond", "radius": 8 }
+      },
+      "Scenary View": {
+        "color": "#16A34A",
+        "visible": true,
+        "label": "Scenary View",
+        "point": { "shape": "triangle", "radius": 8 }
+      },
+      "Spring/Pool/Cistern": {
+        "color": "#0891B2",
+        "visible": true,
+        "label": "Spring/Pool/Cistern",
+        "point": { "shape": "circle", "radius": 8 }
+      },
+      "Structure/Building": {
+        "color": "#C2410C",
+        "visible": true,
+        "label": "Structure/Building",
+        "point": { "shape": "square", "radius": 8 }
+      },
+      "Wilson Benchmark": {
+        "color": "#0F766E",
+        "visible": true,
+        "label": "Wilson Benchmark",
+        "point": { "shape": "diamond", "radius": 8 }
+      }
     }
   }
 }

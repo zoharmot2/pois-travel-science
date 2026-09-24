@@ -47,7 +47,7 @@ The following components no longer assume that every Entity is a point marker:
 
 Points retain the existing Topic marker shape/color configured in `config.json`.
 
-Future lines use the Topic color as stroke color. Future polygons use the Topic color for outline and a low-opacity fill. A missing Topic style uses the configured default style and is reported as a QA warning rather than hiding the Entity.
+Beginning with v1.4, future lines use the POI Type color as stroke color. Future polygons use the POI Type color for outline and a low-opacity fill. A missing Type style uses the configured default style and is reported as `TYPE_STYLE_MISSING` rather than hiding the Entity.
 
 This policy does not activate line/polygon publication; it defines safe default behavior once those datasets are added.
 

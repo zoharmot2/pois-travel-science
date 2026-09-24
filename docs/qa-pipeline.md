@@ -43,7 +43,7 @@ Remote `http`/`https` attachment URLs are counted but are not fetched during QA.
 
 ## Severity
 
-`WARNING` means the website can still be published, but the issue should be reviewed. Typical examples include a missing POI name, a newly introduced Topic with no custom style yet, a placeholder-like Type value, or an orphan sidecar reference.
+`WARNING` means the website can still be published, but the issue should be reviewed. Typical examples include a missing POI name, a newly introduced POI Type with no custom style yet, a placeholder-like Type value, or an orphan sidecar reference.
 
 `ERROR` means publication should be blocked. Typical examples include invalid/duplicate stable IDs, invalid geometries, missing required files, unsafe attachment paths, local attachment references whose files are missing, or an invalid sidecar schema.
 
@@ -113,6 +113,10 @@ The real GitHub Actions integration has been tested successfully with WARNING st
 
 ## Extensibility
 
-`POI_Topic` and `POI_Type` remain open-ended. The QA pipeline does not enforce a closed POI Type list. New Types are counted automatically. New Topics are accepted and reported as a warning only when no explicit visual style exists yet; the website continues with its default style.
+`POI_Topic` and `POI_Type` remain open-ended. The QA pipeline does not enforce closed domain lists. New Topics are accepted as research metadata without requiring visual style. New Types are counted automatically; if a Type has no explicit `config.json` style, QA emits `TYPE_STYLE_MISSING` and the website continues with the default Type style.
 
 The QA layer never edits ArcGIS data. Source corrections remain an ArcGIS Online / Field Maps responsibility unless a value is explicitly defined as website-managed or externally derived metadata.
+
+### Orphan attachment protection
+
+Data QA also scans `data/attachments/` recursively after export. A local attachment file that is not referenced by any current point, line, or polygon entity is reported as `ATTACHMENT_FILE_ORPHAN` and is an `ERROR`. The exporter normally removes these files itself; the QA check is a second safety net that prevents stale media from being published if cleanup ever fails.

@@ -1,0 +1,127 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": 1,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              35.0878636717037,
+              31.9484367700802
+            ],
+            [
+              35.134212243481,
+              31.9458148722868
+            ],
+            [
+              35.1060597776607,
+              31.9117233939125
+            ],
+            [
+              35.0878636717037,
+              31.9484367700802
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1,
+        "GlobalID": "ecbb5101-9127-42c9-9930-af1b5724a56c",
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_worst_h_rms": null,
+        "esrignss_worst_v_rms": null,
+        "esrignss_worst_fixtype": null,
+        "esrignss_manual_locations": null,
+        "Shape__Area": 12074503.096679688,
+        "Shape__Length": 15855.593607378432,
+        "CreationDate": "24/09/2026 12:49",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "24/09/2026 12:49",
+        "Editor": "mzohar_univhaifa25",
+        "Collection_date": "01/09/2026 12:49",
+        "POI_Type": "Scenary View",
+        "POI_Description": null,
+        "POI_Name": "Test",
+        "POI_Topic": "General",
+        "Collect_Name": "Motti Zohar",
+        "attachments": [
+          "data/attachments/polygons/1_1_20250421_160500.jpg"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 2,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              35.0342674087733,
+              31.9218204589561
+            ],
+            [
+              35.0344441831112,
+              31.9217184511945
+            ],
+            [
+              35.0344637129456,
+              31.9216359732673
+            ],
+            [
+              35.0344389863312,
+              31.9215564290062
+            ],
+            [
+              35.0343487132341,
+              31.9215666130185
+            ],
+            [
+              35.0342865195125,
+              31.9216217659414
+            ],
+            [
+              35.0342373177409,
+              31.9216951075941
+            ],
+            [
+              35.034189876169,
+              31.9217648450285
+            ],
+            [
+              35.0342674087733,
+              31.9218204589561
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "OBJECTID": 2,
+        "GlobalID": "c3989bb6-57cf-4277-91b2-6165178b5734",
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_worst_h_rms": null,
+        "esrignss_worst_v_rms": null,
+        "esrignss_worst_fixtype": null,
+        "esrignss_manual_locations": null,
+        "Shape__Area": 602.796875,
+        "Shape__Length": 98.69985726094893,
+        "CreationDate": "24/09/2026 13:21",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "24/09/2026 13:21",
+        "Editor": "mzohar_univhaifa25",
+        "Collection_date": "24/09/2026 13:19",
+        "POI_Type": "Scenary View",
+        "POI_Description": "This polygon was captured",
+        "POI_Name": null,
+        "POI_Topic": "General",
+        "Collect_Name": "Motti Zohar",
+        "attachments": []
+      }
+    }
+  ]
+}

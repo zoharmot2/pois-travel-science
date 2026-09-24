@@ -330,37 +330,47 @@ export function createShapeSVG(shape, color, size = 20) {
     return `<svg width="${size}" height="${size}" viewBox="0 0 20 20">${svgContent}</svg>`;
 }
 
-export function createCustomIcon(shape, color) {
+export function createCustomIcon(shape, color, radius = 7) {
+    const safeRadius = Number.isFinite(Number(radius)) ? Number(radius) : 7;
+    const size = Math.max(16, Math.round(safeRadius * 2 + 6));
+    const anchor = size / 2;
+
     return L.divIcon({
         className: 'custom-svg-icon',
-        html: createShapeSVG(shape, color, 20),
-        iconSize: [20, 20],
-        iconAnchor: [10, 10],
-        popupAnchor: [0, -10]
+        html: createShapeSVG(shape, color, size),
+        iconSize: [size, size],
+        iconAnchor: [anchor, anchor],
+        popupAnchor: [0, -anchor]
     });
 }
 
 /**
- * Topic-based vector styling for future line/polygon publication.
- * Point symbols continue to use the existing SVG-marker symbology.
+ * POI_Type-based vector styling for line/polygon entities.
+ * Geometry-specific options inherit from the symbology default when omitted.
  */
-export function createVectorStyle(setting = {}, geometryFamily = 'line') {
-    const color = setting.color || '#64748B';
+export function createVectorStyle(setting = {}, geometryFamily = 'line', defaultSetting = {}) {
+    const color = setting.color || defaultSetting.color || '#64748B';
 
     if (geometryFamily === 'polygon') {
+        const polygonDefault = defaultSetting.polygon || {};
+        const polygon = setting.polygon || {};
         return {
             color,
-            weight: 2,
-            opacity: 0.9,
-            fillColor: color,
-            fillOpacity: 0.18
+            weight: polygon.weight ?? polygonDefault.weight ?? 2,
+            opacity: polygon.opacity ?? polygonDefault.opacity ?? 0.9,
+            fillColor: polygon.fillColor || color,
+            fillOpacity: polygon.fillOpacity ?? polygonDefault.fillOpacity ?? 0.18,
+            dashArray: polygon.dashArray ?? polygonDefault.dashArray ?? null
         };
     }
 
+    const lineDefault = defaultSetting.line || {};
+    const line = setting.line || {};
     return {
         color,
-        weight: 4,
-        opacity: 0.85
+        weight: line.weight ?? lineDefault.weight ?? 4,
+        opacity: line.opacity ?? lineDefault.opacity ?? 0.85,
+        dashArray: line.dashArray ?? lineDefault.dashArray ?? null
     };
 }
 

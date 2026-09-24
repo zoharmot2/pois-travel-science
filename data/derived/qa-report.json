@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-24T12:18:43Z",
+  "status": "WARNING",
+  "repositoryRoot": ".",
+  "config": "scripts/qa_config.json",
+  "summary": {
+    "datasetCount": 3,
+    "activeDatasetCount": 3,
+    "entityCount": 1206,
+    "stableIdCount": 1206,
+    "attachmentReferenceCount": 1081,
+    "localAttachmentCount": 1076,
+    "remoteAttachmentCount": 5,
+    "missingAttachmentCount": 0,
+    "orphanAttachmentCount": 0,
+    "warningCount": 5,
+    "errorCount": 0
+  },
+  "counts": {
+    "geometryFamilies": {
+      "line": 6,
+      "point": 1198,
+      "polygon": 2
+    },
+    "topics": {
+      "Aqueducts": 2,
+      "Cartography": 1,
+      "Climate Negev": 33,
+      "General": 777,
+      "Historical Earthquakes": 76,
+      "Ottoman Jerusalem": 1,
+      "Settlements": 206,
+      "TBV": 96,
+      "UFOs & Planetary": 2,
+      "Volcanoes GIS": 11
+    },
+    "types": {
+      "Earthquake Damage/Env.Effect": 25,
+      "General Site": 841,
+      "Graffiti/Wall Painting/Statue": 20,
+      "Iron Rails/Reinforcement": 59,
+      "Old map/Globe/Model": 1,
+      "Religious/Faith": 4,
+      "River/Lake/Delta": 28,
+      "Rock/Stone/Soil": 14,
+      "Scenary View": 70,
+      "Spring/Pool/Cistern": 11,
+      "Structure/Building": 96,
+      "Wilson Benchmark": 36
+    }
+  },
+  "datasets": [
+    {
+      "name": "points",
+      "path": "data/pois.geojson",
+      "required": true,
+      "status": "validated",
+      "featureCount": 1198,
+      "validStableIdCount": 1198,
+      "geometryFamilies": {
+        "point": 1198
+      }
+    },
+    {
+      "name": "lines",
+      "path": "data/lines.geojson",
+      "required": true,
+      "status": "validated",
+      "featureCount": 6,
+      "validStableIdCount": 6,
+      "geometryFamilies": {
+        "line": 6
+      }
+    },
+    {
+      "name": "polygons",
+      "path": "data/polygons.geojson",
+      "required": true,
+      "status": "validated",
+      "featureCount": 2,
+      "validStableIdCount": 2,
+      "geometryFamilies": {
+        "polygon": 2
+      }
+    }
+  ],
+  "issues": [
+    {
+      "severity": "WARNING",
+      "code": "NAME_MISSING",
+      "message": "Features are missing POI_Name.",
+      "dataset": "points",
+      "count": 43,
+      "examples": [
+        241,
+        901,
+        902,
+        903,
+        904,
+        905,
+        906,
+        907,
+        908,
+        909
+      ]
+    },
+    {
+      "severity": "WARNING",
+      "code": "NAME_MISSING",
+      "message": "Features are missing POI_Name.",
+      "dataset": "lines",
+      "count": 1,
+      "examples": [
+        6
+      ]
+    },
+    {
+      "severity": "WARNING",
+      "code": "TOPIC_MISSING",
+      "message": "Features are missing POI_Topic.",
+      "dataset": "lines",
+      "count": 1,
+      "examples": [
+        6
+      ]
+    },
+    {
+      "severity": "WARNING",
+      "code": "TYPE_MISSING",
+      "message": "Features are missing POI_Type.",
+      "dataset": "lines",
+      "count": 1,
+      "examples": [
+        6
+      ]
+    },
+    {
+      "severity": "WARNING",
+      "code": "NAME_MISSING",
+      "message": "Features are missing POI_Name.",
+      "dataset": "polygons",
+      "count": 1,
+      "examples": [
+        2
+      ]
+    }
+  ]
+}

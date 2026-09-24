@@ -1,173 +1,149 @@
---- a/config.json
-+++ b/config.json
-@@ -54,12 +54,12 @@
-         "visible": true,
-         "label": "Ottoman Jerusalem"
-       },
--      "Settelments": {
-+      "Settlements": {
-         "color": "#875E3B",
-         "shape": "circle",
-         "radius": 10,
-         "visible": true,
--        "label": "Settelments"
-+        "label": "Settlements"
-       },
-       "Volcanos GIS": {
-         "color": "#E19859",
-@@ -68,12 +68,12 @@
-         "visible": true,
-         "label": "Volcanos GIS"
-       },
--      "UFOs": {
-+      "UFOs & Planetary": {
-         "color": "#856F5E",
-         "shape": "diamond",
-         "radius": 7,
-         "visible": true,
--        "label": "UFOs"
-+        "label": "UFOs & Planetary"
-       },
-       "TBV": {
-         "color": "#E26DC0",
-@@ -81,6 +81,13 @@
-         "radius": 10,
-         "visible": true,
-         "label": "TBV"
-+      },
-+      "Cartography": {
-+        "color": "#64748B",
-+        "shape": "circle",
-+        "radius": 7,
-+        "visible": true,
-+        "label": "Cartography"
-       }
-     }
-   }
---- a/VERSION
-+++ b/VERSION
-@@ -1 +1 @@
--1.0.0
-+1.2.0
---- a/README.md
-+++ b/README.md
-@@ -1,45 +1,92 @@
- # Point of Interest (POI) Map - v1.2.0
+--- /mnt/data/pts_v14_stage6_2_repo/scripts/fetch_data.py	2026-09-24 12:05:20.538033066 +0000
++++ /mnt/data/pts_v14_stage6_3_repo/scripts/fetch_data.py	2026-09-24 12:14:54.968648546 +0000
+@@ -57,6 +57,7 @@
+ FONT_URL = "https://github.com/googlefonts/noto-fonts/raw/main/hinted/ttf/NotoSansHebrew/NotoSansHebrew-Regular.ttf"
  
--An interactive Leaflet.js-based web mapping application designed to display dynamic Points of Interest (POIs), rich feature popups, utility overlays, and customizable category filtering, with built-in support for iframe embedding.
-+An interactive Leaflet.js web mapping application for displaying Points of Interest (POIs) collected with Esri Field Maps. The website is static at runtime: data and attachments are periodically synchronized from the ArcGIS Feature Service into local files in the repository.
+ IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.gif', '.webp')
++AUDIO_EXTENSIONS = ('.mp3', '.wav', '.m4a', '.aac', '.ogg', '.oga', '.flac', '.wma', '.opus', '.aiff', '.aif', '.amr', '.m4b')
+ DOMAIN_FIELDS = ("POI_Type", "POI_Topic", "Collect_Name")
+ COMMON_ENTITY_FIELDS = (
+     "GlobalID",
+@@ -368,11 +369,11 @@
  
- ---
  
--## 🚀 What's New in v1.2.0 (Changelog)
-+## What's New in v1.2.0
+ def attachment_storage(spec, oid, att_id, att_name):
+-    """Return local and web-relative paths for one image attachment.
++    """Return local and web-relative paths for one downloaded media attachment.
  
--- **Timezone Layer Stability Fix:** Migrated vector boundary loading to a high-speed CDN with an automatic fallback mechanism to the Esri World Time Zones tile service, ensuring 100% layer uptime without CORS errors.
--- **Light Basemap Replacement (No API Key Required):** Replaced CartoDB tiles with **Esri Light Gray Canvas** to eliminate "API Key Required" watermarks while keeping a clean, modern basemap.
--- **Interactive Legend & Topic Filtering:** Users can toggle category visibility directly by clicking topic items inside the dynamic legend panel.
--- **Real-Time Coordinate Tracker:** Displays precise cursor coordinates (`Lat` / `Lon`) on hover.
--- **Built-In POI Search:** Search for features by name with automatic map pan/zoom and popup trigger.
--- **Embed Mode (`embed=true`):** Hides the top navigation header via URL query parameters for seamless `iframe` integration.
-+- **Timezone Layer Stability Fix:** Vector timezone boundaries are loaded from a CDN with an Esri World Time Zones fallback.
-+- **Light Basemap Replacement:** Uses **Esri Light Gray Canvas**, avoiding API-key watermarks.
-+- **Interactive Legend & Topic Filtering:** Topic categories can be toggled directly from the legend.
-+- **Real-Time Coordinate Tracker:** Displays cursor latitude and longitude.
-+- **Built-In POI Search:** Searches POIs by name and opens the selected feature.
-+- **Embed Mode (`embed=true`):** Hides the top header for iframe embedding.
+-    Point images keep the established v1.x root-level naming convention to
++    Point media keep the established v1.x root-level naming convention to
+     avoid rewriting more than one thousand existing files. New line/polygon
+-    images live in dataset-specific subdirectories so OBJECTID/attachment IDs
++    media live in dataset-specific subdirectories so OBJECTID/attachment IDs
+     cannot collide across ArcGIS sublayers.
+     """
+     safe_name = str(att_name).replace("/", "_").replace("\\", "_")
+@@ -394,10 +395,10 @@
+ def attach_dataset_media(features, spec, metadata):
+     """Synchronize attachment references for one ArcGIS dataset.
  
- ---
+-    Images are downloaded locally for the static website. Non-image media stay
+-    as direct public ArcGIS URLs. Attachment retrieval/download failures abort
+-    the refresh so orphan cleanup can never be based on an incomplete ArcGIS
+-    response.
++    Image and audio attachments are downloaded locally for the static website.
++    Other media types (for example video) remain direct public ArcGIS URLs.
++    Attachment retrieval/download failures abort the refresh so orphan cleanup
++    can never be based on an incomplete ArcGIS response.
+     """
+     if not spec.get("downloadAttachments"):
+         for feature in features:
+@@ -426,15 +427,19 @@
+                 )
+             att_name = att.get("name") or f"attachment-{att_id}"
+             download_url = f"{base_url}/{oid}/attachments/{att_id}"
+-            is_image = str(att_name).lower().endswith(IMAGE_EXTENSIONS)
++            att_name_lower = str(att_name).lower()
++            content_type = str(att.get("contentType") or "").lower()
++            is_image = att_name_lower.endswith(IMAGE_EXTENSIONS) or content_type.startswith("image/")
++            is_audio = att_name_lower.endswith(AUDIO_EXTENSIONS) or content_type.startswith("audio/")
  
--## 🛠️ Key Features
-+## Key Features
+-            if is_image:
++            if is_image or is_audio:
++                media_kind = "image" if is_image else "audio"
+                 local_path, relative_path = attachment_storage(
+                     spec, oid, att_id, att_name
+                 )
+                 if not os.path.exists(local_path):
+                     print(
+-                        f"Downloading {spec['sourceDataset']} image: "
++                        f"Downloading {spec['sourceDataset']} {media_kind}: "
+                         f"{os.path.relpath(local_path, DATA_DIR)}..."
+                     )
+                     try:
+@@ -445,11 +450,12 @@
+                             f"{spec['sourceDataset']} OBJECTID {oid}: {exc}"
+                         ) from exc
  
--1. **5 Diverse Basemaps:**
--   - OpenStreetMap (Default)
--   - Aerial Imagery (Esri World Imagery)
--   - Topographic Map (Esri Topo)
--   - Light Map (Esri Light Gray Canvas)
--   - Historic Map (National Geographic / Esri)
--
--2. **Utility Overlay Layers:**
--   - **Day/Night Overlay:** Real-time solar terminator layer (`Leaflet.Terminator`).
--   - **World Time Zones:** Timezone boundaries with UTC offsets.
--
--3. **Custom Symbology & Popups:**
--   - Vector SVG icons with custom shapes (`circle`, `square`, `triangle`, `diamond`) and colors configured dynamically via `config.json`.
--   - Rich popup windows displaying feature properties, coordinates, and linked image attachments.
-+- Five basemaps: OpenStreetMap, Esri World Imagery, Esri Topographic, Esri Light Gray Canvas, and National Geographic / Esri.
-+- Day/night solar terminator overlay.
-+- World timezone overlay with fallback loading.
-+- Custom SVG marker shapes and colors configured in `config.json`.
-+- Interactive topic legend and filtering.
-+- POI-name search.
-+- Rich popups with feature attributes, coordinates, and image attachments.
-+- Local, static runtime data for fast deployment and simple hosting.
+-                optimize_image(local_path, max_dim=600, quality=45)
++                if is_image:
++                    optimize_image(local_path, max_dim=600, quality=45)
+                 attachments_map[oid].append(relative_path)
+             else:
+                 print(
+-                    f"Skipping non-image media download ({att_name}); "
++                    f"Skipping unsupported media download ({att_name}); "
+                     "keeping the direct URL."
+                 )
+                 attachments_map[oid].append(download_url)
+@@ -732,7 +738,7 @@
+         print("   No orphan local attachments found.")
  
- ---
+     print("Multi-layer ArcGIS export completed successfully.")
+-    print("Attachments are synchronized for points, lines and polygons.")
++    print("Image and audio attachments are synchronized for points, lines and polygons.")
  
--## 📁 Project Structure
-+## Data Workflow
-+
-+POIs are collected in **Esri Field Maps** and stored in the ArcGIS Feature Service. A scheduled **GitHub Actions** workflow runs once per week and uses `scripts/fetch_data.py` to refresh the repository data.
-+
-+The update process generates or refreshes:
-+
-+- `data/pois.geojson` — primary dataset used by the web map.
-+- `data/pois.csv` — tabular export.
-+- `data/pois.pdf` — PDF export when PDF dependencies are available.
-+- `data/attachments/` — locally stored image attachments.
-+
-+Because the weekly workflow updates data independently of application releases, data-refresh commits should be distinguished from code/configuration changes when reviewing history, debugging, or performing QA.
-+
-+---
-+
-+## Project Structure
  
- ```text
- .
--├── index.html          # Core application logic, styling, and Leaflet setup
--├── config.json          # Map settings, initial bounds, and topic symbology
-+├── .git/                 # Local Git metadata (not part of distributed source files)
-+├── .github/              # GitHub Actions workflows and repository automation
- ├── data/
--│   └── pois.geojson    # Primary GeoJSON feature dataset
--└── README.md           # Project documentation+│   ├── attachments/      # Locally stored POI image attachments
-+│   ├── pois.geojson      # Primary dataset loaded by the web map
-+│   ├── pois.csv          # CSV export
-+│   └── pois.pdf          # PDF export
-+├── scripts/
-+│   └── fetch_data.py     # ArcGIS data/attachment synchronization and export script
-+├── .gitattributes
-+├── config.json           # Initial map settings and topic symbology
-+├── index.html            # Leaflet application, styling, and client-side logic
-+├── README.md             # Project documentation
-+└── VERSION               # Current application version
-+```
+ if __name__ == "__main__":
+--- /mnt/data/pts_v14_stage6_2_repo/docs/multi-layer-ingestion-v1.4.md	2026-09-24 12:07:01.415233520 +0000
++++ /mnt/data/pts_v14_stage6_3_repo/docs/multi-layer-ingestion-v1.4.md	2026-09-24 12:15:16.167976973 +0000
+@@ -75,17 +75,21 @@
+ 
+ Stage 6.2 extends attachment synchronization to all three datasets.
+ 
+-- Image attachments are downloaded locally for points, lines, and polygons.
+-- Existing point images keep the historical `data/attachments/<OBJECTID>_<attachmentId>_<name>` path to avoid a mass rewrite.
+-- New line images are stored under `data/attachments/lines/` and polygon images under `data/attachments/polygons/` so attachment/object IDs from different ArcGIS sublayers cannot collide.
+-- Non-image media keep the existing behavior: they remain direct public ArcGIS attachment URLs rather than local copies.
+-- Attachment metadata retrieval and image download failures abort the refresh. The exporter never interprets a failed ArcGIS attachment request as an empty attachment set.
++- Image and audio attachments are downloaded locally for points, lines, and polygons.
++- Existing point media keep the historical `data/attachments/<OBJECTID>_<attachmentId>_<name>` path to avoid a mass rewrite.
++- New line media are stored under `data/attachments/lines/` and polygon media under `data/attachments/polygons/` so attachment/object IDs from different ArcGIS sublayers cannot collide.
++- Media other than images and audio (for example video) remain direct public ArcGIS attachment URLs rather than local copies.
++- Attachment metadata retrieval and local image/audio download failures abort the refresh. The exporter never interprets a failed ArcGIS attachment request as an empty attachment set.
+ 
+ The export is a synchronization, not an append-only archive. Every successful run builds the current attachment reference set from the authoritative AGOL view and then removes local image files that are no longer referenced. Therefore:
+ 
+ - deleting an entity in AGOL removes it from the rewritten GeoJSON output;
+-- all locally cached image attachments that belonged only to that deleted entity are removed;
+-- deleting an attachment from a surviving AGOL entity removes the local copy on the next successful refresh;
++- all locally cached image/audio attachments that belonged only to that deleted entity are removed;
++- deleting an image/audio attachment from a surviving AGOL entity removes the local copy on the next successful refresh;
+ - GitHub Actions stages these file deletions because it commits `data/` with `git add data/`.
+ 
++### Downloaded media types
 +
-+---
++The local static archive downloads both image and audio media. Audio detection uses either the ArcGIS attachment MIME type (`audio/*`) or common audio filename extensions such as `.mp3`, `.wav`, `.m4a`, `.aac`, `.ogg`, `.flac`, `.opus`, `.aiff`, `.amr`, and `.m4b`. Audio files are preserved byte-for-byte and are not transcoded. Video and other unsupported media remain direct ArcGIS URLs.
 +
-+## Local Preview
+ Website-managed metadata sidecar records are intentionally not auto-deleted when an ArcGIS entity disappears. Data QA reports such records as sidecar orphans so they can be reviewed rather than destructively removed.
+--- /mnt/data/pts_v14_stage6_2_repo/TESTING-v1.4-stage6.md	2026-09-24 12:13:41.516322508 +0000
++++ /mnt/data/pts_v14_stage6_3_repo/TESTING-v1.4-stage6.md	2026-09-24 12:15:28.483320083 +0000
+@@ -42,22 +42,24 @@
+ 
+ ## 4. Verify attachment synchronization and deletion cleanup
+ 
+-The exporter now synchronizes attachments for points, lines, and polygons. Image attachments for lines and polygons should appear under:
++The exporter now synchronizes attachments for points, lines, and polygons. Image and audio attachments for lines and polygons should appear under:
+ 
+ - `data/attachments/lines/`
+ - `data/attachments/polygons/`
+ 
+-Non-image media remain direct ArcGIS URLs, matching the existing point behavior.
++Audio files are downloaded locally without transcoding. Video and other unsupported media remain direct ArcGIS URLs.
+ 
+ For a controlled deletion test, use a disposable ArcGIS test entity or attachment only:
+ 
+-1. Run the export and verify its GeoJSON feature and local image attachment exist.
+-2. Delete that test entity (or one of its image attachments) in AGOL.
++1. Run the export and verify its GeoJSON feature and local image/audio attachment exist.
++2. Delete that test entity (or one of its image/audio attachments) in AGOL.
+ 3. Run `py scripts\fetch_data.py` again.
+ 4. Verify the deleted entity is absent from the relevant GeoJSON and its no-longer-referenced local image file is removed.
+ 
+ Do not use a production research record for this test.
+ 
++For an audio test, use a disposable attachment such as `.mp3`, `.wav`, or `.m4a` and confirm that the GeoJSON `attachments` array contains a local `data/attachments/...` path rather than an ArcGIS URL.
 +
-+Run a local HTTP server from the repository root (do not open `index.html` directly with `file://`):
-+
-+```cmd
-+py -m http.server 8000
-+```
-+
-+Then open:
-+
-+```text
-+http://localhost:8000/
-+```
-+
-+---
-+
-+## Runtime Architecture
-+
-+At runtime, `index.html` loads `config.json` and `data/pois.geojson` from the repository. The browser does **not** query the ArcGIS Feature Service directly. ArcGIS synchronization is handled separately by `scripts/fetch_data.py` and the scheduled GitHub Actions workflow.
-+
-+---
-+
-+## Version
-+
-+Current release: **1.2.0**
+ ## 5. Run Data QA
+ 
+ ```cmd

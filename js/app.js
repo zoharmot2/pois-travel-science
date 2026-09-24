@@ -9,15 +9,14 @@ import {
     entitiesToFeatureCollection
 } from './entities.js';
 import {
-    addEntityFiltersControl,
+    addMapControlPanel,
     createFilterState,
-    createTopicFilterItems,
+    createGeometryFilterItems,
     createTypeFilterItems,
-    filterEntitiesByDimensions
+    filterEntitiesByTypeAndGeometry
 } from './filters.js';
 import {
-    addCoordinateControl,
-    addUtilityControls,
+    attachCoordinateDisplay,
     attachOverlayHandlers,
     attachSearchHandler,
     createMap,
@@ -27,7 +26,6 @@ import {
 applyEmbedMode();
 
 const map = createMap();
-addUtilityControls(map);
 
 const detailPanel = createEntityDetailPanel({
     onVisibilityChange: () => {
@@ -38,9 +36,9 @@ const detailPanel = createEntityDetailPanel({
 let geojsonLayer = null;
 let allEntities = [];
 let entityFeatureIndex = new WeakMap();
-let activeTopicsState = {};
 let activeTypesState = {};
-let topicSettingsGlobal = {};
+let activeGeometryState = {};
+let typeSettingsGlobal = {};
 let defaultStyleGlobal = {};
 
 function getEntityForFeature(feature) {
@@ -51,10 +49,10 @@ function refreshMapEntities() {
     if (!geojsonLayer) return;
 
     geojsonLayer.clearLayers();
-    const filteredEntities = filterEntitiesByDimensions(
+    const filteredEntities = filterEntitiesByTypeAndGeometry(
         allEntities,
-        activeTopicsState,
-        activeTypesState
+        activeTypesState,
+        activeGeometryState
     );
     geojsonLayer.addData(entitiesToFeatureCollection(filteredEntities));
 
@@ -63,7 +61,7 @@ function refreshMapEntities() {
         detailPanel.close();
     }
 
-    document.getElementById('poiCount').textContent = `${filteredEntities.length} POIs`;
+    document.getElementById('poiCount').textContent = `${filteredEntities.length} entities`;
 }
 
 loadAppData()
@@ -72,48 +70,56 @@ loadAppData()
         entityFeatureIndex = createEntityFeatureIndex(allEntities);
 
         const symbologyConfig = config.symbology || {};
-        topicSettingsGlobal = symbologyConfig.topics || {};
+        typeSettingsGlobal = symbologyConfig.types || {};
         defaultStyleGlobal = symbologyConfig.default || {
             color: '#64748B',
-            shape: 'circle',
-            label: 'Other'
+            visible: true,
+            label: 'Other Type',
+            point: { shape: 'circle', radius: 7 },
+            line: { weight: 4, opacity: 0.85 },
+            polygon: { weight: 2, opacity: 0.9, fillOpacity: 0.18 }
         };
 
-        const topicFilterItems = createTopicFilterItems(
+        const typeFilterItems = createTypeFilterItems(
             allEntities,
-            topicSettingsGlobal,
+            typeSettingsGlobal,
             defaultStyleGlobal
         );
-        const typeFilterItems = createTypeFilterItems(allEntities);
+        const geometryFilterItems = createGeometryFilterItems(allEntities);
 
-        activeTopicsState = createFilterState(topicFilterItems);
         activeTypesState = createFilterState(typeFilterItems);
+        activeGeometryState = createFilterState(geometryFilterItems);
 
-        const unconfiguredTopics = topicFilterItems.filter(
+        const unconfiguredTypes = typeFilterItems.filter(
             item => !item.configured && item.count > 0
         );
-        if (unconfiguredTopics.length) {
+        if (unconfiguredTypes.length) {
             console.warn(
-                'POI_Topic values are present in data but missing from config symbology. ' +
+                'POI_Type values are present in data but missing from config symbology. ' +
                 'They remain visible and filterable using the default style:',
-                unconfiguredTopics.map(item => item.value)
+                unconfiguredTypes.map(item => item.value)
             );
         }
 
         geojsonLayer = L.geoJSON(null, {
             pointToLayer: function (feature, latlng) {
                 const entity = getEntityForFeature(feature);
-                const topicValue = entity ? entity.topic : '';
-                const setting = topicSettingsGlobal[topicValue] || defaultStyleGlobal;
-                const icon = createCustomIcon(setting.shape || 'circle', setting.color || '#64748B');
+                const typeValue = entity ? entity.type : '';
+                const setting = typeSettingsGlobal[typeValue] || defaultStyleGlobal;
+                const pointSetting = setting.point || defaultStyleGlobal.point || {};
+                const icon = createCustomIcon(
+                    pointSetting.shape || 'circle',
+                    setting.color || defaultStyleGlobal.color || '#64748B',
+                    pointSetting.radius ?? 7
+                );
                 return L.marker(latlng, { icon });
             },
             style: function (feature) {
                 const entity = getEntityForFeature(feature);
-                const topicValue = entity ? entity.topic : '';
-                const setting = topicSettingsGlobal[topicValue] || defaultStyleGlobal;
+                const typeValue = entity ? entity.type : '';
+                const setting = typeSettingsGlobal[typeValue] || defaultStyleGlobal;
                 const geometryFamily = entity ? entity.geometryFamily : 'line';
-                return createVectorStyle(setting, geometryFamily);
+                return createVectorStyle(setting, geometryFamily, defaultStyleGlobal);
             },
             onEachFeature: function (feature, layer) {
                 const entity = getEntityForFeature(feature);
@@ -126,16 +132,18 @@ loadAppData()
 
         refreshMapEntities();
         setInitialExtent(map, config, geojsonLayer);
-        addEntityFiltersControl(map, {
-            topicItems: topicFilterItems,
+
+        addMapControlPanel(map, {
             typeItems: typeFilterItems,
-            activeTopicsState,
+            geometryItems: geometryFilterItems,
             activeTypesState,
+            activeGeometryState,
             onChange: refreshMapEntities
         });
-        addCoordinateControl(map);
+
         attachSearchHandler(map, geojsonLayer, getEntityForFeature);
         attachOverlayHandlers(map);
+        attachCoordinateDisplay(map);
     })
     .catch(error => {
         console.error('Error loading application data:', error);

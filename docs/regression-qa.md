@@ -81,7 +81,7 @@ Also verify:
 - Counts remain visible beside values.
 - Scrolling inside Filters does not zoom the map.
 - `POI_Type = Undefined` may appear as a source-data value until corrected in ArcGIS Online; it must not break filtering.
-- A Topic missing explicit config styling remains filterable and uses the default marker style.
+- A POI Type missing explicit config styling remains filterable and uses the default style across geometry families.
 
 ### D. Search
 

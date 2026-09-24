@@ -1,6 +1,6 @@
 # Documentation Index
 
-This directory documents the v1.3 Foundation architecture and operating workflow for POIS Travel Science.
+This directory documents the released v1.3 Foundation architecture and the active v1.4 development work for POIS Travel Science.
 
 ## System and data contracts
 
@@ -13,7 +13,9 @@ This directory documents the v1.3 Foundation architecture and operating workflow
 
 ## User-interface behavior
 
-- [`filtering.md`](filtering.md) — independent Research Topic and POI Type filtering.
+- [`filtering.md`](filtering.md) — Topic/Type semantics and the v1.4 transition to Type-based primary filtering/symbology.
+- [`symbology-v1.4.md`](symbology-v1.4.md) — POI Type visual model shared across Points, Lines, and Polygons.
+- [`ui-v1.4.md`](ui-v1.4.md) — integrated Type/Search/Geometry/Map Utilities control layout and responsive behavior.
 - [`detail-panel.md`](detail-panel.md) — concise popup plus persistent Entity Detail Panel.
 
 ## Development, QA, and release process
@@ -24,6 +26,8 @@ This directory documents the v1.3 Foundation architecture and operating workflow
 
 ## Current release boundary
 
-The current official release is **1.3.0 (Foundation)**. Actual line/polygon export, analytics, clustering, external enrichment, Trips, Collections, Routes, and public/private publication logic remain later work.
+The current official release is **1.3.0 (Foundation)**. v1.4 development is focused on the UI redesign plus actual Point/Line/Polygon ingestion and display. Analytics, clustering, external enrichment, Trips, Collections, Routes, and public/private publication logic remain later work.
 
 See [`release-1.3.0.md`](release-1.3.0.md) for the release summary.
+
+- [v1.4 Multi-Layer ArcGIS Ingestion](multi-layer-ingestion-v1.4.md) — FeatureServer layers 0/1/2, domain harvesting, and export contract.

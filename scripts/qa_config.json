@@ -6,32 +6,41 @@
   "typeField": "POI_Type",
   "nameField": "POI_Name",
   "attachmentField": "attachments",
-  "topicConfigPath": "config.json",
+  "symbologyConfigPath": "config.json",
   "metadataSidecarPath": "data/site/poi-meta.json",
   "requiredFiles": [
     "data/pois.geojson",
     "data/pois.csv",
     "data/pois.pdf",
-    "data/site/poi-meta.json"
+    "data/site/poi-meta.json",
+    "data/lines.geojson",
+    "data/polygons.geojson",
+    "data/derived/layers-metadata.json"
   ],
   "datasets": [
     {
       "name": "points",
       "path": "data/pois.geojson",
       "required": true,
-      "expectedGeometryFamilies": ["point"]
+      "expectedGeometryFamilies": [
+        "point"
+      ]
     },
     {
       "name": "lines",
       "path": "data/lines.geojson",
-      "required": false,
-      "expectedGeometryFamilies": ["line"]
+      "required": true,
+      "expectedGeometryFamilies": [
+        "line"
+      ]
     },
     {
       "name": "polygons",
       "path": "data/polygons.geojson",
-      "required": false,
-      "expectedGeometryFamilies": ["polygon"]
+      "required": true,
+      "expectedGeometryFamilies": [
+        "polygon"
+      ]
     }
   ]
 }
