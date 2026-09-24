@@ -3,6 +3,12 @@ const LINE_GEOMETRY_TYPES = new Set(['LineString', 'MultiLineString']);
 const POLYGON_GEOMETRY_TYPES = new Set(['Polygon', 'MultiPolygon']);
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
+const IMAGE_ATTACHMENT_PATTERN = /\.(jpe?g|png|gif|webp|bmp|tiff?)$/i;
+const AUDIO_ATTACHMENT_PATTERN = /\.(mp3|wav|m4a|aac|ogg|oga|flac|opus|wma|aiff?|amr|m4b)$/i;
+const VIDEO_ATTACHMENT_PATTERN = /\.(mp4|mov|m4v|webm|avi|mkv)$/i;
+const MEDIA_KINDS = new Set(['image', 'audio', 'video', 'other']);
+const MEDIA_STORAGE = new Set(['local', 'remote']);
+
 
 function escapeHtml(value) {
     return String(value ?? '')
@@ -130,6 +136,81 @@ export function normalizeAttachments(value) {
         .filter(Boolean);
 }
 
+export function inferAttachmentKind(url = '', contentType = '') {
+    const cleanUrl = String(url || '').split('?')[0];
+    const mime = String(contentType || '').toLowerCase();
+    if (mime.startsWith('image/') || IMAGE_ATTACHMENT_PATTERN.test(cleanUrl)) return 'image';
+    if (mime.startsWith('audio/') || AUDIO_ATTACHMENT_PATTERN.test(cleanUrl)) return 'audio';
+    if (mime.startsWith('video/') || VIDEO_ATTACHMENT_PATTERN.test(cleanUrl)) return 'video';
+    return 'other';
+}
+
+function attachmentDisplayName(url, index) {
+    const cleanUrl = String(url || '').split('?')[0].replace(/\\/g, '/');
+    const lastPart = cleanUrl.split('/').filter(Boolean).pop();
+    if (!lastPart || /^\d+$/.test(lastPart)) return `Attachment ${index + 1}`;
+    try {
+        return decodeURIComponent(lastPart);
+    } catch {
+        return lastPart;
+    }
+}
+
+export function normalizeAttachmentMedia(value, attachments = []) {
+    const attachmentUrls = normalizeAttachments(attachments);
+    if (!Array.isArray(value)) {
+        return attachmentUrls.map((url, index) => ({
+            url,
+            name: attachmentDisplayName(url, index),
+            contentType: '',
+            kind: inferAttachmentKind(url),
+            storage: /^https?:\/\//i.test(url) ? 'remote' : 'local',
+            attachmentId: null,
+            parentObjectId: null,
+            sourceDataset: null
+        }));
+    }
+
+    const normalized = [];
+    value.forEach((item, index) => {
+        if (!item || typeof item !== 'object') return;
+        const url = String(item.url || '').trim();
+        if (!url) return;
+        const kind = MEDIA_KINDS.has(item.kind) ? item.kind : inferAttachmentKind(url, item.contentType);
+        const storage = MEDIA_STORAGE.has(item.storage)
+            ? item.storage
+            : (/^https?:\/\//i.test(url) ? 'remote' : 'local');
+        normalized.push({
+            url,
+            name: String(item.name || attachmentDisplayName(url, index)),
+            contentType: String(item.contentType || ''),
+            kind,
+            storage,
+            attachmentId: item.attachmentId ?? null,
+            parentObjectId: item.parentObjectId ?? null,
+            sourceDataset: item.sourceDataset || null
+        });
+    });
+
+    // Preserve backward compatibility if metadata is partial or absent.
+    const knownUrls = new Set(normalized.map(item => item.url));
+    attachmentUrls.forEach((url, index) => {
+        if (knownUrls.has(url)) return;
+        normalized.push({
+            url,
+            name: attachmentDisplayName(url, index),
+            contentType: '',
+            kind: inferAttachmentKind(url),
+            storage: /^https?:\/\//i.test(url) ? 'remote' : 'local',
+            attachmentId: null,
+            parentObjectId: null,
+            sourceDataset: null
+        });
+    });
+
+    return normalized;
+}
+
 /**
  * Normalize an ArcGIS GlobalID into the website's canonical stable-ID form.
  *
@@ -224,7 +305,11 @@ export function createEntity(feature, options = {}) {
         collectionDate: getProperty(properties, 'Collection_date') || '',
         latitude,
         longitude,
-        attachments: normalizeAttachments(getProperty(properties, 'attachments'))
+        attachments: normalizeAttachments(getProperty(properties, 'attachments')),
+        attachmentMedia: normalizeAttachmentMedia(
+            getProperty(properties, 'attachment_media'),
+            getProperty(properties, 'attachments')
+        )
     };
 }
 
@@ -355,6 +440,7 @@ export function createVectorStyle(setting = {}, geometryFamily = 'line', default
         const polygonDefault = defaultSetting.polygon || {};
         const polygon = setting.polygon || {};
         return {
+            pane: 'polygonPane',
             color,
             weight: polygon.weight ?? polygonDefault.weight ?? 2,
             opacity: polygon.opacity ?? polygonDefault.opacity ?? 0.9,
@@ -367,6 +453,7 @@ export function createVectorStyle(setting = {}, geometryFamily = 'line', default
     const lineDefault = defaultSetting.line || {};
     const line = setting.line || {};
     return {
+        pane: 'linePane',
         color,
         weight: line.weight ?? lineDefault.weight ?? 4,
         opacity: line.opacity ?? lineDefault.opacity ?? 0.85,
@@ -379,15 +466,19 @@ export function buildPopupContent(entityOrProperties) {
         ? entityOrProperties
         : createEntity({ type: 'Feature', properties: entityOrProperties || {}, geometry: null });
 
-    const name = entity.name || 'Unnamed POI';
-    const topic = entity.topic || '—';
-    const type = entity.type || '—';
+    const geometryLabel = entity.geometryFamily === 'line'
+        ? 'Line'
+        : (entity.geometryFamily === 'polygon' ? 'Polygon' : 'Point');
+    const name = entity.name || `Unnamed ${geometryLabel}`;
+    const topic = entity.topic || 'Unspecified';
+    const type = entity.type || 'Unspecified';
 
     return `
         <div class="popup-summary">
             <div class="popup-title">${escapeHtml(name)}</div>
-            <div class="popup-field"><strong>Research Topic:</strong> ${escapeHtml(topic)}</div>
             <div class="popup-field"><strong>POI Type:</strong> ${escapeHtml(type)}</div>
+            <div class="popup-field"><strong>Research Topic:</strong> ${escapeHtml(topic)}</div>
+            <div class="popup-field"><strong>Geometry:</strong> ${escapeHtml(geometryLabel)}</div>
             <button type="button" class="popup-detail-button">View details</button>
         </div>
     `;

@@ -11,10 +11,12 @@ import {
 
 const SITE_METADATA_PATH = 'data/site/poi-meta.json';
 
-// Stage 8 keeps only the current point export active. Future line/polygon exports
-// can be added here without changing the Entity/filters/search/detail architecture.
+// v1.4 Stage 7 activates all three ArcGIS-derived spatial datasets.
+// They share the same Entity normalization/filter/search/detail pipeline.
 const ENTITY_DATA_SOURCES = Object.freeze([
-    { sourceDataset: 'points', path: 'data/pois.geojson', required: true }
+    { sourceDataset: 'points', path: 'data/pois.geojson', required: true },
+    { sourceDataset: 'lines', path: 'data/lines.geojson', required: true },
+    { sourceDataset: 'polygons', path: 'data/polygons.geojson', required: true }
 ]);
 
 function withCacheBuster(path) {

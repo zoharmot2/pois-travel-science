@@ -26,6 +26,13 @@ export function createMap() {
 
     const map = L.map('map', { layers: [osmLayer] });
 
+    // Render polygons below lines. Leaflet point markers already render in the
+    // standard marker pane above both vector families.
+    const polygonPane = map.createPane('polygonPane');
+    polygonPane.style.zIndex = '410';
+    const linePane = map.createPane('linePane');
+    linePane.style.zIndex = '420';
+
     const baseMaps = {
         OpenStreetMap: osmLayer,
         'Satellite (Esri World Imagery)': satelliteLayer,
@@ -112,61 +119,186 @@ export function focusMapOnLayer(map, layer, entity = null, options = {}) {
     return false;
 }
 
-export function attachSearchHandler(map, geojsonLayer, getEntityForFeature = null) {
+export function attachSearchHandler(map, geojsonLayer, getEntityForFeature = null, options = {}) {
     const searchInput = document.getElementById('poiSearchInput');
-    if (!searchInput) return;
+    if (!searchInput) return { refresh: () => {}, close: () => {} };
 
     const SEARCH_DELAY_MS = 180;
+    const SEARCH_RESULT_LIMIT = 8;
     let searchTimer = null;
-    let lastOpenedLayer = null;
+    let currentMatches = [];
+    let activeResultIndex = -1;
+
+    const resultsElement = document.createElement('div');
+    resultsElement.id = 'poiSearchResults';
+    resultsElement.className = 'map-search-results';
+    resultsElement.setAttribute('role', 'listbox');
+    resultsElement.setAttribute('aria-label', 'POI search results');
+    resultsElement.hidden = true;
+    searchInput.insertAdjacentElement('afterend', resultsElement);
+    searchInput.setAttribute('aria-controls', resultsElement.id);
+    searchInput.setAttribute('aria-expanded', 'false');
 
     function normalizeSearchText(value) {
         return String(value || '').toLocaleLowerCase().trim();
     }
 
-    function findBestMatchingLayer(query) {
-        let exactMatch = null;
-        let prefixMatch = null;
-        let partialMatch = null;
+    function geometryLabel(entity) {
+        if (!entity) return 'Entity';
+        if (entity.geometryFamily === 'point') return 'Point';
+        if (entity.geometryFamily === 'line') return 'Line';
+        if (entity.geometryFamily === 'polygon') return 'Polygon';
+        return entity.geometryType || 'Entity';
+    }
+
+    function entityDisplayName(entity, properties = {}) {
+        const name = entity ? entity.name : (properties.POI_Name || properties.Name || '');
+        return String(name || '').trim();
+    }
+
+    function collectSearchMatches(query) {
+        const matches = [];
 
         geojsonLayer.eachLayer(layer => {
-            if (exactMatch) return;
-
             const entity = getEntityForFeature ? getEntityForFeature(layer.feature) : null;
             const properties = layer.feature && layer.feature.properties ? layer.feature.properties : {};
-            const name = normalizeSearchText(
-                entity ? entity.name : (properties.POI_Name || properties.Name || '')
-            );
+            const displayName = entityDisplayName(entity, properties);
+            const normalizedName = normalizeSearchText(displayName);
+            if (!normalizedName || !normalizedName.includes(query)) return;
 
-            if (!name) return;
-            if (name === query) {
-                exactMatch = layer;
-            } else if (!prefixMatch && name.startsWith(query)) {
-                prefixMatch = layer;
-            } else if (!partialMatch && name.includes(query)) {
-                partialMatch = layer;
-            }
+            let rank = 2;
+            if (normalizedName === query) rank = 0;
+            else if (normalizedName.startsWith(query)) rank = 1;
+
+            matches.push({
+                layer,
+                entity,
+                displayName,
+                normalizedName,
+                rank
+            });
         });
 
-        return exactMatch || prefixMatch || partialMatch;
+        matches.sort((a, b) => (
+            a.rank - b.rank ||
+            a.displayName.localeCompare(b.displayName, undefined, { sensitivity: 'base' })
+        ));
+
+        return matches.slice(0, SEARCH_RESULT_LIMIT);
+    }
+
+    // Retained as a named helper because Stage 3.1 established the best-match
+    // search contract. Stage 9 now exposes multiple ranked matches in the UI.
+    function findBestMatchingLayer(query) {
+        const bestMatch = collectSearchMatches(query)[0];
+        return bestMatch ? bestMatch.layer : null;
+    }
+
+    function closeResults() {
+        currentMatches = [];
+        activeResultIndex = -1;
+        resultsElement.innerHTML = '';
+        resultsElement.hidden = true;
+        searchInput.setAttribute('aria-expanded', 'false');
+        searchInput.removeAttribute('aria-activedescendant');
+    }
+
+    function updateActiveResult() {
+        const buttons = [...resultsElement.querySelectorAll('.map-search-result')];
+        buttons.forEach((button, index) => {
+            const active = index === activeResultIndex;
+            button.classList.toggle('active', active);
+            button.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+
+        const activeButton = buttons[activeResultIndex];
+        if (activeButton) {
+            searchInput.setAttribute('aria-activedescendant', activeButton.id);
+            activeButton.scrollIntoView({ block: 'nearest' });
+        } else {
+            searchInput.removeAttribute('aria-activedescendant');
+        }
+    }
+
+    function selectMatch(match) {
+        if (!match) return;
+
+        focusMapOnLayer(map, match.layer, match.entity, {
+            pointZoom: 14,
+            maxZoom: 14,
+            padding: [40, 40]
+        });
+
+        if (typeof options.onSelectEntity === 'function' && match.entity) {
+            options.onSelectEntity(match.entity, match.layer);
+        } else if (typeof match.layer.openPopup === 'function') {
+            match.layer.openPopup();
+        }
+
+        closeResults();
+    }
+
+    function renderSearchResults(query) {
+        currentMatches = collectSearchMatches(query);
+        activeResultIndex = currentMatches.length ? 0 : -1;
+        resultsElement.innerHTML = '';
+        resultsElement.hidden = false;
+        searchInput.setAttribute('aria-expanded', 'true');
+
+        if (!currentMatches.length) {
+            const empty = document.createElement('div');
+            empty.className = 'map-search-empty';
+            empty.textContent = 'No matching visible entities.';
+            resultsElement.appendChild(empty);
+            searchInput.removeAttribute('aria-activedescendant');
+            return;
+        }
+
+        currentMatches.forEach((match, index) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'map-search-result';
+            button.id = `poiSearchResult-${index}`;
+            button.setAttribute('role', 'option');
+            button.setAttribute('aria-selected', index === activeResultIndex ? 'true' : 'false');
+
+            const geometry = document.createElement('span');
+            geometry.className = `map-search-result-geometry geometry-${match.entity ? match.entity.geometryFamily : 'unknown'}`;
+            geometry.textContent = geometryLabel(match.entity);
+
+            const text = document.createElement('span');
+            text.className = 'map-search-result-text';
+
+            const name = document.createElement('span');
+            name.className = 'map-search-result-name';
+            name.textContent = match.displayName;
+
+            const meta = document.createElement('span');
+            meta.className = 'map-search-result-meta';
+            const type = match.entity && match.entity.type ? match.entity.type : 'Unspecified';
+            const topic = match.entity && match.entity.topic ? match.entity.topic : '';
+            meta.textContent = topic ? `${type} · ${topic}` : type;
+
+            text.append(name, meta);
+            button.append(geometry, text);
+            button.addEventListener('click', event => {
+                event.preventDefault();
+                event.stopPropagation();
+                selectMatch(match);
+            });
+            resultsElement.appendChild(button);
+        });
+
+        updateActiveResult();
     }
 
     function runSearch() {
         const query = normalizeSearchText(searchInput.value);
         if (!query) {
-            lastOpenedLayer = null;
+            closeResults();
             return;
         }
-
-        const matchedLayer = findBestMatchingLayer(query);
-        if (!matchedLayer || matchedLayer === lastOpenedLayer) return;
-
-        lastOpenedLayer = matchedLayer;
-        const entity = getEntityForFeature ? getEntityForFeature(matchedLayer.feature) : null;
-        focusMapOnLayer(map, matchedLayer, entity, { pointZoom: 14, maxZoom: 14 });
-        if (typeof matchedLayer.openPopup === 'function') {
-            matchedLayer.openPopup();
-        }
+        renderSearchResults(query);
     }
 
     searchInput.addEventListener('input', function () {
@@ -175,11 +307,55 @@ export function attachSearchHandler(map, geojsonLayer, getEntityForFeature = nul
     });
 
     searchInput.addEventListener('keydown', function (event) {
+        if (event.key === 'ArrowDown' && currentMatches.length) {
+            event.preventDefault();
+            activeResultIndex = (activeResultIndex + 1) % currentMatches.length;
+            updateActiveResult();
+            return;
+        }
+
+        if (event.key === 'ArrowUp' && currentMatches.length) {
+            event.preventDefault();
+            activeResultIndex = (activeResultIndex - 1 + currentMatches.length) % currentMatches.length;
+            updateActiveResult();
+            return;
+        }
+
+        if (event.key === 'Escape') {
+            closeResults();
+            return;
+        }
+
         if (event.key === 'Enter') {
+            event.preventDefault();
             window.clearTimeout(searchTimer);
-            runSearch();
+            const query = normalizeSearchText(searchInput.value);
+            if (!query) {
+                closeResults();
+                return;
+            }
+
+            if (!currentMatches.length) {
+                renderSearchResults(query);
+            }
+            const match = currentMatches[activeResultIndex >= 0 ? activeResultIndex : 0];
+            if (match) selectMatch(match);
         }
     });
+
+    document.addEventListener('click', event => {
+        if (event.target === searchInput || resultsElement.contains(event.target)) return;
+        closeResults();
+    });
+
+    return {
+        refresh: () => {
+            const query = normalizeSearchText(searchInput.value);
+            if (query && !resultsElement.hidden) renderSearchResults(query);
+        },
+        close: closeResults,
+        findBestMatchingLayer
+    };
 }
 
 export function attachOverlayHandlers(map) {

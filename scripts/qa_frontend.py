@@ -167,7 +167,7 @@ def main() -> int:
             error("V14_UI_CONTRACT", f"v1.4 integrated map-control contract missing: {token}")
     if "createTopicFilterItems" in app or "activeTopicsState" in app:
         error("TOPIC_LEGEND_REMOVAL", "Research Topic must not remain an active primary legend/filter in app.js.")
-    if "getDimensionValues(entities, 'type')" not in filters or "extraValues" not in filters:
+    if "extraValues" not in filters or "getTypeFilterValue(entity)" not in filters:
         error("TYPE_EXTENSIBILITY", "POI Type legend must include live values not yet configured.")
     if "unconfiguredTypes" not in app or "default style" not in app.lower():
         error("TYPE_FALLBACK", "Unconfigured POI Types must remain visible with a default style and warning.")
@@ -234,6 +234,85 @@ def main() -> int:
                 error("MULTI_LAYER_QA_OUTPUT", f"QA requiredFiles is missing Stage 6 output: {output}")
     except Exception as exc:
         error("MULTI_LAYER_QA_CONFIG", f"Unable to validate Stage 6 QA configuration: {exc}")
+
+
+    # v1.4 Stage 7 live multi-geometry rendering contract.
+    for token in [
+        "{ sourceDataset: 'points', path: 'data/pois.geojson', required: true }",
+        "{ sourceDataset: 'lines', path: 'data/lines.geojson', required: true }",
+        "{ sourceDataset: 'polygons', path: 'data/polygons.geojson', required: true }"
+    ]:
+        if token not in data_js:
+            error("MULTI_GEOMETRY_DATA_SOURCE", f"Active Stage 7 data source missing: {token}")
+    for token in ["createPane('polygonPane')", "createPane('linePane')", "polygonPane.style.zIndex", "linePane.style.zIndex"]:
+        if token not in map_js:
+            error("MULTI_GEOMETRY_PANES", f"Stage 7 geometry pane contract missing: {token}")
+    for token in ["pane: 'polygonPane'", "pane: 'linePane'"]:
+        if token not in entities:
+            error("MULTI_GEOMETRY_STYLE", f"Stage 7 vector style pane contract missing: {token}")
+
+    # v1.4 Stage 8 unified Type + Geometry filtering refinement.
+    for token in [
+        "UNSPECIFIED_TYPE_VALUE", "getTypeFilterValue", "computeFilterFacets",
+        "updateFilterSummary", "Showing ${filteredCount} of ${totalCount} entities"
+    ]:
+        if token not in filters + app:
+            error("UNIFIED_FILTER_REFINEMENT", f"Stage 8 unified filter contract missing: {token}")
+    if filters.count("includeAllNone: true") < 2:
+        error("FILTER_ALL_NONE", "Both POI Type and Geometry controls must provide All/None actions.")
+    for token in [".map-ui-panel-summary", ".control-toggle-item.no-matches", ".synthetic-value"]:
+        if token not in css:
+            error("FILTER_REFINEMENT_STYLE", f"Stage 8 filter-refinement styling missing: {token}")
+    if "!item.synthetic" not in app:
+        error("UNSPECIFIED_TYPE_WARNING", "UI-only Unspecified POI Type must not be treated as an unconfigured ArcGIS Type.")
+
+
+    # v1.4 Stage 9 multi-geometry search + Detail Panel refinement.
+    for token in [
+        "SEARCH_RESULT_LIMIT = 8", "collectSearchMatches", "map-search-results",
+        "ArrowDown", "ArrowUp", "No matching visible entities.", "onSelectEntity"
+    ]:
+        if token not in map_js + app + css:
+            error("MULTI_GEOMETRY_SEARCH", f"Stage 9 search contract missing: {token}")
+    for token in [
+        ".map-search-result", ".map-search-result-geometry", ".geometry-point",
+        ".geometry-line", ".geometry-polygon"
+    ]:
+        if token not in css:
+            error("MULTI_GEOMETRY_SEARCH_STYLE", f"Stage 9 search-result styling missing: {token}")
+    for token in [
+        "getEntityDisplayName", "Unnamed ${geometryDisplayLabel(entity)}",
+        "Map Center (derived)", "Extent", "Source Dataset", "GeoJSON Geometry",
+        "entity-detail-audio-item", "<audio controls", "Open audio file"
+    ]:
+        if token not in details + css:
+            error("DETAIL_PANEL_REFINEMENT", f"Stage 9 detail-panel contract missing: {token}")
+
+    # v1.4 Stage 10 attachment/media contract across geometry families.
+    for token in [
+        "ATTACHMENT_MEDIA_FIELD", "classify_attachment", "attachment_media",
+        "attachmentSummary", "Image and audio", "video/other media"
+    ]:
+        if token not in fetch_script:
+            error("ATTACHMENT_MEDIA_EXPORT", f"Stage 10 media-export contract missing: {token}")
+    for token in [
+        "normalizeAttachmentMedia", "attachmentMedia", "inferAttachmentKind"
+    ]:
+        if token not in entities:
+            error("ATTACHMENT_MEDIA_ENTITY", f"Stage 10 Entity media contract missing: {token}")
+    for token in [
+        "Photos", "Audio", "Other Attachments", "entity-detail-other-item",
+        "<source src=", "Open video"
+    ]:
+        if token not in details + css:
+            error("ATTACHMENT_MEDIA_UI", f"Stage 10 media UI contract missing: {token}")
+    qa_data = read("scripts/qa_data.py")
+    for token in [
+        "ATTACHMENT_MEDIA_INVALID", "ATTACHMENT_MEDIA_MISMATCH",
+        "mediaKinds", "mediaStorage", "attachmentMediaField"
+    ]:
+        if token not in qa_data + read("scripts/qa_config.json"):
+            error("ATTACHMENT_MEDIA_QA", f"Stage 10 media QA contract missing: {token}")
 
     # Data fetching/cache behavior.
     if "cache: 'no-store'" not in data_js or "Date.now()" not in data_js:

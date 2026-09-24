@@ -58,6 +58,8 @@ FONT_URL = "https://github.com/googlefonts/noto-fonts/raw/main/hinted/ttf/NotoSa
 
 IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.gif', '.webp')
 AUDIO_EXTENSIONS = ('.mp3', '.wav', '.m4a', '.aac', '.ogg', '.oga', '.flac', '.wma', '.opus', '.aiff', '.aif', '.amr', '.m4b')
+VIDEO_EXTENSIONS = ('.mp4', '.mov', '.m4v', '.webm', '.avi', '.mkv')
+ATTACHMENT_MEDIA_FIELD = 'attachment_media'
 DOMAIN_FIELDS = ("POI_Type", "POI_Topic", "Collect_Name")
 COMMON_ENTITY_FIELDS = (
     "GlobalID",
@@ -86,7 +88,8 @@ PRIORITY_FIELDS = [
     "POI_Description",
     "Latitude",
     "Longitude",
-    "attachments"
+    "attachments",
+    ATTACHMENT_MEDIA_FIELD
 ]
 
 
@@ -368,6 +371,47 @@ def get_attachments_map(layer_id, object_ids):
     return attachments_map
 
 
+def classify_attachment(att_name, content_type=""):
+    """Classify one ArcGIS attachment using MIME type first, then filename."""
+    name_lower = str(att_name or "").lower()
+    content_type_lower = str(content_type or "").lower()
+
+    if content_type_lower.startswith("image/") or name_lower.endswith(IMAGE_EXTENSIONS):
+        return "image"
+    if content_type_lower.startswith("audio/") or name_lower.endswith(AUDIO_EXTENSIONS):
+        return "audio"
+    if content_type_lower.startswith("video/") or name_lower.endswith(VIDEO_EXTENSIONS):
+        return "video"
+    return "other"
+
+
+def summarize_attachment_media(features):
+    """Return media counts for one exported dataset."""
+    summary = {
+        "references": 0,
+        "local": 0,
+        "remote": 0,
+        "byKind": {"image": 0, "audio": 0, "video": 0, "other": 0},
+    }
+    for feature in features:
+        media = feature.get("properties", {}).get(ATTACHMENT_MEDIA_FIELD, [])
+        if not isinstance(media, list):
+            continue
+        for item in media:
+            if not isinstance(item, dict):
+                continue
+            summary["references"] += 1
+            storage = item.get("storage")
+            if storage in ("local", "remote"):
+                summary[storage] += 1
+            kind = item.get("kind")
+            if kind in summary["byKind"]:
+                summary["byKind"][kind] += 1
+            else:
+                summary["byKind"]["other"] += 1
+    return summary
+
+
 def attachment_storage(spec, oid, att_id, att_name):
     """Return local and web-relative paths for one downloaded media attachment.
 
@@ -402,22 +446,28 @@ def attach_dataset_media(features, spec, metadata):
     """
     if not spec.get("downloadAttachments"):
         for feature in features:
-            feature.setdefault("properties", {})["attachments"] = []
+            props = feature.setdefault("properties", {})
+            props["attachments"] = []
+            props[ATTACHMENT_MEDIA_FIELD] = []
         return
 
     if metadata.get("hasAttachments") is False:
         for feature in features:
-            feature.setdefault("properties", {})["attachments"] = []
+            props = feature.setdefault("properties", {})
+            props["attachments"] = []
+            props[ATTACHMENT_MEDIA_FIELD] = []
         return
 
     object_ids = get_object_ids(features)
     attachments_info_map = get_attachments_map(spec["layerId"], object_ids)
     attachments_map = {}
+    attachment_media_map = {}
     base_url = layer_url(spec["layerId"])
 
     for oid in object_ids:
         att_list = attachments_info_map.get(oid, [])
         attachments_map[oid] = []
+        attachment_media_map[oid] = []
         for att in att_list:
             att_id = att.get("id")
             if att_id is None:
@@ -427,13 +477,10 @@ def attach_dataset_media(features, spec, metadata):
                 )
             att_name = att.get("name") or f"attachment-{att_id}"
             download_url = f"{base_url}/{oid}/attachments/{att_id}"
-            att_name_lower = str(att_name).lower()
-            content_type = str(att.get("contentType") or "").lower()
-            is_image = att_name_lower.endswith(IMAGE_EXTENSIONS) or content_type.startswith("image/")
-            is_audio = att_name_lower.endswith(AUDIO_EXTENSIONS) or content_type.startswith("audio/")
+            content_type = str(att.get("contentType") or "")
+            media_kind = classify_attachment(att_name, content_type)
 
-            if is_image or is_audio:
-                media_kind = "image" if is_image else "audio"
+            if media_kind in ("image", "audio"):
                 local_path, relative_path = attachment_storage(
                     spec, oid, att_id, att_name
                 )
@@ -450,20 +497,34 @@ def attach_dataset_media(features, spec, metadata):
                             f"{spec['sourceDataset']} OBJECTID {oid}: {exc}"
                         ) from exc
 
-                if is_image:
+                if media_kind == "image":
                     optimize_image(local_path, max_dim=600, quality=45)
-                attachments_map[oid].append(relative_path)
+                media_url = relative_path
+                storage = "local"
             else:
                 print(
-                    f"Skipping unsupported media download ({att_name}); "
-                    "keeping the direct URL."
+                    f"Keeping {media_kind} attachment as direct ArcGIS URL ({att_name})."
                 )
-                attachments_map[oid].append(download_url)
+                media_url = download_url
+                storage = "remote"
+
+            attachments_map[oid].append(media_url)
+            attachment_media_map[oid].append({
+                "url": media_url,
+                "name": att_name,
+                "contentType": content_type or None,
+                "kind": media_kind,
+                "storage": storage,
+                "attachmentId": att_id,
+                "parentObjectId": oid,
+                "sourceDataset": spec["sourceDataset"],
+            })
 
     for feature in features:
         props = feature.get("properties", {})
         oid = props.get("OBJECTID") or props.get("objectid") or props.get("FID")
         props["attachments"] = attachments_map.get(oid, [])
+        props[ATTACHMENT_MEDIA_FIELD] = attachment_media_map.get(oid, [])
 
 
 def local_attachment_references(snapshots):
@@ -569,6 +630,7 @@ def build_layer_metadata_record(spec, metadata, features):
         },
         "domains": domains,
         "observedValues": observed,
+        "attachmentSummary": summarize_attachment_media(features),
     }
 
 
@@ -591,6 +653,10 @@ def generate_csv(features, output_path):
             props = feat.get("properties", {}).copy()
             if isinstance(props.get("attachments"), list):
                 props["attachments"] = ", ".join(props["attachments"])
+            if isinstance(props.get(ATTACHMENT_MEDIA_FIELD), (list, dict)):
+                props[ATTACHMENT_MEDIA_FIELD] = json.dumps(
+                    props[ATTACHMENT_MEDIA_FIELD], ensure_ascii=False, separators=(",", ":")
+                )
             writer.writerow(props)
 
 
@@ -738,7 +804,8 @@ def fetch_and_process():
         print("   No orphan local attachments found.")
 
     print("Multi-layer ArcGIS export completed successfully.")
-    print("Image and audio attachments are synchronized for points, lines and polygons.")
+    print("Attachment media metadata is exported for points, lines and polygons.")
+    print("Images and audio are local; video/other media remain direct ArcGIS URLs.")
 
 
 if __name__ == "__main__":

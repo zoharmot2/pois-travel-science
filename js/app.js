@@ -10,6 +10,7 @@ import {
 } from './entities.js';
 import {
     addMapControlPanel,
+    computeFilterFacets,
     createFilterState,
     createGeometryFilterItems,
     createTypeFilterItems,
@@ -40,6 +41,8 @@ let activeTypesState = {};
 let activeGeometryState = {};
 let typeSettingsGlobal = {};
 let defaultStyleGlobal = {};
+let mapControlPanel = null;
+let searchController = null;
 
 function getEntityForFeature(feature) {
     return entityFeatureIndex.get(feature) || null;
@@ -61,12 +64,29 @@ function refreshMapEntities() {
         detailPanel.close();
     }
 
-    document.getElementById('poiCount').textContent = `${filteredEntities.length} entities`;
+    const totalCount = allEntities.length;
+    document.getElementById('poiCount').textContent = filteredEntities.length === totalCount
+        ? `${totalCount} entities`
+        : `${filteredEntities.length} / ${totalCount} entities`;
+
+    if (mapControlPanel && typeof mapControlPanel.updateFilterSummary === 'function') {
+        mapControlPanel.updateFilterSummary(
+            computeFilterFacets(allEntities, activeTypesState, activeGeometryState)
+        );
+    }
+
+    if (searchController && typeof searchController.refresh === 'function') {
+        searchController.refresh();
+    }
 }
 
 loadAppData()
-    .then(({ config, entities }) => {
+    .then(({ config, entities, geometrySummary }) => {
         allEntities = entities;
+        console.info(
+            `Loaded spatial entities: ${geometrySummary.point} points, ${geometrySummary.line} lines, ` +
+            `${geometrySummary.polygon} polygons${geometrySummary.unknown ? `, ${geometrySummary.unknown} unknown` : ''}.`
+        );
         entityFeatureIndex = createEntityFeatureIndex(allEntities);
 
         const symbologyConfig = config.symbology || {};
@@ -91,7 +111,7 @@ loadAppData()
         activeGeometryState = createFilterState(geometryFilterItems);
 
         const unconfiguredTypes = typeFilterItems.filter(
-            item => !item.configured && item.count > 0
+            item => !item.configured && !item.synthetic && item.count > 0
         );
         if (unconfiguredTypes.length) {
             console.warn(
@@ -130,10 +150,7 @@ loadAppData()
             }
         }).addTo(map);
 
-        refreshMapEntities();
-        setInitialExtent(map, config, geojsonLayer);
-
-        addMapControlPanel(map, {
+        mapControlPanel = addMapControlPanel(map, {
             typeItems: typeFilterItems,
             geometryItems: geometryFilterItems,
             activeTypesState,
@@ -141,7 +158,15 @@ loadAppData()
             onChange: refreshMapEntities
         });
 
-        attachSearchHandler(map, geojsonLayer, getEntityForFeature);
+        refreshMapEntities();
+        setInitialExtent(map, config, geojsonLayer);
+
+        searchController = attachSearchHandler(map, geojsonLayer, getEntityForFeature, {
+            onSelectEntity: (entity) => {
+                if (map && typeof map.closePopup === 'function') map.closePopup();
+                detailPanel.open(entity);
+            }
+        });
         attachOverlayHandlers(map);
         attachCoordinateDisplay(map);
     })

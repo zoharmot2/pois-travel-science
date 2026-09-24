@@ -4295,12 +4295,12 @@
         "esrignss_worst_fixtype": null,
         "esrignss_manual_locations": null,
         "Shape__Length": 26098.972730091966,
-        "CreationDate": "12/05/2026 10:32",
+        "CreationDate": "12/05/2026 13:32",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "24/09/2026 08:04",
+        "EditDate": "24/09/2026 11:04",
         "Editor": "mzohar_univhaifa25",
         "Title": "Test",
-        "Collection_date": "08/09/2026 08:04",
+        "Collection_date": "08/09/2026 11:04",
         "POI_Type": "General Site",
         "POI_Description": null,
         "POI_Name": "Test",
@@ -4308,6 +4308,18 @@
         "Collect_Name": "Motti Zohar",
         "attachments": [
           "data/attachments/lines/3_1_20250421_160452.jpg"
+        ],
+        "attachment_media": [
+          {
+            "url": "data/attachments/lines/3_1_20250421_160452.jpg",
+            "name": "20250421_160452.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 1,
+            "parentObjectId": 3,
+            "sourceDataset": "lines"
+          }
         ]
       }
     },
@@ -4337,12 +4349,12 @@
         "esrignss_worst_fixtype": null,
         "esrignss_manual_locations": null,
         "Shape__Length": 11363.18117327592,
-        "CreationDate": "24/09/2026 08:00",
+        "CreationDate": "24/09/2026 11:00",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "24/09/2026 08:00",
+        "EditDate": "24/09/2026 11:00",
         "Editor": "mzohar_univhaifa25",
         "Title": "-1",
-        "Collection_date": "01/09/2026 11:54",
+        "Collection_date": "01/09/2026 14:54",
         "POI_Type": "General Site",
         "POI_Description": null,
         "POI_Name": "Test",
@@ -4350,57 +4362,18 @@
         "Collect_Name": "Motti Zohar",
         "attachments": [
           "data/attachments/lines/4_2_20250328_184705.jpg"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "id": 5,
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [
-            -0.132220894069076,
-            51.5068581249971
-          ],
-          [
-            -0.135255094078371,
-            51.5044725992824
-          ],
-          [
-            -0.137227168316533,
-            51.5055490983895
-          ],
-          [
-            -0.136985533183214,
-            51.5027225232727
-          ]
-        ]
-      },
-      "properties": {
-        "OBJECTID": 5,
-        "GlobalID": "61641bec-59c2-4ad9-a87e-de2eb42cc9b8",
-        "esrignss_avg_h_rms": null,
-        "esrignss_avg_v_rms": null,
-        "esrignss_worst_h_rms": null,
-        "esrignss_worst_v_rms": null,
-        "esrignss_worst_fixtype": null,
-        "esrignss_manual_locations": 4,
-        "Shape__Length": 1342.3626475791252,
-        "CreationDate": "24/09/2026 08:44",
-        "Creator": "mzohar_univhaifa25",
-        "EditDate": "24/09/2026 08:44",
-        "Editor": "mzohar_univhaifa25",
-        "Title": "-1",
-        "Collection_date": "24/09/2026 08:44",
-        "POI_Type": "Religious/Faith",
-        "POI_Description": "Ffghhvv",
-        "POI_Name": "Fff",
-        "POI_Topic": "General",
-        "Collect_Name": "Motti Zohar",
-        "attachments": [
-          "data/attachments/lines/5_3_general_20260924114402.jpg",
-          "https://services5.arcgis.com/eJYUV73IZAY87Jwy/arcgis/rest/services/POI_Feature_Layer_view/FeatureServer/1/5/attachments/4"
+        ],
+        "attachment_media": [
+          {
+            "url": "data/attachments/lines/4_2_20250328_184705.jpg",
+            "name": "20250328_184705.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 2,
+            "parentObjectId": 4,
+            "sourceDataset": "lines"
+          }
         ]
       }
     },
@@ -4434,9 +4407,9 @@
         "esrignss_worst_fixtype": null,
         "esrignss_manual_locations": null,
         "Shape__Length": 19.82615774510936,
-        "CreationDate": "24/09/2026 09:08",
+        "CreationDate": "24/09/2026 12:08",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "24/09/2026 09:08",
+        "EditDate": "24/09/2026 12:08",
         "Editor": "mzohar_univhaifa25",
         "Title": "Sssa",
         "Collection_date": null,
@@ -4445,7 +4418,8 @@
         "POI_Name": null,
         "POI_Topic": null,
         "Collect_Name": null,
-        "attachments": []
+        "attachments": [],
+        "attachment_media": []
       }
     },
     {
@@ -4482,9 +4456,9 @@
         "esrignss_worst_fixtype": null,
         "esrignss_manual_locations": null,
         "Shape__Length": 31.88347102108937,
-        "CreationDate": "24/09/2026 09:10",
+        "CreationDate": "24/09/2026 12:10",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "24/09/2026 09:10",
+        "EditDate": "24/09/2026 12:10",
         "Editor": "mzohar_univhaifa25",
         "Title": "Trail",
         "Collection_date": null,
@@ -4493,7 +4467,8 @@
         "POI_Name": "Hhhssh",
         "POI_Topic": "General",
         "Collect_Name": "Motti Zohar",
-        "attachments": []
+        "attachments": [],
+        "attachment_media": []
       }
     },
     {
@@ -4550,18 +4525,19 @@
         "esrignss_worst_fixtype": null,
         "esrignss_manual_locations": null,
         "Shape__Length": 83.9484398882263,
-        "CreationDate": "24/09/2026 10:19",
+        "CreationDate": "24/09/2026 13:19",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "24/09/2026 10:19",
+        "EditDate": "24/09/2026 13:19",
         "Editor": "mzohar_univhaifa25",
         "Title": "Trail",
-        "Collection_date": "24/09/2026 10:18",
+        "Collection_date": "24/09/2026 13:18",
         "POI_Type": "General Site",
         "POI_Description": "Automatic trail capture",
         "POI_Name": "Test 3",
         "POI_Topic": "General",
         "Collect_Name": "Motti Zohar",
-        "attachments": []
+        "attachments": [],
+        "attachment_media": []
       }
     }
   ]

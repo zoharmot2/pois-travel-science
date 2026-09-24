@@ -1,5 +1,9 @@
 import { focusMapOnLayer } from './map.js';
 
+const IMAGE_EXTENSIONS = /\.(jpe?g|png|gif|webp|bmp|tiff?)$/i;
+const AUDIO_EXTENSIONS = /\.(mp3|wav|m4a|aac|ogg|oga|flac|opus|wma|aiff?|amr|m4b)$/i;
+const VIDEO_EXTENSIONS = /\.(mp4|mov|m4v|webm|avi|mkv)$/i;
+
 function escapeHtml(value) {
     return String(value ?? '')
         .replace(/&/g, '&amp;')
@@ -33,44 +37,112 @@ function renderField(label, value, className = '') {
     `;
 }
 
-function isLikelyImageAttachment(path) {
-    const value = String(path || '').toLowerCase().split('?')[0];
-    if (/\.(jpe?g|png|gif|webp|bmp|tiff?)$/.test(value)) return true;
+function attachmentPathWithoutQuery(path) {
+    return String(path || '').split('?')[0];
+}
 
-    // Current ArcGIS attachment URLs do not include a file extension in the URL.
-    return /^https?:\/\/.*\/attachments\/\d+$/i.test(String(path || ''));
+function attachmentFileName(path, index) {
+    const cleanPath = attachmentPathWithoutQuery(path).replace(/\\/g, '/');
+    const lastPart = cleanPath.split('/').filter(Boolean).pop();
+    if (!lastPart || /^\d+$/.test(lastPart)) return `Attachment ${index + 1}`;
+    try {
+        return decodeURIComponent(lastPart);
+    } catch {
+        return lastPart;
+    }
+}
+
+function getAttachmentKind(path) {
+    const cleanPath = attachmentPathWithoutQuery(path);
+    if (IMAGE_EXTENSIONS.test(cleanPath)) return 'image';
+    if (AUDIO_EXTENSIONS.test(cleanPath)) return 'audio';
+    if (VIDEO_EXTENSIONS.test(cleanPath)) return 'video';
+    return 'other';
+}
+
+function renderMediaLink(item, label) {
+    const safeUrl = escapeHtml(item.url);
+    const safeName = escapeHtml(item.name || 'Attachment');
+    return `
+        <a class="entity-detail-attachment-link" href="${safeUrl}" target="_blank" rel="noopener noreferrer">
+            ${escapeHtml(label)} — ${safeName}
+        </a>
+    `;
 }
 
 function renderAttachments(entity) {
-    const attachments = Array.isArray(entity.attachments) ? entity.attachments : [];
-    if (!attachments.length) return '';
+    const media = Array.isArray(entity.attachmentMedia) ? entity.attachmentMedia : [];
+    if (!media.length) return '';
 
-    const items = attachments.map((path, index) => {
-        const safePath = escapeHtml(path);
-        const label = `Attachment ${index + 1}`;
+    const images = media.filter(item => item.kind === 'image');
+    const audio = media.filter(item => item.kind === 'audio');
+    const other = media.filter(item => item.kind !== 'image' && item.kind !== 'audio');
 
-        if (isLikelyImageAttachment(path)) {
+    const sections = [];
+
+    if (images.length) {
+        const items = images.map((item, index) => {
+            const safeUrl = escapeHtml(item.url);
+            const safeName = escapeHtml(item.name || `Image ${index + 1}`);
             return `
-                <a class="entity-detail-media-item" href="${safePath}" target="_blank" rel="noopener noreferrer">
-                    <img src="${safePath}" alt="${escapeHtml(entity.name || 'POI')} - image ${index + 1}" loading="lazy">
-                    <span>${escapeHtml(label)}</span>
+                <a class="entity-detail-media-item" href="${safeUrl}" target="_blank" rel="noopener noreferrer">
+                    <img src="${safeUrl}" alt="${escapeHtml(getEntityDisplayName(entity))} - image ${index + 1}" loading="lazy">
+                    <span>${safeName}</span>
                 </a>
             `;
-        }
+        }).join('');
+        sections.push(`
+            <section class="entity-detail-section entity-detail-media-section">
+                <h3>Photos <span class="entity-detail-section-count">${images.length}</span></h3>
+                <div class="entity-detail-media-grid">${items}</div>
+            </section>
+        `);
+    }
 
-        return `
-            <a class="entity-detail-attachment-link" href="${safePath}" target="_blank" rel="noopener noreferrer">
-                ${escapeHtml(label)}
-            </a>
-        `;
-    }).join('');
+    if (audio.length) {
+        const items = audio.map(item => {
+            const safeUrl = escapeHtml(item.url);
+            const safeName = escapeHtml(item.name || 'Audio');
+            const safeType = escapeHtml(item.contentType || '');
+            return `
+                <div class="entity-detail-audio-item">
+                    <div class="entity-detail-attachment-name">${safeName}</div>
+                    <audio controls preload="none">
+                        <source src="${safeUrl}"${safeType ? ` type="${safeType}"` : ''}>
+                        Your browser does not support audio playback.
+                    </audio>
+                    ${renderMediaLink(item, 'Open audio file')}
+                </div>
+            `;
+        }).join('');
+        sections.push(`
+            <section class="entity-detail-section entity-detail-media-section">
+                <h3>Audio <span class="entity-detail-section-count">${audio.length}</span></h3>
+                <div class="entity-detail-audio-list">${items}</div>
+            </section>
+        `);
+    }
 
-    return `
-        <section class="entity-detail-section">
-            <h3>Attachments <span class="entity-detail-section-count">${attachments.length}</span></h3>
-            <div class="entity-detail-media-grid">${items}</div>
-        </section>
-    `;
+    if (other.length) {
+        const items = other.map(item => {
+            const label = item.kind === 'video' ? 'Open video' : 'Open attachment';
+            const kindLabel = item.kind === 'video' ? 'Video' : 'Attachment';
+            return `
+                <div class="entity-detail-other-item">
+                    <span class="entity-detail-media-kind">${escapeHtml(kindLabel)}</span>
+                    ${renderMediaLink(item, label)}
+                </div>
+            `;
+        }).join('');
+        sections.push(`
+            <section class="entity-detail-section entity-detail-media-section">
+                <h3>Other Attachments <span class="entity-detail-section-count">${other.length}</span></h3>
+                <div class="entity-detail-other-list">${items}</div>
+            </section>
+        `);
+    }
+
+    return sections.join('');
 }
 
 function formatBounds(bounds) {
@@ -81,8 +153,21 @@ function formatBounds(bounds) {
     return `W ${bounds.west.toFixed(5)}, S ${bounds.south.toFixed(5)}, E ${bounds.east.toFixed(5)}, N ${bounds.north.toFixed(5)}`;
 }
 
+function geometryDisplayLabel(entity) {
+    if (!entity) return 'Entity';
+    if (entity.geometryFamily === 'point') return 'Point';
+    if (entity.geometryFamily === 'line') return 'Line';
+    if (entity.geometryFamily === 'polygon') return 'Polygon';
+    return entity.geometryType || 'Entity';
+}
+
+export function getEntityDisplayName(entity) {
+    if (entity && entity.name) return entity.name;
+    return `Unnamed ${geometryDisplayLabel(entity)}`;
+}
+
 export function buildEntityDetailContent(entity) {
-    if (!entity) return '<div class="entity-detail-empty">No POI selected.</div>';
+    if (!entity) return '<div class="entity-detail-empty">No entity selected.</div>';
 
     const collectionDate = entity.collectionDate || getProperty(entity, 'Collection_date');
     const creationDate = entity.creationDate || getProperty(entity, 'CreationDate');
@@ -110,8 +195,8 @@ export function buildEntityDetailContent(entity) {
         : '';
 
     const classificationFields = [
-        renderField('Research Topic', entity.topic || '—'),
-        renderField('POI Type', entity.type || '—')
+        renderField('POI Type', entity.type || 'Unspecified'),
+        renderField('Research Topic', entity.topic || 'Unspecified')
     ].join('');
 
     const fieldworkFields = [
@@ -125,19 +210,21 @@ export function buildEntityDetailContent(entity) {
         renderField('Coordinates', coordinateText),
         renderField('Map Center (derived)', representativePointText),
         renderField('Extent', entity.geometryType !== 'Point' ? formatBounds(entity.bounds) : ''),
-        renderField('Geometry', entity.geometryType || entity.geometryFamily || '')
+        renderField('Geometry', geometryDisplayLabel(entity))
     ].join('');
 
     const technicalFields = [
         renderField('Stable Entity ID', entity.entityId || 'Not available', 'entity-detail-field-monospace'),
         renderField('ArcGIS OBJECTID', objectId, 'entity-detail-field-monospace'),
-        renderField('Source Dataset', entity.sourceDataset || 'unknown', 'entity-detail-field-monospace')
+        renderField('Source Dataset', entity.sourceDataset || 'unknown', 'entity-detail-field-monospace'),
+        renderField('GeoJSON Geometry', entity.geometryType || 'Unknown', 'entity-detail-field-monospace')
     ].join('');
 
     return `
         <div class="entity-detail-badges">
+            <span class="entity-detail-badge entity-detail-badge-geometry">${escapeHtml(geometryDisplayLabel(entity))}</span>
+            <span class="entity-detail-badge entity-detail-badge-secondary">${escapeHtml(entity.type || 'Unspecified')}</span>
             ${entity.topic ? `<span class="entity-detail-badge">${escapeHtml(entity.topic)}</span>` : ''}
-            ${entity.type ? `<span class="entity-detail-badge entity-detail-badge-secondary">${escapeHtml(entity.type)}</span>` : ''}
         </div>
 
         ${descriptionSection}
@@ -191,7 +278,7 @@ export function createEntityDetailPanel(options = {}) {
     function open(entity) {
         if (!entity) return;
         activeEntity = entity;
-        title.textContent = entity.name || 'Unnamed POI';
+        title.textContent = getEntityDisplayName(entity);
         content.innerHTML = buildEntityDetailContent(entity);
         panel.classList.add('open');
         panel.setAttribute('aria-hidden', 'false');

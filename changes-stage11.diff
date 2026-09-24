@@ -1,0 +1,515 @@
+--- /mnt/data/pts_v14_stage10_impl/scripts/qa_data.py	2026-09-24 13:59:20.997982119 +0000
++++ /mnt/data/pts_v14_stage11_impl/scripts/qa_data.py	2026-09-24 14:09:04.970910392 +0000
+@@ -149,6 +149,8 @@
+             "mediaStorage": Counter(),
+         }
+         self.deltas: dict[str, Any] | None = None
++        self.layer_metadata: dict[str, Any] | None = None
++        self.domain_comparison: dict[str, Any] = {}
+ 
+     def add_issue(
+         self,
+@@ -206,6 +208,10 @@
+         }
+         if self.deltas is not None:
+             result["changesFromBaseline"] = self.deltas
++        if self.layer_metadata is not None:
++            result["layerMetadataValidation"] = self.layer_metadata
++        if self.domain_comparison:
++            result["domainComparison"] = self.domain_comparison
+         return result
+ 
+ 
+@@ -379,6 +385,338 @@
+     }
+ 
+ 
++
++def normalize_domain_values(entries: Any) -> tuple[set[str], list[Any], list[str]]:
++    """Return (codes, invalid_entries, duplicate_codes) for ArcGIS coded values."""
++    if not isinstance(entries, list):
++        return set(), [entries], []
++    codes: set[str] = set()
++    invalid: list[Any] = []
++    duplicates: list[str] = []
++    for entry in entries:
++        if not isinstance(entry, dict) or entry.get("code") is None:
++            invalid.append(entry)
++            continue
++        code = str(entry.get("code")).strip()
++        if not code:
++            invalid.append(entry)
++            continue
++        if code in codes:
++            duplicates.append(code)
++        codes.add(code)
++    return codes, invalid, duplicates
++
++
++def actual_observed_values(features: list[dict[str, Any]], field_name: str) -> set[str]:
++    values: set[str] = set()
++    for feature in features:
++        if not isinstance(feature, dict):
++            continue
++        props = feature.get("properties")
++        if not isinstance(props, dict):
++            continue
++        value = props.get(field_name)
++        if value is None:
++            continue
++        text = str(value).strip()
++        if text and text.lower() not in {"none", "null"}:
++            values.add(text)
++    return values
++
++
++def actual_attachment_summary(
++    features: list[dict[str, Any]],
++    attachment_field: str,
++    attachment_media_field: str,
++) -> dict[str, Any]:
++    summary = {
++        "references": 0,
++        "local": 0,
++        "remote": 0,
++        "byKind": {"image": 0, "audio": 0, "video": 0, "other": 0},
++    }
++    for feature in features:
++        if not isinstance(feature, dict):
++            continue
++        props = feature.get("properties")
++        if not isinstance(props, dict):
++            continue
++        media = props.get(attachment_media_field, [])
++        if isinstance(media, list):
++            for item in media:
++                if not isinstance(item, dict):
++                    continue
++                summary["references"] += 1
++                storage = item.get("storage")
++                if storage in ("local", "remote"):
++                    summary[storage] += 1
++                kind = item.get("kind")
++                if kind in summary["byKind"]:
++                    summary["byKind"][kind] += 1
++                else:
++                    summary["byKind"]["other"] += 1
++        elif isinstance(props.get(attachment_field), list):
++            # The Stage 10 contract should always have structured media metadata.
++            # Keep the reference count useful even if the dedicated QA check reports
++            # the missing/invalid metadata elsewhere.
++            summary["references"] += len([
++                ref for ref in props.get(attachment_field, [])
++                if isinstance(ref, str) and ref.strip()
++            ])
++    return summary
++
++
++def validate_layers_metadata(
++    repo_root: Path,
++    config: dict[str, Any],
++    specs: list[dict[str, Any]],
++    attachment_field: str,
++    attachment_media_field: str,
++    report: QaReport,
++) -> None:
++    """Cross-check harvested ArcGIS layer metadata against exported GeoJSON.
++
++    Domain divergence between layers is allowed. The report records alignment and
++    union values, while only malformed metadata or actual export/metadata
++    inconsistencies are treated as errors.
++    """
++    rel_path = config.get("layersMetadataPath", "data/derived/layers-metadata.json")
++    path = repo_root / rel_path
++    if not path.exists():
++        report.add_issue("ERROR", "LAYER_METADATA_MISSING", f"Layer metadata file is missing: {rel_path}")
++        return
++    try:
++        root = read_json(path)
++    except Exception as exc:
++        report.add_issue("ERROR", "LAYER_METADATA_INVALID_JSON", f"Cannot parse {rel_path}: {exc}")
++        return
++    if not isinstance(root, dict):
++        report.add_issue("ERROR", "LAYER_METADATA_INVALID", "Layer metadata root must be an object.")
++        return
++    if root.get("schemaVersion") != 1:
++        report.add_issue(
++            "ERROR",
++            "LAYER_METADATA_SCHEMA_UNSUPPORTED",
++            f"layers-metadata.json schemaVersion must be 1, found {root.get('schemaVersion')!r}.",
++        )
++
++    expected_server = str(config.get("expectedFeatureServerUrl") or "").rstrip("/")
++    actual_server = str(root.get("featureServerUrl") or "").rstrip("/")
++    if expected_server and actual_server != expected_server:
++        report.add_issue(
++            "ERROR",
++            "FEATURE_SERVER_URL_MISMATCH",
++            "Layer metadata was generated from an unexpected ArcGIS FeatureServer URL.",
++            examples=[{"expected": expected_server, "actual": actual_server}],
++        )
++
++    metadata_datasets = root.get("datasets")
++    if not isinstance(metadata_datasets, dict):
++        report.add_issue("ERROR", "LAYER_METADATA_INVALID", "layers-metadata.json datasets must be an object.")
++        return
++
++    required_common_fields = [str(v) for v in config.get("requiredCommonFields", [])]
++    domain_fields = [str(v) for v in config.get("domainFields", [])]
++    domain_codes_by_field: dict[str, dict[str, set[str]]] = {
++        field: {} for field in domain_fields
++    }
++    validated_names: list[str] = []
++
++    for spec in specs:
++        name = str(spec.get("name", "unnamed"))
++        rel = str(spec.get("path", ""))
++        layer_id = spec.get("layerId")
++        expected_source_dataset = str(spec.get("sourceDataset", name))
++        expected_families = [str(v) for v in spec.get("expectedGeometryFamilies", [])]
++        expected_family = expected_families[0] if len(expected_families) == 1 else None
++
++        metadata = metadata_datasets.get(name)
++        if not isinstance(metadata, dict):
++            report.add_issue(
++                "ERROR", "LAYER_METADATA_DATASET_MISSING",
++                f"Layer metadata record is missing for dataset {name!r}.", dataset=name,
++            )
++            continue
++
++        features, load_error = load_dataset(repo_root / rel)
++        if load_error or features is None:
++            # Dataset QA has already reported the primary problem.
++            continue
++        validated_names.append(name)
++
++        if metadata.get("layerId") != layer_id:
++            report.add_issue(
++                "ERROR", "LAYER_METADATA_ID_MISMATCH",
++                f"Layer metadata layerId does not match QA configuration for {name!r}.",
++                dataset=name,
++                examples=[{"expected": layer_id, "actual": metadata.get("layerId")}],
++            )
++        if metadata.get("sourceDataset") != expected_source_dataset:
++            report.add_issue(
++                "ERROR", "LAYER_METADATA_SOURCE_MISMATCH",
++                f"Layer metadata sourceDataset does not match QA configuration for {name!r}.",
++                dataset=name,
++                examples=[{"expected": expected_source_dataset, "actual": metadata.get("sourceDataset")}],
++            )
++        if expected_family and metadata.get("geometryFamily") != expected_family:
++            report.add_issue(
++                "ERROR", "LAYER_METADATA_GEOMETRY_MISMATCH",
++                f"Layer metadata geometryFamily does not match {name!r} dataset expectation.",
++                dataset=name,
++                examples=[{"expected": expected_family, "actual": metadata.get("geometryFamily")}],
++            )
++        if metadata.get("entityCount") != len(features):
++            report.add_issue(
++                "ERROR", "LAYER_METADATA_COUNT_MISMATCH",
++                f"Layer metadata entityCount does not match exported feature count for {name!r}.",
++                dataset=name,
++                examples=[{"metadata": metadata.get("entityCount"), "geojson": len(features)}],
++            )
++
++        if expected_server and layer_id is not None:
++            expected_source_url = f"{expected_server}/{layer_id}"
++            actual_source_url = str(metadata.get("sourceUrl") or "").rstrip("/")
++            if actual_source_url != expected_source_url:
++                report.add_issue(
++                    "ERROR", "LAYER_METADATA_URL_MISMATCH",
++                    f"Layer metadata sourceUrl does not match expected public-view sublayer for {name!r}.",
++                    dataset=name,
++                    examples=[{"expected": expected_source_url, "actual": actual_source_url}],
++                )
++
++        availability = metadata.get("commonFieldAvailability")
++        field_names = metadata.get("fieldNames")
++        missing_common: list[str] = []
++        if not isinstance(availability, dict):
++            missing_common = list(required_common_fields)
++        else:
++            missing_common = [field for field in required_common_fields if availability.get(field) is not True]
++        if missing_common:
++            report.add_issue(
++                "ERROR", "COMMON_FIELD_MISSING",
++                "Required Common Entity fields are missing from ArcGIS layer metadata.",
++                dataset=name, count=len(missing_common), examples=missing_common,
++            )
++        if not isinstance(field_names, list):
++            report.add_issue(
++                "ERROR", "LAYER_METADATA_FIELDS_INVALID",
++                "Layer metadata fieldNames must be an array.", dataset=name,
++            )
++        else:
++            field_name_set = {str(v) for v in field_names}
++            missing_from_names = [field for field in required_common_fields if field not in field_name_set]
++            if missing_from_names:
++                report.add_issue(
++                    "ERROR", "COMMON_FIELD_LIST_MISMATCH",
++                    "Required Common Entity fields are absent from layer metadata fieldNames.",
++                    dataset=name, count=len(missing_from_names), examples=missing_from_names,
++                )
++
++        domains = metadata.get("domains")
++        observed_meta = metadata.get("observedValues")
++        if not isinstance(domains, dict):
++            report.add_issue("ERROR", "LAYER_METADATA_DOMAINS_INVALID", "Layer metadata domains must be an object.", dataset=name)
++            domains = {}
++        if not isinstance(observed_meta, dict):
++            report.add_issue("ERROR", "LAYER_METADATA_OBSERVED_INVALID", "Layer metadata observedValues must be an object.", dataset=name)
++            observed_meta = {}
++
++        for field_name in domain_fields:
++            entries = domains.get(field_name)
++            codes, invalid_entries, duplicate_codes = normalize_domain_values(entries)
++            domain_codes_by_field[field_name][name] = codes
++            if invalid_entries:
++                report.add_issue(
++                    "ERROR", "DOMAIN_METADATA_INVALID",
++                    f"ArcGIS coded-value metadata for {field_name} is malformed.",
++                    dataset=name, count=len(invalid_entries), examples=invalid_entries,
++                )
++            if duplicate_codes:
++                report.add_issue(
++                    "ERROR", "DOMAIN_CODE_DUPLICATE",
++                    f"ArcGIS coded-value metadata for {field_name} contains duplicate stored codes.",
++                    dataset=name, count=len(duplicate_codes), examples=duplicate_codes,
++                )
++            if not codes:
++                report.add_issue(
++                    "WARNING", "DOMAIN_NOT_CODED",
++                    f"No coded-value domain was harvested for {field_name}; future domain divergence is allowed but should be reviewed.",
++                    dataset=name,
++                )
++
++            actual_values = actual_observed_values(features, field_name)
++            metadata_values_raw = observed_meta.get(field_name, [])
++            metadata_values = {
++                str(v).strip() for v in metadata_values_raw
++                if v is not None and str(v).strip()
++            } if isinstance(metadata_values_raw, list) else set()
++            if metadata_values != actual_values:
++                report.add_issue(
++                    "ERROR", "LAYER_METADATA_OBSERVED_MISMATCH",
++                    f"Harvested observedValues for {field_name} do not match the exported GeoJSON.",
++                    dataset=name,
++                    examples=[{
++                        "metadataOnly": sorted(metadata_values - actual_values)[:10],
++                        "geojsonOnly": sorted(actual_values - metadata_values)[:10],
++                    }],
++                )
++            if codes:
++                outside = sorted(actual_values - codes)
++                if outside:
++                    report.add_issue(
++                        "WARNING", "DOMAIN_VALUE_OUTSIDE_CODED_LIST",
++                        f"Exported {field_name} values are not present in the current coded-value domain.",
++                        dataset=name, count=len(outside), examples=outside,
++                    )
++
++        expected_attachment_summary = actual_attachment_summary(
++            features, attachment_field, attachment_media_field
++        )
++        metadata_attachment_summary = metadata.get("attachmentSummary")
++        if metadata_attachment_summary != expected_attachment_summary:
++            report.add_issue(
++                "ERROR", "LAYER_METADATA_ATTACHMENT_MISMATCH",
++                "Layer metadata attachmentSummary does not match exported attachment_media.",
++                dataset=name,
++                examples=[{
++                    "metadata": metadata_attachment_summary,
++                    "geojson": expected_attachment_summary,
++                }],
++            )
++
++    configured_names = {str(spec.get("name", "unnamed")) for spec in specs}
++    extra_names = sorted(set(metadata_datasets) - configured_names)
++    if extra_names:
++        report.add_issue(
++            "WARNING", "LAYER_METADATA_EXTRA_DATASET",
++            "layers-metadata.json contains datasets not configured for publication.",
++            count=len(extra_names), examples=extra_names,
++        )
++
++    comparison: dict[str, Any] = {}
++    for field_name, datasets in domain_codes_by_field.items():
++        code_sets = [frozenset(values) for values in datasets.values()]
++        aligned = len(set(code_sets)) <= 1 if code_sets else True
++        union_codes = sorted(set().union(*datasets.values()) if datasets else set())
++        comparison[field_name] = {
++            "alignedAcrossDatasets": aligned,
++            "unionCount": len(union_codes),
++            "unionCodes": union_codes,
++            "datasets": {name: sorted(values) for name, values in sorted(datasets.items())},
++        }
++    report.domain_comparison = comparison
++    report.layer_metadata = {
++        "path": rel_path,
++        "featureServerUrl": actual_server,
++        "datasetCount": len(metadata_datasets),
++        "validatedDatasets": validated_names,
++        "requiredCommonFieldCount": len(required_common_fields),
++        "domainFields": domain_fields,
++    }
++    report.summary["layerMetadataDatasetCount"] = len(metadata_datasets)
++    report.summary["requiredCommonFieldCount"] = len(required_common_fields)
++
++
+ def validate(repo_root: Path, qa_config_path: Path, baseline_root: Path | None = None) -> tuple[QaReport, dict[str, Any]]:
+     try:
+         config = read_json(qa_config_path)
+@@ -723,6 +1061,10 @@
+             examples=[{"value": value, "count": observed_types[value]} for value in unconfigured_types],
+         )
+ 
++    validate_layers_metadata(
++        repo_root, config, specs, attachment_field, attachment_media_field, report
++    )
++
+     validate_sidecar(
+         repo_root,
+         config.get("metadataSidecarPath", "data/site/poi-meta.json"),
+@@ -753,6 +1095,7 @@
+         "| Metric | Count |",
+         "| --- | ---: |",
+         f"| Active datasets | {report.summary['activeDatasetCount']} |",
++        f"| Layer metadata datasets | {report.summary.get('layerMetadataDatasetCount', 0)} |",
+         f"| Entities | {report.summary['entityCount']} |",
+         f"| Stable IDs | {report.summary['stableIdCount']} |",
+         f"| Attachment references | {report.summary['attachmentReferenceCount']} |",
+@@ -771,6 +1114,11 @@
+             f"| Added since baseline | {report.deltas['added']} |",
+             f"| Removed since baseline | {report.deltas['removed']} |",
+         ]
++    if report.domain_comparison:
++        lines += ["", "### Domain alignment", ""]
++        for field_name, info in report.domain_comparison.items():
++            status = "aligned" if info.get("alignedAcrossDatasets") else "divergent (allowed)"
++            lines.append(f"- **{field_name}**: {status}; union {info.get('unionCount', 0)} coded values.")
+     if report.issues:
+         lines += ["", "### Issues", ""]
+         for issue in report.issues:
+--- /mnt/data/pts_v14_stage10_impl/scripts/qa_config.json	2026-09-24 13:59:38.780788350 +0000
++++ /mnt/data/pts_v14_stage11_impl/scripts/qa_config.json	2026-09-24 14:08:10.697311667 +0000
+@@ -6,8 +6,30 @@
+   "typeField": "POI_Type",
+   "nameField": "POI_Name",
+   "attachmentField": "attachments",
++  "attachmentMediaField": "attachment_media",
+   "symbologyConfigPath": "config.json",
+   "metadataSidecarPath": "data/site/poi-meta.json",
++  "layersMetadataPath": "data/derived/layers-metadata.json",
++  "expectedFeatureServerUrl": "https://services5.arcgis.com/eJYUV73IZAY87Jwy/arcgis/rest/services/POI_Feature_Layer_view/FeatureServer",
++  "requiredCommonFields": [
++    "GlobalID",
++    "OBJECTID",
++    "POI_Name",
++    "POI_Type",
++    "POI_Topic",
++    "POI_Description",
++    "Collection_date",
++    "Collect_Name",
++    "CreationDate",
++    "Creator",
++    "EditDate",
++    "Editor"
++  ],
++  "domainFields": [
++    "POI_Type",
++    "POI_Topic",
++    "Collect_Name"
++  ],
+   "requiredFiles": [
+     "data/pois.geojson",
+     "data/pois.csv",
+@@ -24,7 +46,9 @@
+       "required": true,
+       "expectedGeometryFamilies": [
+         "point"
+-      ]
++      ],
++      "layerId": 0,
++      "sourceDataset": "points"
+     },
+     {
+       "name": "lines",
+@@ -32,7 +56,9 @@
+       "required": true,
+       "expectedGeometryFamilies": [
+         "line"
+-      ]
++      ],
++      "layerId": 1,
++      "sourceDataset": "lines"
+     },
+     {
+       "name": "polygons",
+@@ -40,8 +66,9 @@
+       "required": true,
+       "expectedGeometryFamilies": [
+         "polygon"
+-      ]
++      ],
++      "layerId": 2,
++      "sourceDataset": "polygons"
+     }
+-  ],
+-  "attachmentMediaField": "attachment_media"
++  ]
+ }
+--- /mnt/data/pts_v14_stage10_impl/docs/qa-pipeline.md	2026-09-24 14:02:22.788124149 +0000
++++ /mnt/data/pts_v14_stage11_impl/docs/qa-pipeline.md	2026-09-24 14:11:16.813122427 +0000
+@@ -9,17 +9,15 @@
+ - `data/derived/qa-report.json` — generated machine-readable report.
+ - `.github/workflows/sync.yml` — weekly/manual refresh workflow that runs the validator after export.
+ 
+-## Current and future geometry datasets
++## Active geometry datasets
+ 
+-The QA configuration is deliberately multi-geometry-ready:
++All three ArcGIS geometry datasets are now required publication inputs:
+ 
+-- `points` → `data/pois.geojson` — required now.
+-- `lines` → `data/lines.geojson` — optional until line export is activated.
+-- `polygons` → `data/polygons.geojson` — optional until polygon export is activated.
++- `points` → `data/pois.geojson`
++- `lines` → `data/lines.geojson`
++- `polygons` → `data/polygons.geojson`
+ 
+-Optional datasets are ignored when their files do not exist. Once line or polygon export is activated, the validator can check them without restructuring the QA engine. Paths can be changed in `scripts/qa_config.json` if the final export names differ.
+-
+-Stable Entity IDs are checked globally across every active dataset, because future metadata, Trips, Collections, Routes, deep links, and public pages must resolve to exactly one Entity regardless of geometry family.
++Stable Entity IDs are checked globally across all three datasets, because website metadata, future Trips, Collections, Routes, deep links, and public pages must resolve to exactly one Entity regardless of geometry family.
+ 
+ ## Checks
+ 
+@@ -32,7 +30,6 @@
+ - expected geometry family for each configured dataset;
+ - present, valid, and globally unique ArcGIS `GlobalID` values;
+ - missing POI names, Research Topics, and POI Types;
+-- Research Topics present in data but missing explicit `config.json` styling;
+ - placeholder-like POI Type values such as `Undefined` as review warnings, without rewriting source data;
+ - attachment field structure;
+ - local attachment file existence and safe repository-relative paths;
+@@ -105,7 +102,7 @@
+ 
+ into `.qa-baseline` before the refresh. This allows the validator to report additions and removals between the previous and newly generated snapshots.
+ 
+-The line and polygon files are optional today, but this baseline mechanism is already prepared for their future export.
++All three geometry files now participate in this baseline comparison.
+ 
+ ## Validated behavior
+ 
+@@ -123,4 +120,11 @@
+ ## v1.4 Stage 10 media validation
+ 
+ The Data QA report validates both the legacy `attachments` URL/path list and the structured `attachment_media` metadata generated for Points, Lines, and Polygons. Media metadata must match attachment references one-to-one. The report also summarizes media by `image`, `audio`, `video`, and `other`, plus local/remote storage counts. Invalid media metadata or a mismatch between the two representations is an ERROR and blocks publication.
++## v1.4 Stage 11 multi-dataset metadata validation
++
++Stage 11 validates `data/derived/layers-metadata.json` against the actual Point, Line, and Polygon exports. It verifies the public hosted-view FeatureServer URL, layer IDs, geometry family, entity counts, Common Entity field availability, harvested coded-value domains, observed values, and per-layer attachment/media summaries.
++
++`POI_Type`, `POI_Topic`, and `Collect_Name` domains are compared across datasets. Domain divergence is explicitly allowed: the QA report records whether the current lists are aligned and the union of codes across all three datasets. A difference by itself does not generate a warning or error. Exported values that fall outside their own layer's current coded-value list generate a warning for ArcGIS review. Metadata/GeoJSON inconsistencies remain errors because both outputs belong to the same refresh snapshot.
++
++The expected ArcGIS export source is the public hosted view `POI_Feature_Layer_view/FeatureServer` with sublayers `0` Points, `1` Lines, and `2` Polygons. A source URL mismatch is an error and blocks publication.
+ 

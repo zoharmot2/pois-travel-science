@@ -1,25 +1,28 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-24T12:18:43Z",
+  "generatedAt": "2026-09-24T14:13:59Z",
   "status": "WARNING",
   "repositoryRoot": ".",
   "config": "scripts/qa_config.json",
   "summary": {
     "datasetCount": 3,
     "activeDatasetCount": 3,
-    "entityCount": 1206,
-    "stableIdCount": 1206,
-    "attachmentReferenceCount": 1081,
-    "localAttachmentCount": 1076,
-    "remoteAttachmentCount": 5,
+    "entityCount": 1205,
+    "stableIdCount": 1205,
+    "attachmentReferenceCount": 1079,
+    "localAttachmentCount": 1075,
+    "remoteAttachmentCount": 4,
     "missingAttachmentCount": 0,
     "orphanAttachmentCount": 0,
+    "mediaMetadataCount": 1079,
     "warningCount": 5,
-    "errorCount": 0
+    "errorCount": 0,
+    "layerMetadataDatasetCount": 3,
+    "requiredCommonFieldCount": 12
   },
   "counts": {
     "geometryFamilies": {
-      "line": 6,
+      "line": 5,
       "point": 1198,
       "polygon": 2
     },
@@ -27,7 +30,7 @@
       "Aqueducts": 2,
       "Cartography": 1,
       "Climate Negev": 33,
-      "General": 777,
+      "General": 776,
       "Historical Earthquakes": 76,
       "Ottoman Jerusalem": 1,
       "Settlements": 206,
@@ -41,13 +44,21 @@
       "Graffiti/Wall Painting/Statue": 20,
       "Iron Rails/Reinforcement": 59,
       "Old map/Globe/Model": 1,
-      "Religious/Faith": 4,
+      "Religious/Faith": 3,
       "River/Lake/Delta": 28,
       "Rock/Stone/Soil": 14,
       "Scenary View": 70,
       "Spring/Pool/Cistern": 11,
       "Structure/Building": 96,
       "Wilson Benchmark": 36
+    },
+    "mediaKinds": {
+      "image": 1075,
+      "video": 4
+    },
+    "mediaStorage": {
+      "local": 1075,
+      "remote": 4
     }
   },
   "datasets": [
@@ -60,6 +71,14 @@
       "validStableIdCount": 1198,
       "geometryFamilies": {
         "point": 1198
+      },
+      "mediaKinds": {
+        "image": 1072,
+        "video": 4
+      },
+      "mediaStorage": {
+        "local": 1072,
+        "remote": 4
       }
     },
     {
@@ -67,10 +86,16 @@
       "path": "data/lines.geojson",
       "required": true,
       "status": "validated",
-      "featureCount": 6,
-      "validStableIdCount": 6,
+      "featureCount": 5,
+      "validStableIdCount": 5,
       "geometryFamilies": {
-        "line": 6
+        "line": 5
+      },
+      "mediaKinds": {
+        "image": 2
+      },
+      "mediaStorage": {
+        "local": 2
       }
     },
     {
@@ -82,6 +107,12 @@
       "validStableIdCount": 2,
       "geometryFamilies": {
         "polygon": 2
+      },
+      "mediaKinds": {
+        "image": 1
+      },
+      "mediaStorage": {
+        "local": 1
       }
     }
   ],
@@ -145,5 +176,157 @@
         2
       ]
     }
-  ]
+  ],
+  "layerMetadataValidation": {
+    "path": "data/derived/layers-metadata.json",
+    "featureServerUrl": "https://services5.arcgis.com/eJYUV73IZAY87Jwy/arcgis/rest/services/POI_Feature_Layer_view/FeatureServer",
+    "datasetCount": 3,
+    "validatedDatasets": [
+      "points",
+      "lines",
+      "polygons"
+    ],
+    "requiredCommonFieldCount": 12,
+    "domainFields": [
+      "POI_Type",
+      "POI_Topic",
+      "Collect_Name"
+    ]
+  },
+  "domainComparison": {
+    "POI_Type": {
+      "alignedAcrossDatasets": true,
+      "unionCount": 12,
+      "unionCodes": [
+        "Earthquake Damage/Env.Effect",
+        "General Site",
+        "Graffiti/Wall Painting/Statue",
+        "Iron Rails/Reinforcement",
+        "Old map/Globe/Model",
+        "Religious/Faith",
+        "River/Lake/Delta",
+        "Rock/Stone/Soil",
+        "Scenary View",
+        "Spring/Pool/Cistern",
+        "Structure/Building",
+        "Wilson Benchmark"
+      ],
+      "datasets": {
+        "lines": [
+          "Earthquake Damage/Env.Effect",
+          "General Site",
+          "Graffiti/Wall Painting/Statue",
+          "Iron Rails/Reinforcement",
+          "Old map/Globe/Model",
+          "Religious/Faith",
+          "River/Lake/Delta",
+          "Rock/Stone/Soil",
+          "Scenary View",
+          "Spring/Pool/Cistern",
+          "Structure/Building",
+          "Wilson Benchmark"
+        ],
+        "points": [
+          "Earthquake Damage/Env.Effect",
+          "General Site",
+          "Graffiti/Wall Painting/Statue",
+          "Iron Rails/Reinforcement",
+          "Old map/Globe/Model",
+          "Religious/Faith",
+          "River/Lake/Delta",
+          "Rock/Stone/Soil",
+          "Scenary View",
+          "Spring/Pool/Cistern",
+          "Structure/Building",
+          "Wilson Benchmark"
+        ],
+        "polygons": [
+          "Earthquake Damage/Env.Effect",
+          "General Site",
+          "Graffiti/Wall Painting/Statue",
+          "Iron Rails/Reinforcement",
+          "Old map/Globe/Model",
+          "Religious/Faith",
+          "River/Lake/Delta",
+          "Rock/Stone/Soil",
+          "Scenary View",
+          "Spring/Pool/Cistern",
+          "Structure/Building",
+          "Wilson Benchmark"
+        ]
+      }
+    },
+    "POI_Topic": {
+      "alignedAcrossDatasets": true,
+      "unionCount": 10,
+      "unionCodes": [
+        "Aqueducts",
+        "Cartography",
+        "Climate Negev",
+        "General",
+        "Historical Earthquakes",
+        "Ottoman Jerusalem",
+        "Settlements",
+        "TBV",
+        "UFOs & Planetary",
+        "Volcanoes GIS"
+      ],
+      "datasets": {
+        "lines": [
+          "Aqueducts",
+          "Cartography",
+          "Climate Negev",
+          "General",
+          "Historical Earthquakes",
+          "Ottoman Jerusalem",
+          "Settlements",
+          "TBV",
+          "UFOs & Planetary",
+          "Volcanoes GIS"
+        ],
+        "points": [
+          "Aqueducts",
+          "Cartography",
+          "Climate Negev",
+          "General",
+          "Historical Earthquakes",
+          "Ottoman Jerusalem",
+          "Settlements",
+          "TBV",
+          "UFOs & Planetary",
+          "Volcanoes GIS"
+        ],
+        "polygons": [
+          "Aqueducts",
+          "Cartography",
+          "Climate Negev",
+          "General",
+          "Historical Earthquakes",
+          "Ottoman Jerusalem",
+          "Settlements",
+          "TBV",
+          "UFOs & Planetary",
+          "Volcanoes GIS"
+        ]
+      }
+    },
+    "Collect_Name": {
+      "alignedAcrossDatasets": true,
+      "unionCount": 1,
+      "unionCodes": [
+        "Motti Zohar"
+      ],
+      "datasets": {
+        "lines": [
+          "Motti Zohar"
+        ],
+        "points": [
+          "Motti Zohar"
+        ],
+        "polygons": [
+          "Motti Zohar"
+        ]
+      }
+    }
+  }
 }

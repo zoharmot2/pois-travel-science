@@ -1,3 +1,5 @@
+const UNSPECIFIED_TYPE_VALUE = '__UNSPECIFIED_TYPE__';
+
 function normalizeDimensionValue(value) {
     return value == null ? '' : String(value).trim();
 }
@@ -18,6 +20,11 @@ function generalFirstSort(a, b, generalValue) {
     if (a === generalValue) return -1;
     if (b === generalValue) return 1;
     return a.localeCompare(b);
+}
+
+export function getTypeFilterValue(entity) {
+    const typeValue = normalizeDimensionValue(entity ? entity.type : '');
+    return typeValue || UNSPECIFIED_TYPE_VALUE;
 }
 
 /**
@@ -41,27 +48,42 @@ export function createTopicFilterItems(entities) {
  * Build the primary POI Type legend from configuration plus values observed
  * across every loaded Entity dataset. Configured Types retain explicit order
  * and presentation; new ArcGIS values are appended with the default style.
+ *
+ * Missing/blank source POI_Type values are represented by a UI-only
+ * "Unspecified" bucket. The source Entity data is not changed.
  */
 export function createTypeFilterItems(entities, typeSettings = {}, defaultStyle = {}) {
-    const observedCounts = getDimensionValues(entities, 'type');
+    const observedCounts = new Map();
+    for (const entity of entities || []) {
+        const value = getTypeFilterValue(entity);
+        observedCounts.set(value, (observedCounts.get(value) || 0) + 1);
+    }
+
     const configuredKeys = Object.keys(typeSettings);
     const configuredSet = new Set(configuredKeys);
     const extraValues = [...observedCounts.keys()]
-        .filter(value => !configuredSet.has(value))
+        .filter(value => value !== UNSPECIFIED_TYPE_VALUE && !configuredSet.has(value))
         .sort((a, b) => generalFirstSort(a, b, 'General Site'));
 
-    return [...configuredKeys, ...extraValues].map(value => {
-        const configured = Object.prototype.hasOwnProperty.call(typeSettings, value);
+    const values = [...configuredKeys, ...extraValues];
+    if ((observedCounts.get(UNSPECIFIED_TYPE_VALUE) || 0) > 0) {
+        values.push(UNSPECIFIED_TYPE_VALUE);
+    }
+
+    return values.map(value => {
+        const synthetic = value === UNSPECIFIED_TYPE_VALUE;
+        const configured = !synthetic && Object.prototype.hasOwnProperty.call(typeSettings, value);
         const setting = configured ? typeSettings[value] : defaultStyle;
         const pointSetting = setting.point || defaultStyle.point || {};
 
         return {
             value,
-            label: configured && typeSettings[value].label
-                ? typeSettings[value].label
-                : value,
+            label: synthetic
+                ? 'Unspecified'
+                : (configured && typeSettings[value].label ? typeSettings[value].label : value),
             count: observedCounts.get(value) || 0,
             configured,
+            synthetic,
             visibleByDefault: configured ? typeSettings[value].visible !== false : true,
             shape: pointSetting.shape || 'circle',
             radius: pointSetting.radius ?? 7,
@@ -71,9 +93,7 @@ export function createTypeFilterItems(entities, typeSettings = {}, defaultStyle 
 }
 
 /**
- * Geometry is a separate visibility dimension from POI Type. The control is
- * deliberately fixed to the three supported geometry families so Lines and
- * Polygons appear in the UI before their AGOL export is activated.
+ * Geometry is a separate visibility dimension from POI Type.
  */
 export function createGeometryFilterItems(entities) {
     const counts = { point: 0, line: 0, polygon: 0 };
@@ -113,17 +133,58 @@ export function createTopicState(topicSettings) {
 /** Primary v1.4 map filter: POI Type AND Geometry family. */
 export function filterEntitiesByTypeAndGeometry(entities, activeTypesState, activeGeometryState) {
     return entities.filter(entity => {
-        const typeVisible = activeTypesState[entity.type] !== false;
+        const typeValue = getTypeFilterValue(entity);
+        const typeVisible = activeTypesState[typeValue] !== false;
         const geometryVisible = activeGeometryState[entity.geometryFamily] !== false;
         return typeVisible && geometryVisible;
     });
+}
+
+/**
+ * Cross-filter facets for Stage 8.
+ * - Type counts respond to the active Geometry selection, but ignore Type visibility.
+ * - Geometry counts respond to the active Type selection, but ignore Geometry visibility.
+ * This makes each count answer "how many would be available if I toggled this item?".
+ */
+export function computeFilterFacets(entities, activeTypesState, activeGeometryState) {
+    const typeCounts = new Map();
+    const geometryCounts = new Map([
+        ['point', 0],
+        ['line', 0],
+        ['polygon', 0]
+    ]);
+    let filteredCount = 0;
+
+    for (const entity of entities || []) {
+        const typeValue = getTypeFilterValue(entity);
+        const geometryValue = entity.geometryFamily || 'unknown';
+        const typeVisible = activeTypesState[typeValue] !== false;
+        const geometryVisible = activeGeometryState[geometryValue] !== false;
+
+        if (geometryVisible) {
+            typeCounts.set(typeValue, (typeCounts.get(typeValue) || 0) + 1);
+        }
+        if (typeVisible && geometryCounts.has(geometryValue)) {
+            geometryCounts.set(geometryValue, (geometryCounts.get(geometryValue) || 0) + 1);
+        }
+        if (typeVisible && geometryVisible) {
+            filteredCount += 1;
+        }
+    }
+
+    return {
+        typeCounts,
+        geometryCounts,
+        filteredCount,
+        totalCount: Array.isArray(entities) ? entities.length : 0
+    };
 }
 
 // Compatibility helpers retained while v1.4 is under development.
 export function filterEntitiesByDimensions(entities, activeTopicsState, activeTypesState) {
     return entities.filter(entity => {
         const topicVisible = activeTopicsState[entity.topic] !== false;
-        const typeVisible = activeTypesState[entity.type] !== false;
+        const typeVisible = activeTypesState[getTypeFilterValue(entity)] !== false;
         return topicVisible && typeVisible;
     });
 }
@@ -148,6 +209,13 @@ function setAllStates(items, state, visible) {
 function updateToggleItemState(element, isVisible) {
     element.classList.toggle('disabled', !isVisible);
     element.setAttribute('aria-checked', isVisible ? 'true' : 'false');
+}
+
+function updateToggleItemCount(element, count) {
+    if (!element) return;
+    const countElement = element.querySelector('.control-toggle-count');
+    if (countElement) countElement.textContent = String(count ?? 0);
+    element.classList.toggle('no-matches', Number(count || 0) === 0);
 }
 
 function createAllNoneActions(container, items, state, itemElements, onChange) {
@@ -200,13 +268,14 @@ function createToggleList(container, options) {
         const isVisible = state[item.value] !== false;
         const itemElement = L.DomUtil.create(
             'div',
-            `control-toggle-item ${isVisible ? '' : 'disabled'}`,
+            `control-toggle-item ${isVisible ? '' : 'disabled'} ${item.synthetic ? 'synthetic-value' : ''}`,
             itemsContainer
         );
 
         itemElement.dataset.value = item.value;
         itemElement.setAttribute('role', 'checkbox');
         itemElement.setAttribute('tabindex', '0');
+        itemElement.setAttribute('aria-label', item.synthetic ? `${item.label} POI Type` : item.label);
         updateToggleItemState(itemElement, isVisible);
 
         const iconContainer = L.DomUtil.create('span', 'control-toggle-icon', itemElement);
@@ -275,6 +344,9 @@ export function addMapControlPanel(map, options) {
     } = options;
 
     const control = L.control({ position: 'topleft' });
+    let typeItemElements = new Map();
+    let geometryItemElements = new Map();
+    let summaryElement = null;
 
     control.onAdd = function () {
         const panel = L.DomUtil.create('div', 'map-ui-panel');
@@ -289,10 +361,14 @@ export function addMapControlPanel(map, options) {
         collapseButton.setAttribute('aria-label', 'Toggle map controls');
         collapseButton.setAttribute('aria-expanded', 'true');
 
+        summaryElement = L.DomUtil.create('div', 'map-ui-panel-summary', panel);
+        summaryElement.textContent = 'Showing 0 of 0 entities';
+        summaryElement.setAttribute('aria-live', 'polite');
+
         const body = L.DomUtil.create('div', 'map-ui-panel-body', panel);
 
         const typeSection = createSection(body, 'POI Types');
-        createToggleList(typeSection, {
+        typeItemElements = createToggleList(typeSection, {
             items: typeItems,
             state: activeTypesState,
             onChange,
@@ -309,10 +385,11 @@ export function addMapControlPanel(map, options) {
         searchInput.autocomplete = 'off';
 
         const geometrySection = createSection(body, 'Geometry');
-        createToggleList(geometrySection, {
+        geometryItemElements = createToggleList(geometrySection, {
             items: geometryItems,
             state: activeGeometryState,
             onChange,
+            includeAllNone: true,
             renderIcon: item => geometryIcon(item.value)
         });
 
@@ -354,6 +431,24 @@ export function addMapControlPanel(map, options) {
         }
 
         return panel;
+    };
+
+    control.updateFilterSummary = facets => {
+        const typeCounts = facets && facets.typeCounts ? facets.typeCounts : new Map();
+        const geometryCounts = facets && facets.geometryCounts ? facets.geometryCounts : new Map();
+
+        typeItemElements.forEach((element, value) => {
+            updateToggleItemCount(element, typeCounts.get(value) || 0);
+        });
+        geometryItemElements.forEach((element, value) => {
+            updateToggleItemCount(element, geometryCounts.get(value) || 0);
+        });
+
+        if (summaryElement) {
+            const filteredCount = facets ? facets.filteredCount || 0 : 0;
+            const totalCount = facets ? facets.totalCount || 0 : 0;
+            summaryElement.textContent = `Showing ${filteredCount} of ${totalCount} entities`;
+        }
     };
 
     control.addTo(map);

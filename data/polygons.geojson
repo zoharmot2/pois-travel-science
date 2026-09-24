@@ -38,11 +38,11 @@
         "esrignss_manual_locations": null,
         "Shape__Area": 12074503.096679688,
         "Shape__Length": 15855.593607378432,
-        "CreationDate": "24/09/2026 09:49",
+        "CreationDate": "24/09/2026 12:49",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "24/09/2026 09:49",
+        "EditDate": "24/09/2026 12:49",
         "Editor": "mzohar_univhaifa25",
-        "Collection_date": "01/09/2026 09:49",
+        "Collection_date": "01/09/2026 12:49",
         "POI_Type": "Scenary View",
         "POI_Description": null,
         "POI_Name": "Test",
@@ -50,6 +50,18 @@
         "Collect_Name": "Motti Zohar",
         "attachments": [
           "data/attachments/polygons/1_1_20250421_160500.jpg"
+        ],
+        "attachment_media": [
+          {
+            "url": "data/attachments/polygons/1_1_20250421_160500.jpg",
+            "name": "20250421_160500.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 1,
+            "parentObjectId": 1,
+            "sourceDataset": "polygons"
+          }
         ]
       }
     },
@@ -110,17 +122,18 @@
         "esrignss_manual_locations": null,
         "Shape__Area": 602.796875,
         "Shape__Length": 98.69985726094893,
-        "CreationDate": "24/09/2026 10:21",
+        "CreationDate": "24/09/2026 13:21",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "24/09/2026 10:21",
+        "EditDate": "24/09/2026 13:21",
         "Editor": "mzohar_univhaifa25",
-        "Collection_date": "24/09/2026 10:19",
+        "Collection_date": "24/09/2026 13:19",
         "POI_Type": "Scenary View",
         "POI_Description": "This polygon was captured",
         "POI_Name": null,
         "POI_Topic": "General",
         "Collect_Name": "Motti Zohar",
-        "attachments": []
+        "attachments": [],
+        "attachment_media": []
       }
     }
   ]

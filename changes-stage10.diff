@@ -1,0 +1,1025 @@
+diff -ruN pts_v14_stage9_impl/TESTING-v1.4-stage10.md pts_v14_stage10_impl/TESTING-v1.4-stage10.md
+--- pts_v14_stage9_impl/TESTING-v1.4-stage10.md	1970-01-01 00:00:00.000000000 +0000
++++ pts_v14_stage10_impl/TESTING-v1.4-stage10.md	2026-09-24 14:02:37.154106465 +0000
+@@ -0,0 +1,94 @@
++# v1.4 Stage 10 — Media / Attachment Test Checklist
++
++Stage 10 changes generated GeoJSON media metadata, the Detail Panel, and Data QA. Re-run the ArcGIS export before running Data QA.
++
++## 1. Local export
++
++From the repository root in Command Prompt:
++
++```cmd
++py scripts\fetch_data.py
++```
++
++Confirm that the export completes for all three datasets and that image/audio synchronization completes without an exception.
++
++## 2. Generated data contract
++
++Open one current entity with attachments in each available geometry dataset and verify that its GeoJSON properties contain both:
++
++```text
++attachments
++attachment_media
++```
++
++Each `attachment_media` item should contain `url`, `name`, `contentType`, `kind`, `storage`, ArcGIS attachment/object IDs, and `sourceDataset`.
++
++Check `data/derived/layers-metadata.json` and confirm each dataset includes `attachmentSummary`.
++
++## 3. Data QA
++
++Run:
++
++```cmd
++py scripts\qa_data.py
++```
++
++Expected:
++
++- 3 active datasets;
++- 0 Errors;
++- `Attachment references` and `Attachment media metadata` have the same count;
++- Missing local attachments = 0;
++- Orphan local attachments = 0;
++- media counts appear for Images / Audio / Video / Other media.
++
++Known ArcGIS data-quality warnings such as missing POI names/types/topics may remain warnings.
++
++## 4. Frontend QA
++
++```cmd
++py scripts\qa_frontend.py
++```
++
++Expected:
++
++```text
++Frontend regression QA: PASS
++Errors: 0 | Warnings: 0
++```
++
++## 5. Browser media regression
++
++Start the local server:
++
++```cmd
++py -m http.server 8000
++```
++
++Test both:
++
++```text
++http://localhost:8000/
++http://localhost:8000/?embed=true
++```
++
++For entities with media, verify:
++
++- Point photos render under **Photos**;
++- Line/Polygon photos render under **Photos**;
++- audio renders under **Audio** with working browser controls and an Open audio file link;
++- video remains under **Other Attachments** as an Open video link;
++- unsupported attachments remain explicit links rather than broken images;
++- media filenames remain readable;
++- opening/closing the Detail Panel still behaves correctly.
++
++If the current live dataset contains no audio or video, validate the relevant Data QA counts and defer browser playback/link testing until such media is present.
++
++## 6. GitHub Actions
++
++After the local checks pass, commit/push and manually run **Sync ESRI Data Weekly**. Confirm:
++
++- Fetch Points, Lines and Polygons succeeds;
++- Data QA has 0 Errors;
++- Frontend Regression QA passes;
++- the automated data commit includes any changed local media and updated GeoJSON/metadata outputs.
+diff -ruN pts_v14_stage9_impl/changes-stage10.diff pts_v14_stage10_impl/changes-stage10.diff
+--- pts_v14_stage9_impl/changes-stage10.diff	1970-01-01 00:00:00.000000000 +0000
++++ pts_v14_stage10_impl/changes-stage10.diff	2026-09-24 14:02:57.461955101 +0000
+@@ -0,0 +1,98 @@
++diff -ruN pts_v14_stage9_impl/TESTING-v1.4-stage10.md pts_v14_stage10_impl/TESTING-v1.4-stage10.md
++--- pts_v14_stage9_impl/TESTING-v1.4-stage10.md	1970-01-01 00:00:00.000000000 +0000
+++++ pts_v14_stage10_impl/TESTING-v1.4-stage10.md	2026-09-24 14:02:37.154106465 +0000
++@@ -0,0 +1,94 @@
+++# v1.4 Stage 10 — Media / Attachment Test Checklist
+++
+++Stage 10 changes generated GeoJSON media metadata, the Detail Panel, and Data QA. Re-run the ArcGIS export before running Data QA.
+++
+++## 1. Local export
+++
+++From the repository root in Command Prompt:
+++
+++```cmd
+++py scripts\fetch_data.py
+++```
+++
+++Confirm that the export completes for all three datasets and that image/audio synchronization completes without an exception.
+++
+++## 2. Generated data contract
+++
+++Open one current entity with attachments in each available geometry dataset and verify that its GeoJSON properties contain both:
+++
+++```text
+++attachments
+++attachment_media
+++```
+++
+++Each `attachment_media` item should contain `url`, `name`, `contentType`, `kind`, `storage`, ArcGIS attachment/object IDs, and `sourceDataset`.
+++
+++Check `data/derived/layers-metadata.json` and confirm each dataset includes `attachmentSummary`.
+++
+++## 3. Data QA
+++
+++Run:
+++
+++```cmd
+++py scripts\qa_data.py
+++```
+++
+++Expected:
+++
+++- 3 active datasets;
+++- 0 Errors;
+++- `Attachment references` and `Attachment media metadata` have the same count;
+++- Missing local attachments = 0;
+++- Orphan local attachments = 0;
+++- media counts appear for Images / Audio / Video / Other media.
+++
+++Known ArcGIS data-quality warnings such as missing POI names/types/topics may remain warnings.
+++
+++## 4. Frontend QA
+++
+++```cmd
+++py scripts\qa_frontend.py
+++```
+++
+++Expected:
+++
+++```text
+++Frontend regression QA: PASS
+++Errors: 0 | Warnings: 0
+++```
+++
+++## 5. Browser media regression
+++
+++Start the local server:
+++
+++```cmd
+++py -m http.server 8000
+++```
+++
+++Test both:
+++
+++```text
+++http://localhost:8000/
+++http://localhost:8000/?embed=true
+++```
+++
+++For entities with media, verify:
+++
+++- Point photos render under **Photos**;
+++- Line/Polygon photos render under **Photos**;
+++- audio renders under **Audio** with working browser controls and an Open audio file link;
+++- video remains under **Other Attachments** as an Open video link;
+++- unsupported attachments remain explicit links rather than broken images;
+++- media filenames remain readable;
+++- opening/closing the Detail Panel still behaves correctly.
+++
+++If the current live dataset contains no audio or video, validate the relevant Data QA counts and defer browser playback/link testing until such media is present.
+++
+++## 6. GitHub Actions
+++
+++After the local checks pass, commit/push and manually run **Sync ESRI Data Weekly**. Confirm:
+++
+++- Fetch Points, Lines and Polygons succeeds;
+++- Data QA has 0 Errors;
+++- Frontend Regression QA passes;
+++- the automated data commit includes any changed local media and updated GeoJSON/metadata outputs.
+diff -ruN pts_v14_stage9_impl/css/app.css pts_v14_stage10_impl/css/app.css
+--- pts_v14_stage9_impl/css/app.css	2026-09-24 13:50:36.867814211 +0000
++++ pts_v14_stage10_impl/css/app.css	2026-09-24 13:58:47.679834296 +0000
+@@ -837,3 +837,27 @@
+     border: 0;
+     background: transparent;
+ }
++
++/* v1.4 Stage 10 media/attachment refinement */
++.entity-detail-media-section + .entity-detail-media-section {
++    margin-top: 12px;
++}
++
++.entity-detail-audio-list,
++.entity-detail-other-list {
++    display: grid;
++    gap: 8px;
++}
++
++.entity-detail-other-item {
++    display: grid;
++    gap: 4px;
++}
++
++.entity-detail-media-kind {
++    color: #64748b;
++    font-size: 9px;
++    font-weight: 700;
++    letter-spacing: 0.04em;
++    text-transform: uppercase;
++}
+diff -ruN pts_v14_stage9_impl/docs/README.md pts_v14_stage10_impl/docs/README.md
+--- pts_v14_stage9_impl/docs/README.md	2026-09-24 11:42:46.367067042 +0000
++++ pts_v14_stage10_impl/docs/README.md	2026-09-24 14:02:01.198219610 +0000
+@@ -17,6 +17,8 @@
+ - [`symbology-v1.4.md`](symbology-v1.4.md) — POI Type visual model shared across Points, Lines, and Polygons.
+ - [`ui-v1.4.md`](ui-v1.4.md) — integrated Type/Search/Geometry/Map Utilities control layout and responsive behavior.
+ - [`detail-panel.md`](detail-panel.md) — concise popup plus persistent Entity Detail Panel.
++- [`search-detail-v1.4.md`](search-detail-v1.4.md) — multi-geometry search and geometry-aware entity inspection.
++- [`media-attachments-v1.4.md`](media-attachments-v1.4.md) — image/audio/video/other media export, rendering, synchronization, and QA contract.
+ 
+ ## Development, QA, and release process
+ 
+diff -ruN pts_v14_stage9_impl/docs/media-attachments-v1.4.md pts_v14_stage10_impl/docs/media-attachments-v1.4.md
+--- pts_v14_stage9_impl/docs/media-attachments-v1.4.md	1970-01-01 00:00:00.000000000 +0000
++++ pts_v14_stage10_impl/docs/media-attachments-v1.4.md	2026-09-24 14:01:59.814382959 +0000
+@@ -0,0 +1,59 @@
++# v1.4 Stage 10 — Media and Attachment Handling
++
++Stage 10 formalizes attachment/media handling across the active point, line, and polygon datasets.
++
++## Export contract
++
++The ArcGIS export keeps the existing `attachments` array of canonical URLs/paths for backward compatibility and adds a structured `attachment_media` array for each entity.
++
++Each media item contains:
++
++- `url` — local repository path or direct public ArcGIS URL;
++- `name` — original ArcGIS attachment name;
++- `contentType` — ArcGIS MIME type when available;
++- `kind` — `image`, `audio`, `video`, or `other`;
++- `storage` — `local` or `remote`;
++- `attachmentId` and `parentObjectId` — ArcGIS attachment linkage;
++- `sourceDataset` — `points`, `lines`, or `polygons`.
++
++`attachments` and `attachment_media[*].url` must match one-to-one.
++
++## Storage policy
++
++- Images are downloaded locally and optimized as before.
++- Audio is downloaded locally without transcoding.
++- Video remains a direct public ArcGIS URL.
++- Other unsupported media remains a direct public ArcGIS URL.
++- Point media keep the historical root attachment path.
++- Line media use `data/attachments/lines/`.
++- Polygon media use `data/attachments/polygons/`.
++
++The synchronization cleanup from Stage 6 remains authoritative: deleting an ArcGIS entity or deleting one of its local image/audio attachments removes the corresponding local file after the next successful refresh. Cleanup never runs from an incomplete attachment query.
++
++## Browser presentation
++
++The Entity Detail Panel uses structured media metadata when available and retains a compatibility fallback for older exports.
++
++- Photos render as thumbnail links.
++- Audio renders with the browser's native HTML5 audio controls and an explicit file link.
++- Video remains an external/open link rather than an embedded or locally downloaded video.
++- Other attachments render as explicit links.
++
++Media sections are grouped as **Photos**, **Audio**, and **Other Attachments** and are shared by Point, Line, and Polygon entities.
++
++## Layer metadata
++
++`data/derived/layers-metadata.json` now includes an `attachmentSummary` per dataset with total references, local/remote storage counts, and counts by media kind. This makes the weekly export auditable without requiring the browser to inspect every feature.
++
++## QA contract
++
++Data QA validates:
++
++- `attachment_media` is an array of valid metadata objects for every exported feature;
++- `kind` is one of `image`, `audio`, `video`, `other`;
++- `storage` is `local` or `remote` and matches the URL form;
++- the structured media URLs match the canonical `attachments` array one-to-one;
++- local attachment files exist;
++- no unreferenced local attachment file remains in the repository.
++
++The QA report also exposes counts by media kind and local/remote storage.
+diff -ruN pts_v14_stage9_impl/docs/multi-layer-ingestion-v1.4.md pts_v14_stage10_impl/docs/multi-layer-ingestion-v1.4.md
+--- pts_v14_stage9_impl/docs/multi-layer-ingestion-v1.4.md	2026-09-24 12:15:16.167976973 +0000
++++ pts_v14_stage10_impl/docs/multi-layer-ingestion-v1.4.md	2026-09-24 14:02:01.198473377 +0000
+@@ -21,7 +21,7 @@
+ - All source properties are preserved. The shared Entity fields are not used to discard layer-specific attributes.
+ - `GlobalID` remains the canonical website stable ID; uniqueness across datasets is enforced by Data QA.
+ - Point CSV/PDF products remain point-based for backward compatibility.
+-- Existing point attachment behavior is preserved in Stage 6. Line/polygon attachment download is intentionally deferred to Stage 10.
++- Attachment synchronization is active across Points, Lines, and Polygons. Images and audio are downloaded locally; video/other media remain direct ArcGIS URLs.
+ 
+ ## Common Entity fields
+ 
+@@ -78,7 +78,7 @@
+ - Image and audio attachments are downloaded locally for points, lines, and polygons.
+ - Existing point media keep the historical `data/attachments/<OBJECTID>_<attachmentId>_<name>` path to avoid a mass rewrite.
+ - New line media are stored under `data/attachments/lines/` and polygon media under `data/attachments/polygons/` so attachment/object IDs from different ArcGIS sublayers cannot collide.
+-- Media other than images and audio (for example video) remain direct public ArcGIS attachment URLs rather than local copies.
++- Media other than images and audio (for example video) remain direct public ArcGIS attachment URLs rather than local copies. Stage 10 additionally exports structured `attachment_media` metadata so the browser and QA do not need to infer media type from a URL alone.
+ - Attachment metadata retrieval and local image/audio download failures abort the refresh. The exporter never interprets a failed ArcGIS attachment request as an empty attachment set.
+ 
+ The export is a synchronization, not an append-only archive. Every successful run builds the current attachment reference set from the authoritative AGOL view and then removes local image files that are no longer referenced. Therefore:
+diff -ruN pts_v14_stage9_impl/docs/qa-pipeline.md pts_v14_stage10_impl/docs/qa-pipeline.md
+--- pts_v14_stage9_impl/docs/qa-pipeline.md	2026-09-24 12:07:01.423233460 +0000
++++ pts_v14_stage10_impl/docs/qa-pipeline.md	2026-09-24 14:02:22.788124149 +0000
+@@ -120,3 +120,7 @@
+ ### Orphan attachment protection
+ 
+ Data QA also scans `data/attachments/` recursively after export. A local attachment file that is not referenced by any current point, line, or polygon entity is reported as `ATTACHMENT_FILE_ORPHAN` and is an `ERROR`. The exporter normally removes these files itself; the QA check is a second safety net that prevents stale media from being published if cleanup ever fails.
++## v1.4 Stage 10 media validation
++
++The Data QA report validates both the legacy `attachments` URL/path list and the structured `attachment_media` metadata generated for Points, Lines, and Polygons. Media metadata must match attachment references one-to-one. The report also summarizes media by `image`, `audio`, `video`, and `other`, plus local/remote storage counts. Invalid media metadata or a mismatch between the two representations is an ERROR and blocks publication.
++
+diff -ruN pts_v14_stage9_impl/docs/search-detail-v1.4.md pts_v14_stage10_impl/docs/search-detail-v1.4.md
+--- pts_v14_stage9_impl/docs/search-detail-v1.4.md	2026-09-24 13:51:15.447500916 +0000
++++ pts_v14_stage10_impl/docs/search-detail-v1.4.md	2026-09-24 14:02:01.198602682 +0000
+@@ -38,13 +38,14 @@
+ 
+ ## Attachments
+ 
+-The panel now distinguishes downloaded media by file extension:
++Stage 10 replaces extension-only presentation with structured attachment metadata generated by the ArcGIS export. The Detail Panel groups media into **Photos**, **Audio**, and **Other Attachments**:
+ 
+ - images render as thumbnails;
+-- locally downloaded audio renders with an HTML5 audio player plus an Open audio file link;
+-- video and other unsupported/direct ArcGIS attachments remain links.
++- downloaded audio renders with an HTML5 audio player plus an Open audio file link;
++- video remains a direct ArcGIS link;
++- other unsupported media remains an explicit attachment link.
+ 
+-This presentation layer does not change the Stage 6 synchronization rules. Images and audio are still downloaded during the weekly ArcGIS export, while unsupported media remain direct URLs.
++The Entity model retains a compatibility fallback for older snapshots that contain only the legacy `attachments` URL/path array.
+ 
+ ## Performance and safety
+ 
+diff -ruN pts_v14_stage9_impl/docs/v1.4-checkpoint-stage10.md pts_v14_stage10_impl/docs/v1.4-checkpoint-stage10.md
+--- pts_v14_stage9_impl/docs/v1.4-checkpoint-stage10.md	1970-01-01 00:00:00.000000000 +0000
++++ pts_v14_stage10_impl/docs/v1.4-checkpoint-stage10.md	2026-09-24 14:01:59.826382869 +0000
+@@ -0,0 +1,55 @@
++# v1.4 Checkpoint — Stage 10
++
++## Completed v1.4 stages
++
++1. ArcGIS schema/domain audit — complete.
++2. UI specification — complete.
++3. AGOL multi-layer ingestion design — complete.
++4. POI Type symbology/config model — complete.
++5. v1.4 UI implementation — complete.
++6. Multi-layer export and attachment synchronization — complete and validated locally and in GitHub Actions.
++7. Multi-geometry rendering — complete.
++8. Unified POI Type + Geometry filtering — complete.
++9. Multi-geometry search + Detail Panel refinement — complete.
++10. Media/attachment regression and refinement — implemented in this checkpoint.
++
++## Authoritative ArcGIS source
++
++Public hosted view:
++
++`https://services5.arcgis.com/eJYUV73IZAY87Jwy/arcgis/rest/services/POI_Feature_Layer_view/FeatureServer`
++
++- `/0` Points
++- `/1` Lines
++- `/2` Polygons
++
++ArcGIS Online / Field Maps remains authoritative and is not modified by the website pipeline.
++
++## Current multi-geometry baseline
++
++The last validated live Stage 6 snapshot contained:
++
++- 1,198 Points
++- 6 Lines
++- 2 Polygons
++- 1,206 stable GlobalID-based entities total
++- 3 active datasets
++- 0 missing local attachments
++- 0 orphan local attachments
++
++The exact counts remain dynamic because the weekly GitHub Action refreshes ArcGIS data.
++
++## Stage 10 media contract
++
++- Images: local archive + browser thumbnails.
++- Audio: local archive + HTML5 audio playback.
++- Video: direct ArcGIS URL.
++- Other media: direct ArcGIS URL.
++- Structured `attachment_media` metadata is exported in addition to the existing `attachments` URL/path list.
++- Attachment metadata is generated for Points, Lines, and Polygons.
++- `layers-metadata.json` contains per-dataset media summaries.
++- Data QA verifies media metadata, storage semantics, local files, and one-to-one agreement with attachment references.
++
++## Next approved stage
++
++Stage 11 — Multi-dataset QA refinement, followed by standalone/embedded regression, documentation, and the v1.4.0 release sequence.
+diff -ruN pts_v14_stage9_impl/js/details.js pts_v14_stage10_impl/js/details.js
+--- pts_v14_stage9_impl/js/details.js	2026-09-24 13:49:10.524430171 +0000
++++ pts_v14_stage10_impl/js/details.js	2026-09-24 13:58:39.523222961 +0000
+@@ -60,51 +60,89 @@
+     return 'other';
+ }
+ 
+-function renderAttachments(entity) {
+-    const attachments = Array.isArray(entity.attachments) ? entity.attachments : [];
+-    if (!attachments.length) return '';
++function renderMediaLink(item, label) {
++    const safeUrl = escapeHtml(item.url);
++    const safeName = escapeHtml(item.name || 'Attachment');
++    return `
++        <a class="entity-detail-attachment-link" href="${safeUrl}" target="_blank" rel="noopener noreferrer">
++            ${escapeHtml(label)} — ${safeName}
++        </a>
++    `;
++}
+ 
+-    const items = attachments.map((path, index) => {
+-        const safePath = escapeHtml(path);
+-        const fileName = attachmentFileName(path, index);
+-        const safeName = escapeHtml(fileName);
+-        const kind = getAttachmentKind(path);
++function renderAttachments(entity) {
++    const media = Array.isArray(entity.attachmentMedia) ? entity.attachmentMedia : [];
++    if (!media.length) return '';
+ 
+-        if (kind === 'image') {
++    const images = media.filter(item => item.kind === 'image');
++    const audio = media.filter(item => item.kind === 'audio');
++    const other = media.filter(item => item.kind !== 'image' && item.kind !== 'audio');
++
++    const sections = [];
++
++    if (images.length) {
++        const items = images.map((item, index) => {
++            const safeUrl = escapeHtml(item.url);
++            const safeName = escapeHtml(item.name || `Image ${index + 1}`);
+             return `
+-                <a class="entity-detail-media-item" href="${safePath}" target="_blank" rel="noopener noreferrer">
+-                    <img src="${safePath}" alt="${escapeHtml(entity.name || 'Entity')} - image ${index + 1}" loading="lazy">
++                <a class="entity-detail-media-item" href="${safeUrl}" target="_blank" rel="noopener noreferrer">
++                    <img src="${safeUrl}" alt="${escapeHtml(getEntityDisplayName(entity))} - image ${index + 1}" loading="lazy">
+                     <span>${safeName}</span>
+                 </a>
+             `;
+-        }
+-
+-        if (kind === 'audio') {
++        }).join('');
++        sections.push(`
++            <section class="entity-detail-section entity-detail-media-section">
++                <h3>Photos <span class="entity-detail-section-count">${images.length}</span></h3>
++                <div class="entity-detail-media-grid">${items}</div>
++            </section>
++        `);
++    }
++
++    if (audio.length) {
++        const items = audio.map(item => {
++            const safeUrl = escapeHtml(item.url);
++            const safeName = escapeHtml(item.name || 'Audio');
++            const safeType = escapeHtml(item.contentType || '');
+             return `
+                 <div class="entity-detail-audio-item">
+                     <div class="entity-detail-attachment-name">${safeName}</div>
+-                    <audio controls preload="none" src="${safePath}">
++                    <audio controls preload="none">
++                        <source src="${safeUrl}"${safeType ? ` type="${safeType}"` : ''}>
+                         Your browser does not support audio playback.
+                     </audio>
+-                    <a class="entity-detail-attachment-link" href="${safePath}" target="_blank" rel="noopener noreferrer">Open audio file</a>
++                    ${renderMediaLink(item, 'Open audio file')}
+                 </div>
+             `;
+-        }
+-
+-        const linkLabel = kind === 'video' ? 'Open video' : 'Open attachment';
+-        return `
+-            <a class="entity-detail-attachment-link" href="${safePath}" target="_blank" rel="noopener noreferrer">
+-                ${escapeHtml(linkLabel)} — ${safeName}
+-            </a>
+-        `;
+-    }).join('');
++        }).join('');
++        sections.push(`
++            <section class="entity-detail-section entity-detail-media-section">
++                <h3>Audio <span class="entity-detail-section-count">${audio.length}</span></h3>
++                <div class="entity-detail-audio-list">${items}</div>
++            </section>
++        `);
++    }
++
++    if (other.length) {
++        const items = other.map(item => {
++            const label = item.kind === 'video' ? 'Open video' : 'Open attachment';
++            const kindLabel = item.kind === 'video' ? 'Video' : 'Attachment';
++            return `
++                <div class="entity-detail-other-item">
++                    <span class="entity-detail-media-kind">${escapeHtml(kindLabel)}</span>
++                    ${renderMediaLink(item, label)}
++                </div>
++            `;
++        }).join('');
++        sections.push(`
++            <section class="entity-detail-section entity-detail-media-section">
++                <h3>Other Attachments <span class="entity-detail-section-count">${other.length}</span></h3>
++                <div class="entity-detail-other-list">${items}</div>
++            </section>
++        `);
++    }
+ 
+-    return `
+-        <section class="entity-detail-section">
+-            <h3>Attachments <span class="entity-detail-section-count">${attachments.length}</span></h3>
+-            <div class="entity-detail-media-grid">${items}</div>
+-        </section>
+-    `;
++    return sections.join('');
+ }
+ 
+ function formatBounds(bounds) {
+diff -ruN pts_v14_stage9_impl/js/entities.js pts_v14_stage10_impl/js/entities.js
+--- pts_v14_stage9_impl/js/entities.js	2026-09-24 13:50:13.405443548 +0000
++++ pts_v14_stage10_impl/js/entities.js	2026-09-24 13:58:17.722802721 +0000
+@@ -3,6 +3,12 @@
+ const POLYGON_GEOMETRY_TYPES = new Set(['Polygon', 'MultiPolygon']);
+ const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+ 
++const IMAGE_ATTACHMENT_PATTERN = /\.(jpe?g|png|gif|webp|bmp|tiff?)$/i;
++const AUDIO_ATTACHMENT_PATTERN = /\.(mp3|wav|m4a|aac|ogg|oga|flac|opus|wma|aiff?|amr|m4b)$/i;
++const VIDEO_ATTACHMENT_PATTERN = /\.(mp4|mov|m4v|webm|avi|mkv)$/i;
++const MEDIA_KINDS = new Set(['image', 'audio', 'video', 'other']);
++const MEDIA_STORAGE = new Set(['local', 'remote']);
++
+ 
+ function escapeHtml(value) {
+     return String(value ?? '')
+@@ -130,6 +136,81 @@
+         .filter(Boolean);
+ }
+ 
++export function inferAttachmentKind(url = '', contentType = '') {
++    const cleanUrl = String(url || '').split('?')[0];
++    const mime = String(contentType || '').toLowerCase();
++    if (mime.startsWith('image/') || IMAGE_ATTACHMENT_PATTERN.test(cleanUrl)) return 'image';
++    if (mime.startsWith('audio/') || AUDIO_ATTACHMENT_PATTERN.test(cleanUrl)) return 'audio';
++    if (mime.startsWith('video/') || VIDEO_ATTACHMENT_PATTERN.test(cleanUrl)) return 'video';
++    return 'other';
++}
++
++function attachmentDisplayName(url, index) {
++    const cleanUrl = String(url || '').split('?')[0].replace(/\\/g, '/');
++    const lastPart = cleanUrl.split('/').filter(Boolean).pop();
++    if (!lastPart || /^\d+$/.test(lastPart)) return `Attachment ${index + 1}`;
++    try {
++        return decodeURIComponent(lastPart);
++    } catch {
++        return lastPart;
++    }
++}
++
++export function normalizeAttachmentMedia(value, attachments = []) {
++    const attachmentUrls = normalizeAttachments(attachments);
++    if (!Array.isArray(value)) {
++        return attachmentUrls.map((url, index) => ({
++            url,
++            name: attachmentDisplayName(url, index),
++            contentType: '',
++            kind: inferAttachmentKind(url),
++            storage: /^https?:\/\//i.test(url) ? 'remote' : 'local',
++            attachmentId: null,
++            parentObjectId: null,
++            sourceDataset: null
++        }));
++    }
++
++    const normalized = [];
++    value.forEach((item, index) => {
++        if (!item || typeof item !== 'object') return;
++        const url = String(item.url || '').trim();
++        if (!url) return;
++        const kind = MEDIA_KINDS.has(item.kind) ? item.kind : inferAttachmentKind(url, item.contentType);
++        const storage = MEDIA_STORAGE.has(item.storage)
++            ? item.storage
++            : (/^https?:\/\//i.test(url) ? 'remote' : 'local');
++        normalized.push({
++            url,
++            name: String(item.name || attachmentDisplayName(url, index)),
++            contentType: String(item.contentType || ''),
++            kind,
++            storage,
++            attachmentId: item.attachmentId ?? null,
++            parentObjectId: item.parentObjectId ?? null,
++            sourceDataset: item.sourceDataset || null
++        });
++    });
++
++    // Preserve backward compatibility if metadata is partial or absent.
++    const knownUrls = new Set(normalized.map(item => item.url));
++    attachmentUrls.forEach((url, index) => {
++        if (knownUrls.has(url)) return;
++        normalized.push({
++            url,
++            name: attachmentDisplayName(url, index),
++            contentType: '',
++            kind: inferAttachmentKind(url),
++            storage: /^https?:\/\//i.test(url) ? 'remote' : 'local',
++            attachmentId: null,
++            parentObjectId: null,
++            sourceDataset: null
++        });
++    });
++
++    return normalized;
++}
++
+ /**
+  * Normalize an ArcGIS GlobalID into the website's canonical stable-ID form.
+  *
+@@ -224,7 +305,11 @@
+         collectionDate: getProperty(properties, 'Collection_date') || '',
+         latitude,
+         longitude,
+-        attachments: normalizeAttachments(getProperty(properties, 'attachments'))
++        attachments: normalizeAttachments(getProperty(properties, 'attachments')),
++        attachmentMedia: normalizeAttachmentMedia(
++            getProperty(properties, 'attachment_media'),
++            getProperty(properties, 'attachments')
++        )
+     };
+ }
+ 
+Binary files pts_v14_stage9_impl/scripts/__pycache__/fetch_data.cpython-313.pyc and pts_v14_stage10_impl/scripts/__pycache__/fetch_data.cpython-313.pyc differ
+Binary files pts_v14_stage9_impl/scripts/__pycache__/qa_data.cpython-313.pyc and pts_v14_stage10_impl/scripts/__pycache__/qa_data.cpython-313.pyc differ
+Binary files pts_v14_stage9_impl/scripts/__pycache__/qa_frontend.cpython-313.pyc and pts_v14_stage10_impl/scripts/__pycache__/qa_frontend.cpython-313.pyc differ
+diff -ruN pts_v14_stage9_impl/scripts/fetch_data.py pts_v14_stage10_impl/scripts/fetch_data.py
+--- pts_v14_stage9_impl/scripts/fetch_data.py	2026-09-24 12:14:54.968648546 +0000
++++ pts_v14_stage10_impl/scripts/fetch_data.py	2026-09-24 13:57:54.405449133 +0000
+@@ -58,6 +58,8 @@
+ 
+ IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.gif', '.webp')
+ AUDIO_EXTENSIONS = ('.mp3', '.wav', '.m4a', '.aac', '.ogg', '.oga', '.flac', '.wma', '.opus', '.aiff', '.aif', '.amr', '.m4b')
++VIDEO_EXTENSIONS = ('.mp4', '.mov', '.m4v', '.webm', '.avi', '.mkv')
++ATTACHMENT_MEDIA_FIELD = 'attachment_media'
+ DOMAIN_FIELDS = ("POI_Type", "POI_Topic", "Collect_Name")
+ COMMON_ENTITY_FIELDS = (
+     "GlobalID",
+@@ -86,7 +88,8 @@
+     "POI_Description",
+     "Latitude",
+     "Longitude",
+-    "attachments"
++    "attachments",
++    ATTACHMENT_MEDIA_FIELD
+ ]
+ 
+ 
+@@ -368,6 +371,47 @@
+     return attachments_map
+ 
+ 
++def classify_attachment(att_name, content_type=""):
++    """Classify one ArcGIS attachment using MIME type first, then filename."""
++    name_lower = str(att_name or "").lower()
++    content_type_lower = str(content_type or "").lower()
++
++    if content_type_lower.startswith("image/") or name_lower.endswith(IMAGE_EXTENSIONS):
++        return "image"
++    if content_type_lower.startswith("audio/") or name_lower.endswith(AUDIO_EXTENSIONS):
++        return "audio"
++    if content_type_lower.startswith("video/") or name_lower.endswith(VIDEO_EXTENSIONS):
++        return "video"
++    return "other"
++
++
++def summarize_attachment_media(features):
++    """Return media counts for one exported dataset."""
++    summary = {
++        "references": 0,
++        "local": 0,
++        "remote": 0,
++        "byKind": {"image": 0, "audio": 0, "video": 0, "other": 0},
++    }
++    for feature in features:
++        media = feature.get("properties", {}).get(ATTACHMENT_MEDIA_FIELD, [])
++        if not isinstance(media, list):
++            continue
++        for item in media:
++            if not isinstance(item, dict):
++                continue
++            summary["references"] += 1
++            storage = item.get("storage")
++            if storage in ("local", "remote"):
++                summary[storage] += 1
++            kind = item.get("kind")
++            if kind in summary["byKind"]:
++                summary["byKind"][kind] += 1
++            else:
++                summary["byKind"]["other"] += 1
++    return summary
++
++
+ def attachment_storage(spec, oid, att_id, att_name):
+     """Return local and web-relative paths for one downloaded media attachment.
+ 
+@@ -402,22 +446,28 @@
+     """
+     if not spec.get("downloadAttachments"):
+         for feature in features:
+-            feature.setdefault("properties", {})["attachments"] = []
++            props = feature.setdefault("properties", {})
++            props["attachments"] = []
++            props[ATTACHMENT_MEDIA_FIELD] = []
+         return
+ 
+     if metadata.get("hasAttachments") is False:
+         for feature in features:
+-            feature.setdefault("properties", {})["attachments"] = []
++            props = feature.setdefault("properties", {})
++            props["attachments"] = []
++            props[ATTACHMENT_MEDIA_FIELD] = []
+         return
+ 
+     object_ids = get_object_ids(features)
+     attachments_info_map = get_attachments_map(spec["layerId"], object_ids)
+     attachments_map = {}
++    attachment_media_map = {}
+     base_url = layer_url(spec["layerId"])
+ 
+     for oid in object_ids:
+         att_list = attachments_info_map.get(oid, [])
+         attachments_map[oid] = []
++        attachment_media_map[oid] = []
+         for att in att_list:
+             att_id = att.get("id")
+             if att_id is None:
+@@ -427,13 +477,10 @@
+                 )
+             att_name = att.get("name") or f"attachment-{att_id}"
+             download_url = f"{base_url}/{oid}/attachments/{att_id}"
+-            att_name_lower = str(att_name).lower()
+-            content_type = str(att.get("contentType") or "").lower()
+-            is_image = att_name_lower.endswith(IMAGE_EXTENSIONS) or content_type.startswith("image/")
+-            is_audio = att_name_lower.endswith(AUDIO_EXTENSIONS) or content_type.startswith("audio/")
++            content_type = str(att.get("contentType") or "")
++            media_kind = classify_attachment(att_name, content_type)
+ 
+-            if is_image or is_audio:
+-                media_kind = "image" if is_image else "audio"
++            if media_kind in ("image", "audio"):
+                 local_path, relative_path = attachment_storage(
+                     spec, oid, att_id, att_name
+                 )
+@@ -450,20 +497,34 @@
+                             f"{spec['sourceDataset']} OBJECTID {oid}: {exc}"
+                         ) from exc
+ 
+-                if is_image:
++                if media_kind == "image":
+                     optimize_image(local_path, max_dim=600, quality=45)
+-                attachments_map[oid].append(relative_path)
++                media_url = relative_path
++                storage = "local"
+             else:
+                 print(
+-                    f"Skipping unsupported media download ({att_name}); "
+-                    "keeping the direct URL."
++                    f"Keeping {media_kind} attachment as direct ArcGIS URL ({att_name})."
+                 )
+-                attachments_map[oid].append(download_url)
++                media_url = download_url
++                storage = "remote"
++
++            attachments_map[oid].append(media_url)
++            attachment_media_map[oid].append({
++                "url": media_url,
++                "name": att_name,
++                "contentType": content_type or None,
++                "kind": media_kind,
++                "storage": storage,
++                "attachmentId": att_id,
++                "parentObjectId": oid,
++                "sourceDataset": spec["sourceDataset"],
++            })
+ 
+     for feature in features:
+         props = feature.get("properties", {})
+         oid = props.get("OBJECTID") or props.get("objectid") or props.get("FID")
+         props["attachments"] = attachments_map.get(oid, [])
++        props[ATTACHMENT_MEDIA_FIELD] = attachment_media_map.get(oid, [])
+ 
+ 
+ def local_attachment_references(snapshots):
+@@ -569,6 +630,7 @@
+         },
+         "domains": domains,
+         "observedValues": observed,
++        "attachmentSummary": summarize_attachment_media(features),
+     }
+ 
+ 
+@@ -591,6 +653,10 @@
+             props = feat.get("properties", {}).copy()
+             if isinstance(props.get("attachments"), list):
+                 props["attachments"] = ", ".join(props["attachments"])
++            if isinstance(props.get(ATTACHMENT_MEDIA_FIELD), (list, dict)):
++                props[ATTACHMENT_MEDIA_FIELD] = json.dumps(
++                    props[ATTACHMENT_MEDIA_FIELD], ensure_ascii=False, separators=(",", ":")
++                )
+             writer.writerow(props)
+ 
+ 
+@@ -738,7 +804,8 @@
+         print("   No orphan local attachments found.")
+ 
+     print("Multi-layer ArcGIS export completed successfully.")
+-    print("Image and audio attachments are synchronized for points, lines and polygons.")
++    print("Attachment media metadata is exported for points, lines and polygons.")
++    print("Images and audio are local; video/other media remain direct ArcGIS URLs.")
+ 
+ 
+ if __name__ == "__main__":
+diff -ruN pts_v14_stage9_impl/scripts/qa_config.json pts_v14_stage10_impl/scripts/qa_config.json
+--- pts_v14_stage9_impl/scripts/qa_config.json	2026-09-24 11:42:41.420665262 +0000
++++ pts_v14_stage10_impl/scripts/qa_config.json	2026-09-24 13:59:38.780788350 +0000
+@@ -42,5 +42,6 @@
+         "polygon"
+       ]
+     }
+-  ]
++  ],
++  "attachmentMediaField": "attachment_media"
+ }
+diff -ruN pts_v14_stage9_impl/scripts/qa_data.py pts_v14_stage10_impl/scripts/qa_data.py
+--- pts_v14_stage9_impl/scripts/qa_data.py	2026-09-24 12:05:46.347914819 +0000
++++ pts_v14_stage10_impl/scripts/qa_data.py	2026-09-24 13:59:20.997982119 +0000
+@@ -137,6 +137,7 @@
+             "remoteAttachmentCount": 0,
+             "missingAttachmentCount": 0,
+             "orphanAttachmentCount": 0,
++            "mediaMetadataCount": 0,
+             "warningCount": 0,
+             "errorCount": 0,
+         }
+@@ -144,6 +145,8 @@
+             "geometryFamilies": Counter(),
+             "topics": Counter(),
+             "types": Counter(),
++            "mediaKinds": Counter(),
++            "mediaStorage": Counter(),
+         }
+         self.deltas: dict[str, Any] | None = None
+ 
+@@ -195,6 +198,8 @@
+                 "geometryFamilies": dict(sorted(self.counts["geometryFamilies"].items())),
+                 "topics": dict(sorted(self.counts["topics"].items())),
+                 "types": dict(sorted(self.counts["types"].items())),
++                "mediaKinds": dict(sorted(self.counts["mediaKinds"].items())),
++                "mediaStorage": dict(sorted(self.counts["mediaStorage"].items())),
+             },
+             "datasets": self.datasets,
+             "issues": self.issues,
+@@ -399,6 +404,7 @@
+     type_field = config.get("typeField", "POI_Type")
+     name_field = config.get("nameField", "POI_Name")
+     attachment_field = config.get("attachmentField", "attachments")
++    attachment_media_field = config.get("attachmentMediaField", "attachment_media")
+ 
+     all_ids: dict[str, list[dict[str, Any]]] = defaultdict(list)
+     current_ids_by_dataset: dict[str, set[str]] = {}
+@@ -462,6 +468,10 @@
+         attachment_field_errors: list[Any] = []
+         missing_attachments: list[str] = []
+         unsafe_attachment_paths: list[str] = []
++        attachment_media_errors: list[Any] = []
++        attachment_media_mismatches: list[Any] = []
++        dataset_media_kinds: Counter[str] = Counter()
++        dataset_media_storage: Counter[str] = Counter()
+         dataset_ids: set[str] = set()
+ 
+         for index, feature in enumerate(features):
+@@ -543,8 +553,54 @@
+                     report.summary["missingAttachmentCount"] += 1
+                     missing_attachments.append(ref)
+ 
++            media_metadata = props.get(attachment_media_field)
++            if not isinstance(media_metadata, list):
++                attachment_media_errors.append({"object": object_hint, "reason": f"{attachment_media_field} is not an array"})
++                media_metadata = []
++
++            media_urls: list[str] = []
++            for item in media_metadata:
++                if not isinstance(item, dict):
++                    attachment_media_errors.append({"object": object_hint, "reason": "media item is not an object"})
++                    continue
++                url = item.get("url")
++                kind = item.get("kind")
++                storage = item.get("storage")
++                if not isinstance(url, str) or not url.strip():
++                    attachment_media_errors.append({"object": object_hint, "reason": "media item is missing url"})
++                    continue
++                url = url.strip()
++                media_urls.append(url)
++                if kind not in {"image", "audio", "video", "other"}:
++                    attachment_media_errors.append({"object": object_hint, "url": url, "reason": f"invalid kind: {kind!r}"})
++                    continue
++                if storage not in {"local", "remote"}:
++                    attachment_media_errors.append({"object": object_hint, "url": url, "reason": f"invalid storage: {storage!r}"})
++                    continue
++                parsed = urlparse(url)
++                is_remote = parsed.scheme.lower() in REMOTE_SCHEMES
++                if storage == "remote" and not is_remote:
++                    attachment_media_errors.append({"object": object_hint, "url": url, "reason": "remote storage must use http(s) URL"})
++                if storage == "local" and is_remote:
++                    attachment_media_errors.append({"object": object_hint, "url": url, "reason": "local storage must use repository-relative path"})
++                report.summary["mediaMetadataCount"] += 1
++                report.counts["mediaKinds"][kind] += 1
++                report.counts["mediaStorage"][storage] += 1
++                dataset_media_kinds[kind] += 1
++                dataset_media_storage[storage] += 1
++
++            attachment_refs = [ref.strip() for ref in attachments if isinstance(ref, str) and ref.strip()]
++            if sorted(media_urls) != sorted(attachment_refs):
++                attachment_media_mismatches.append({
++                    "object": object_hint,
++                    "attachmentCount": len(attachment_refs),
++                    "mediaMetadataCount": len(media_urls),
++                })
++
+         dataset_result["validStableIdCount"] = len(dataset_ids)
+         dataset_result["geometryFamilies"] = dict(sorted(geometry_counts.items()))
++        dataset_result["mediaKinds"] = dict(sorted(dataset_media_kinds.items()))
++        dataset_result["mediaStorage"] = dict(sorted(dataset_media_storage.items()))
+         current_ids_by_dataset[name] = dataset_ids
+ 
+         if invalid_feature_objects:
+@@ -613,6 +669,18 @@
+                 "Local attachment references point to files that do not exist.",
+                 dataset=name, count=len(missing_attachments), examples=missing_attachments,
+             )
++        if attachment_media_errors:
++            report.add_issue(
++                "ERROR", "ATTACHMENT_MEDIA_INVALID",
++                f"{attachment_media_field} must contain valid media metadata objects.",
++                dataset=name, count=len(attachment_media_errors), examples=attachment_media_errors,
++            )
++        if attachment_media_mismatches:
++            report.add_issue(
++                "ERROR", "ATTACHMENT_MEDIA_MISMATCH",
++                f"{attachment_media_field} URLs must match the canonical {attachment_field} references one-to-one.",
++                dataset=name, count=len(attachment_media_mismatches), examples=attachment_media_mismatches,
++            )
+ 
+         report.datasets.append(dataset_result)
+ 
+@@ -688,6 +756,11 @@
+         f"| Entities | {report.summary['entityCount']} |",
+         f"| Stable IDs | {report.summary['stableIdCount']} |",
+         f"| Attachment references | {report.summary['attachmentReferenceCount']} |",
++        f"| Attachment media metadata | {report.summary['mediaMetadataCount']} |",
++        f"| Images | {report.counts['mediaKinds'].get('image', 0)} |",
++        f"| Audio | {report.counts['mediaKinds'].get('audio', 0)} |",
++        f"| Video | {report.counts['mediaKinds'].get('video', 0)} |",
++        f"| Other media | {report.counts['mediaKinds'].get('other', 0)} |",
+         f"| Missing local attachments | {report.summary['missingAttachmentCount']} |",
+         f"| Orphan local attachments | {report.summary['orphanAttachmentCount']} |",
+         f"| Warnings | {report.summary['warningCount']} |",
+diff -ruN pts_v14_stage9_impl/scripts/qa_frontend.py pts_v14_stage10_impl/scripts/qa_frontend.py
+--- pts_v14_stage9_impl/scripts/qa_frontend.py	2026-09-24 13:50:49.548410180 +0000
++++ pts_v14_stage10_impl/scripts/qa_frontend.py	2026-09-24 13:59:55.509938106 +0000
+@@ -288,6 +288,32 @@
+         if token not in details + css:
+             error("DETAIL_PANEL_REFINEMENT", f"Stage 9 detail-panel contract missing: {token}")
+ 
++    # v1.4 Stage 10 attachment/media contract across geometry families.
++    for token in [
++        "ATTACHMENT_MEDIA_FIELD", "classify_attachment", "attachment_media",
++        "attachmentSummary", "Image and audio", "video/other media"
++    ]:
++        if token not in fetch_script:
++            error("ATTACHMENT_MEDIA_EXPORT", f"Stage 10 media-export contract missing: {token}")
++    for token in [
++        "normalizeAttachmentMedia", "attachmentMedia", "inferAttachmentKind"
++    ]:
++        if token not in entities:
++            error("ATTACHMENT_MEDIA_ENTITY", f"Stage 10 Entity media contract missing: {token}")
++    for token in [
++        "Photos", "Audio", "Other Attachments", "entity-detail-other-item",
++        "<source src=", "Open video"
++    ]:
++        if token not in details + css:
++            error("ATTACHMENT_MEDIA_UI", f"Stage 10 media UI contract missing: {token}")
++    qa_data = read("scripts/qa_data.py")
++    for token in [
++        "ATTACHMENT_MEDIA_INVALID", "ATTACHMENT_MEDIA_MISMATCH",
++        "mediaKinds", "mediaStorage", "attachmentMediaField"
++    ]:
++        if token not in qa_data + read("scripts/qa_config.json"):
++            error("ATTACHMENT_MEDIA_QA", f"Stage 10 media QA contract missing: {token}")
++
+     # Data fetching/cache behavior.
+     if "cache: 'no-store'" not in data_js or "Date.now()" not in data_js:
+         error("DATA_CACHE_BUSTING", "Generated JSON/config loads must retain no-store cache busting.")

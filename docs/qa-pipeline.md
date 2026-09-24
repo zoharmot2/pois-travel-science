@@ -9,17 +9,15 @@ Version 1.3 introduces a dependency-free QA layer for generated website data. It
 - `data/derived/qa-report.json` — generated machine-readable report.
 - `.github/workflows/sync.yml` — weekly/manual refresh workflow that runs the validator after export.
 
-## Current and future geometry datasets
+## Active geometry datasets
 
-The QA configuration is deliberately multi-geometry-ready:
+All three ArcGIS geometry datasets are now required publication inputs:
 
-- `points` → `data/pois.geojson` — required now.
-- `lines` → `data/lines.geojson` — optional until line export is activated.
-- `polygons` → `data/polygons.geojson` — optional until polygon export is activated.
+- `points` → `data/pois.geojson`
+- `lines` → `data/lines.geojson`
+- `polygons` → `data/polygons.geojson`
 
-Optional datasets are ignored when their files do not exist. Once line or polygon export is activated, the validator can check them without restructuring the QA engine. Paths can be changed in `scripts/qa_config.json` if the final export names differ.
-
-Stable Entity IDs are checked globally across every active dataset, because future metadata, Trips, Collections, Routes, deep links, and public pages must resolve to exactly one Entity regardless of geometry family.
+Stable Entity IDs are checked globally across all three datasets, because website metadata, future Trips, Collections, Routes, deep links, and public pages must resolve to exactly one Entity regardless of geometry family.
 
 ## Checks
 
@@ -32,7 +30,6 @@ The validator checks:
 - expected geometry family for each configured dataset;
 - present, valid, and globally unique ArcGIS `GlobalID` values;
 - missing POI names, Research Topics, and POI Types;
-- Research Topics present in data but missing explicit `config.json` styling;
 - placeholder-like POI Type values such as `Undefined` as review warnings, without rewriting source data;
 - attachment field structure;
 - local attachment file existence and safe repository-relative paths;
@@ -105,7 +102,7 @@ data/polygons.geojson
 
 into `.qa-baseline` before the refresh. This allows the validator to report additions and removals between the previous and newly generated snapshots.
 
-The line and polygon files are optional today, but this baseline mechanism is already prepared for their future export.
+All three geometry files now participate in this baseline comparison.
 
 ## Validated behavior
 
@@ -120,3 +117,14 @@ The QA layer never edits ArcGIS data. Source corrections remain an ArcGIS Online
 ### Orphan attachment protection
 
 Data QA also scans `data/attachments/` recursively after export. A local attachment file that is not referenced by any current point, line, or polygon entity is reported as `ATTACHMENT_FILE_ORPHAN` and is an `ERROR`. The exporter normally removes these files itself; the QA check is a second safety net that prevents stale media from being published if cleanup ever fails.
+## v1.4 Stage 10 media validation
+
+The Data QA report validates both the legacy `attachments` URL/path list and the structured `attachment_media` metadata generated for Points, Lines, and Polygons. Media metadata must match attachment references one-to-one. The report also summarizes media by `image`, `audio`, `video`, and `other`, plus local/remote storage counts. Invalid media metadata or a mismatch between the two representations is an ERROR and blocks publication.
+## v1.4 Stage 11 multi-dataset metadata validation
+
+Stage 11 validates `data/derived/layers-metadata.json` against the actual Point, Line, and Polygon exports. It verifies the public hosted-view FeatureServer URL, layer IDs, geometry family, entity counts, Common Entity field availability, harvested coded-value domains, observed values, and per-layer attachment/media summaries.
+
+`POI_Type`, `POI_Topic`, and `Collect_Name` domains are compared across datasets. Domain divergence is explicitly allowed: the QA report records whether the current lists are aligned and the union of codes across all three datasets. A difference by itself does not generate a warning or error. Exported values that fall outside their own layer's current coded-value list generate a warning for ArcGIS review. Metadata/GeoJSON inconsistencies remain errors because both outputs belong to the same refresh snapshot.
+
+The expected ArcGIS export source is the public hosted view `POI_Feature_Layer_view/FeatureServer` with sublayers `0` Points, `1` Lines, and `2` Polygons. A source URL mismatch is an error and blocks publication.
+

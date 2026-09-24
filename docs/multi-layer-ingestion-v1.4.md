@@ -21,7 +21,7 @@ Base service:
 - All source properties are preserved. The shared Entity fields are not used to discard layer-specific attributes.
 - `GlobalID` remains the canonical website stable ID; uniqueness across datasets is enforced by Data QA.
 - Point CSV/PDF products remain point-based for backward compatibility.
-- Existing point attachment behavior is preserved in Stage 6. Line/polygon attachment download is intentionally deferred to Stage 10.
+- Attachment synchronization is active across Points, Lines, and Polygons. Images and audio are downloaded locally; video/other media remain direct ArcGIS URLs.
 
 ## Common Entity fields
 
@@ -78,7 +78,7 @@ Stage 6.2 extends attachment synchronization to all three datasets.
 - Image and audio attachments are downloaded locally for points, lines, and polygons.
 - Existing point media keep the historical `data/attachments/<OBJECTID>_<attachmentId>_<name>` path to avoid a mass rewrite.
 - New line media are stored under `data/attachments/lines/` and polygon media under `data/attachments/polygons/` so attachment/object IDs from different ArcGIS sublayers cannot collide.
-- Media other than images and audio (for example video) remain direct public ArcGIS attachment URLs rather than local copies.
+- Media other than images and audio (for example video) remain direct public ArcGIS attachment URLs rather than local copies. Stage 10 additionally exports structured `attachment_media` metadata so the browser and QA do not need to infer media type from a URL alone.
 - Attachment metadata retrieval and local image/audio download failures abort the refresh. The exporter never interprets a failed ArcGIS attachment request as an empty attachment set.
 
 The export is a synchronization, not an append-only archive. Every successful run builds the current attachment reference set from the authoritative AGOL view and then removes local image files that are no longer referenced. Therefore:

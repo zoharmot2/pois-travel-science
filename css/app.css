@@ -675,3 +675,189 @@ body.embed-mode .entity-detail-panel {
         gap: 2px;
     }
 }
+
+/* v1.4 Stage 8 unified Type + Geometry filtering */
+.map-ui-panel-summary {
+    padding: 6px 11px;
+    border-bottom: 1px solid #e2e8f0;
+    background: #ffffff;
+    color: #475569;
+    font-size: 10px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.control-toggle-item.no-matches:not(.disabled) {
+    opacity: 0.55;
+}
+
+.control-toggle-item.synthetic-value .control-toggle-label {
+    font-style: italic;
+}
+
+.control-toggle-item.synthetic-value .type-color-swatch {
+    border-style: dashed;
+}
+
+@media (max-width: 700px) {
+    .map-ui-panel.collapsed .map-ui-panel-summary {
+        display: block;
+        max-width: 180px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+/* v1.4 Stage 9 multi-geometry search suggestions */
+.map-search-results {
+    margin-top: 5px;
+    max-height: 245px;
+    overflow-y: auto;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+}
+
+.map-search-results[hidden] {
+    display: none;
+}
+
+.map-search-result {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 8px;
+    align-items: start;
+    padding: 7px 8px;
+    border: 0;
+    border-bottom: 1px solid #e2e8f0;
+    background: #ffffff;
+    color: #1e293b;
+    text-align: left;
+    cursor: pointer;
+}
+
+.map-search-result:last-child {
+    border-bottom: 0;
+}
+
+.map-search-result:hover,
+.map-search-result:focus,
+.map-search-result.active {
+    background: #f0f9ff;
+    outline: none;
+}
+
+.map-search-result-geometry {
+    min-width: 48px;
+    padding: 2px 5px;
+    border-radius: 999px;
+    background: #e2e8f0;
+    color: #475569;
+    font-size: 9px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.map-search-result-geometry.geometry-point {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.map-search-result-geometry.geometry-line {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.map-search-result-geometry.geometry-polygon {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.map-search-result-text {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.map-search-result-name {
+    color: #0f172a;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+
+.map-search-result-meta {
+    color: #64748b;
+    font-size: 9px;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+.map-search-empty {
+    padding: 8px;
+    color: #64748b;
+    font-size: 10px;
+}
+
+/* Stage 9 attachment/detail refinements */
+.entity-detail-badge-geometry {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.entity-detail-audio-item {
+    grid-column: 1 / -1;
+    padding: 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: #f8fafc;
+}
+
+.entity-detail-attachment-name {
+    margin-bottom: 6px;
+    color: #334155;
+    font-size: 10px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.entity-detail-audio-item audio {
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 5px;
+}
+
+.entity-detail-audio-item .entity-detail-attachment-link {
+    padding: 4px 0 0;
+    border: 0;
+    background: transparent;
+}
+
+/* v1.4 Stage 10 media/attachment refinement */
+.entity-detail-media-section + .entity-detail-media-section {
+    margin-top: 12px;
+}
+
+.entity-detail-audio-list,
+.entity-detail-other-list {
+    display: grid;
+    gap: 8px;
+}
+
+.entity-detail-other-item {
+    display: grid;
+    gap: 4px;
+}
+
+.entity-detail-media-kind {
+    color: #64748b;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}

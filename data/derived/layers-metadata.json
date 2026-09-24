@@ -194,6 +194,17 @@
         "Collect_Name": [
           "Motti Zohar"
         ]
+      },
+      "attachmentSummary": {
+        "references": 1076,
+        "local": 1072,
+        "remote": 4,
+        "byKind": {
+          "image": 1072,
+          "audio": 0,
+          "video": 4,
+          "other": 0
+        }
       }
     },
     "lines": {
@@ -203,7 +214,7 @@
       "sourceUrl": "https://services5.arcgis.com/eJYUV73IZAY87Jwy/arcgis/rest/services/POI_Feature_Layer_view/FeatureServer/1",
       "geometryFamily": "line",
       "esriGeometryType": "esriGeometryPolyline",
-      "entityCount": 6,
+      "entityCount": 5,
       "hasAttachments": true,
       "maxRecordCount": 1000,
       "objectIdField": "OBJECTID",
@@ -346,8 +357,7 @@
       },
       "observedValues": {
         "POI_Type": [
-          "General Site",
-          "Religious/Faith"
+          "General Site"
         ],
         "POI_Topic": [
           "General"
@@ -355,6 +365,17 @@
         "Collect_Name": [
           "Motti Zohar"
         ]
+      },
+      "attachmentSummary": {
+        "references": 2,
+        "local": 2,
+        "remote": 0,
+        "byKind": {
+          "image": 2,
+          "audio": 0,
+          "video": 0,
+          "other": 0
+        }
       }
     },
     "polygons": {
@@ -515,6 +536,17 @@
         "Collect_Name": [
           "Motti Zohar"
         ]
+      },
+      "attachmentSummary": {
+        "references": 1,
+        "local": 1,
+        "remote": 0,
+        "byKind": {
+          "image": 1,
+          "audio": 0,
+          "video": 0,
+          "other": 0
+        }
       }
     }
   }

@@ -6,8 +6,30 @@
   "typeField": "POI_Type",
   "nameField": "POI_Name",
   "attachmentField": "attachments",
+  "attachmentMediaField": "attachment_media",
   "symbologyConfigPath": "config.json",
   "metadataSidecarPath": "data/site/poi-meta.json",
+  "layersMetadataPath": "data/derived/layers-metadata.json",
+  "expectedFeatureServerUrl": "https://services5.arcgis.com/eJYUV73IZAY87Jwy/arcgis/rest/services/POI_Feature_Layer_view/FeatureServer",
+  "requiredCommonFields": [
+    "GlobalID",
+    "OBJECTID",
+    "POI_Name",
+    "POI_Type",
+    "POI_Topic",
+    "POI_Description",
+    "Collection_date",
+    "Collect_Name",
+    "CreationDate",
+    "Creator",
+    "EditDate",
+    "Editor"
+  ],
+  "domainFields": [
+    "POI_Type",
+    "POI_Topic",
+    "Collect_Name"
+  ],
   "requiredFiles": [
     "data/pois.geojson",
     "data/pois.csv",
@@ -24,7 +46,9 @@
       "required": true,
       "expectedGeometryFamilies": [
         "point"
-      ]
+      ],
+      "layerId": 0,
+      "sourceDataset": "points"
     },
     {
       "name": "lines",
@@ -32,7 +56,9 @@
       "required": true,
       "expectedGeometryFamilies": [
         "line"
-      ]
+      ],
+      "layerId": 1,
+      "sourceDataset": "lines"
     },
     {
       "name": "polygons",
@@ -40,7 +66,9 @@
       "required": true,
       "expectedGeometryFamilies": [
         "polygon"
-      ]
+      ],
+      "layerId": 2,
+      "sourceDataset": "polygons"
     }
   ]
 }

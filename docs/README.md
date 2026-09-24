@@ -17,6 +17,8 @@ This directory documents the released v1.3 Foundation architecture and the activ
 - [`symbology-v1.4.md`](symbology-v1.4.md) — POI Type visual model shared across Points, Lines, and Polygons.
 - [`ui-v1.4.md`](ui-v1.4.md) — integrated Type/Search/Geometry/Map Utilities control layout and responsive behavior.
 - [`detail-panel.md`](detail-panel.md) — concise popup plus persistent Entity Detail Panel.
+- [`search-detail-v1.4.md`](search-detail-v1.4.md) — multi-geometry search and geometry-aware entity inspection.
+- [`media-attachments-v1.4.md`](media-attachments-v1.4.md) — image/audio/video/other media export, rendering, synchronization, and QA contract.
 
 ## Development, QA, and release process
 
