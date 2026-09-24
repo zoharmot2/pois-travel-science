@@ -1,10 +1,10 @@
-# Entity Model — v1.3 Foundation
+# Entity Model — v1.4.0
 
-Version 1.3 introduces a generic in-browser `Entity` model between source GeoJSON and the website UI. The current point dataset remains the only dataset published by the website in v1.3, but the application contract is geometry-agnostic and ready for future point, line, and polygon datasets.
+The in-browser `Entity` model provides one geometry-independent contract for the three active ArcGIS-derived datasets: Points, Lines, and Polygons.
 
 ## Purpose
 
-The website must not assume that every future record is a point. ArcGIS Online already contains point, line, and polygon collection layers. The Entity model gives the application a common contract for those geometry families without changing the authoritative ArcGIS Online / Field Maps schema.
+ArcGIS Online contains separate geometry layers, while the website needs common behavior for identity, classification, filtering, search, detail display, media, and navigation. The Entity model provides that common contract without changing the authoritative ArcGIS Online / Field Maps schema.
 
 ## Data flow
 
@@ -15,98 +15,116 @@ createEntity(feature, source options)
         ↓
 Generic Entity
         ↓
-filters / search / detail panel / map rendering
+filtering / search / Detail Panel / map rendering
 ```
 
-The original GeoJSON Feature is retained on `entity.feature`, so Leaflet can continue to consume standard GeoJSON and the current point workflow remains compatible.
+The original GeoJSON Feature is retained on `entity.feature` so Leaflet can consume standard GeoJSON geometry and source properties remain available.
+
+## Active sources
+
+```text
+points   → data/pois.geojson
+lines    → data/lines.geojson
+polygons → data/polygons.geojson
+```
+
+Each Entity records its `sourceDataset` so source-specific behavior can be audited without changing the generic UI contract.
 
 ## Current Entity shape
 
 ```text
 Entity
 ├── entityId               Canonical stable website ID (normalized ArcGIS GlobalID)
-├── entityIdSource         `GlobalID` when a valid stable ID is available
-├── sourceDataset          Website data-source key, currently `points`
+├── entityIdSource         `GlobalID` when valid
+├── sourceDataset          points / lines / polygons
 ├── feature                Original GeoJSON Feature
 ├── properties             Original ArcGIS-derived properties
 ├── geometry               Original GeoJSON geometry
 ├── geometryType           Point / MultiPoint / LineString / Polygon / etc.
 ├── geometryFamily         point / line / polygon / unknown
-├── bounds                 Plain geographic extent or null
+├── bounds                 Geographic extent or null
 │   ├── west
 │   ├── south
 │   ├── east
 │   └── north
-├── representativePoint    Geometry-independent map-navigation point or null
+├── representativePoint    Navigation/display helper or null
 │   ├── latitude
 │   ├── longitude
-│   └── method             `point` or `bounds-center`
+│   └── method             point or bounds-center
 ├── sourceIds
-│   ├── featureId          GeoJSON feature.id, if present
-│   ├── objectId           ArcGIS OBJECTID/FID, if present
-│   ├── globalId           Raw ArcGIS GlobalID, if present
-│   └── normalizedGlobalId Canonical normalized GlobalID
-├── name                   Normalized display name
+│   ├── featureId
+│   ├── objectId
+│   ├── globalId
+│   └── normalizedGlobalId
+├── name
 ├── topic                  POI_Topic
 ├── type                   POI_Type
-├── description            POI description
+├── description
 ├── creationDate
 ├── collectionDate
 ├── latitude               Single Point coordinate only; otherwise null
 ├── longitude              Single Point coordinate only; otherwise null
-├── attachments[]          Normalized attachment list
+├── attachments[]          Backward-compatible URL list
+├── attachmentMedia[]      Structured media descriptors
 └── websiteMetadata        Website-managed sidecar record or null
 ```
 
 ## Geometry families
 
-The model recognizes these GeoJSON geometry types:
+The model recognizes:
 
 - `Point`, `MultiPoint` → `point`
 - `LineString`, `MultiLineString` → `line`
 - `Polygon`, `MultiPolygon` → `polygon`
-- anything else or missing geometry → `unknown`
-
-Actual line and polygon export/publication is **not** part of v1.3. Stage 8 only removes point-only assumptions from the application architecture.
+- missing/other geometry → `unknown`
 
 ## Geometry-independent spatial helpers
 
 Every supported geometry may expose `bounds` and a `representativePoint`.
 
-For a single `Point`, `representativePoint` is the point itself. For `MultiPoint`, line, and polygon geometries, it is the center of the geometry bounding box. This value exists only for navigation and UI summaries. It is **not** a scientific centroid and must not be used as an analytical measurement.
+For a single `Point`, `representativePoint` is the point itself. For MultiPoint, Line, and Polygon geometries, it is derived from the geometry extent for UI/navigation purposes only. It is **not** a scientific centroid and must not be used as an analytical measurement.
 
-The existing `latitude` and `longitude` Entity properties remain single-Point coordinates only, preserving their original meaning.
-
-## Multi-source readiness
-
-The loader now treats spatial exports as named data sources. Only the current source is active in v1.3:
-
-```text
-points → data/pois.geojson
-```
-
-When the existing ArcGIS line and polygon layers are later added to the GitHub Actions export pipeline, they can be introduced as additional sources while preserving the same Entity contract, stable-ID validation, filters, search, detail panel, and map-rendering flow.
+The `latitude` and `longitude` Entity properties remain single-Point coordinates only.
 
 ## Stable identity
 
-The canonical website identifier is `entity.entityId`.
+The canonical website identifier is `entity.entityId`, derived from ArcGIS `GlobalID` and normalized to lowercase UUID form without braces.
 
-It is derived from the ArcGIS `GlobalID`, normalized to a lowercase UUID without braces. `OBJECTID`, `FID`, and GeoJSON `feature.id` remain source identifiers only and must not be used as stable website identity because they may change when data is exported, recreated, or refreshed.
+`OBJECTID`, FID, feature order, names, and coordinates are source/representation details and must not be used as stable identity.
 
-The current point snapshot contains a valid and unique `GlobalID` for every record. If a future record lacks a valid GlobalID, the Entity remains renderable but `entityId` is `null` and the data loader reports the condition. Duplicate stable IDs are treated as an error because they make entity references ambiguous.
+A record without a usable GlobalID may still be renderable, but stable-ID-dependent workflows cannot safely reference it. Duplicate stable IDs are publication errors because they make cross-Entity references ambiguous.
 
-The stable-ID policy is documented in more detail in `docs/stable-id-strategy.md`.
+## Classification extensibility
 
-## Extensibility
+`POI_Topic` and `POI_Type` remain plain source values; the Entity model does not define closed lists.
 
-`POI_Topic` and `POI_Type` remain plain data values on the Entity. The Entity model does not define closed lists for either field. Dynamic Topic/Type handling therefore continues to consume values added in ArcGIS Online without changing the Entity structure.
+- `POI_Type` drives v1.4 primary map symbology/filtering.
+- `POI_Topic` remains research metadata.
+- blank Type values are not rewritten by the Entity model; the filter UI may expose them through a synthetic `Unspecified` bucket.
+
+## Attachments/media
+
+`attachments[]` is retained for backward compatibility. `attachmentMedia[]` is the normalized current representation and may include:
+
+```text
+url
+name
+contentType
+kind       image / audio / video / other
+storage    local / remote
+attachmentId
+parentObjectId
+sourceDataset
+```
+
+The browser uses media metadata when available rather than guessing solely from URL suffixes.
 
 ## Website-managed metadata
 
-An Entity may receive a `websiteMetadata` property after the ArcGIS snapshot and the website metadata sidecar are loaded. This property is **not** an ArcGIS-authored attribute and is never written back to ArcGIS Online.
+An Entity may receive `websiteMetadata` after the ArcGIS snapshot and the website sidecar are loaded.
 
 ```js
 entity.websiteMetadata // object or null
 ```
 
-The sidecar linkage uses the canonical `entity.entityId` (normalized ArcGIS `GlobalID`). ArcGIS properties remain available separately in `entity.properties`, preserving a clear provenance boundary between source data and website-managed information.
+The sidecar linkage uses canonical `entity.entityId`. ArcGIS properties remain separate in `entity.properties`, preserving provenance between collection data and website-owned information.

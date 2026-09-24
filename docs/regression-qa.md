@@ -1,62 +1,186 @@
-# v1.3 Standalone + Embedded Regression QA
+# v1.4 Standalone + Embedded Full Regression QA
 
-Stage 10 verifies that the v1.3 foundation work has not regressed the published v1.2 map experience and that every current feature works in both supported display modes.
+Stage 12 is the browser-facing release gate for the complete v1.4 interface. It verifies that the site behaves correctly with Points, Lines, and Polygons in both supported presentation modes and at desktop and narrow/mobile widths.
 
-## Automated static gate
+The automated static QA is necessary but not sufficient. Stage 12 is complete only after the manual four-mode browser matrix passes.
 
-Run from the repository root:
+## Automated gates
+
+From the repository root in Command Prompt:
 
 ```cmd
+py scripts\qa_data.py
 py scripts\qa_frontend.py
 ```
 
-The check is network-independent and validates the source-level contracts for:
+Publication-level expectation:
 
-- English-only authored frontend UI (`lang="en"`, LTR, no Hebrew in authored HTML/JavaScript)
-- Standalone header and embedded `?embed=true` / `?embed=1` behavior
-- modular CSS/JavaScript entry points
-- five v1.2 basemaps
-- POI name search and the Stage 3.1 performance fix
-- Day/Night, Time Zones, and coordinate controls
-- separate, extensible Research Topic and POI Type filters
-- Entity Detail Panel and keyboard close behavior
-- GlobalID-based stable IDs
-- website metadata sidecar linkage
-- future line/polygon Entity/navigation readiness
-- no-store/cache-busted JSON loading
-- VERSION / page-title consistency
+```text
+Data QA: 0 Errors
+Frontend regression QA: PASS (0 Errors)
+```
 
-An ERROR returns exit code 1. A WARNING returns exit code 0.
+Known source-data quality warnings such as blank names, blank Topic, or blank Type may remain warnings. They must not be confused with application failures.
 
-## Manual browser release matrix
+The frontend static gate verifies the v1.4 source contracts for:
 
-Run a local server from the repository root:
+- English-only authored UI and LTR layout;
+- Standalone header and `?embed=true` / `?embed=1` behavior;
+- desktop and narrow/mobile layout contracts;
+- five basemaps and existing map utilities;
+- active Point, Line, and Polygon datasets;
+- POI Type primary symbology and legend;
+- independent Geometry controls;
+- unified Type + Geometry filtering and dynamic counts;
+- multi-result search and keyboard navigation;
+- geometry-aware map focus;
+- Detail Panel behavior and responsive placement;
+- structured image/audio/video/other attachment presentation;
+- GlobalID stable IDs, sidecar metadata, cache busting, and required files.
+
+## Browser matrix
+
+Start the site locally:
 
 ```cmd
 py -m http.server 8000
 ```
 
-Test all four combinations below in a current desktop browser. Repeat the mobile-width checks using the browser's responsive device mode or a narrow window.
+Run every required cell below in a current browser. For narrow/mobile, use browser responsive-device mode or resize the viewport to 700 px wide or less.
 
 | Mode | URL | Desktop | Narrow/mobile |
 |---|---|---:|---:|
 | Standalone | `http://localhost:8000/` | Required | Required |
 | Embedded | `http://localhost:8000/?embed=true` | Required | Required |
 
-`?embed=1` should behave identically to `?embed=true`.
+Also verify once that:
 
-## Regression checklist
+```text
+http://localhost:8000/?embed=1
+```
 
-### A. Initial load
+behaves identically to `?embed=true`.
 
-- No fatal error appears in the browser console.
-- The map renders and the POI count finishes loading.
-- The displayed POI count matches the current unfiltered dataset count reported by data QA.
-- Standalone mode shows the page header.
-- Embedded mode hides the page header and gives the map the available height.
-- The map opens at the configured initial extent.
+## 1. Initial load and dataset integrity
 
-### B. Basemaps and utilities
+For each required matrix cell:
+
+- The map renders without a fatal error.
+- The entity count finishes loading rather than remaining on `Loading...`.
+- The total entity count matches the current Data QA report, not a hard-coded historical count.
+- Point, Line, and Polygon data all load when present in the current ArcGIS snapshot.
+- No required local JSON file returns 404 in the browser console/network panel.
+- The configured initial extent is sensible and the map remains interactive.
+
+Standalone mode must show the page header and entity-count badge. Embedded mode must hide the header and use the available viewport height for the application.
+
+## 2. Main control panel
+
+The control panel must appear in this order:
+
+```text
+Map Controls
+  POI Types
+  Search
+  Geometry
+  Map Utilities
+```
+
+Confirm:
+
+- `POI Types` is the only primary classification legend.
+- Research Topic is not displayed as a main map filter; it remains Entity metadata.
+- `All` and `None` work for POI Types.
+- `All` and `None` work independently for Geometry.
+- Geometry contains Points, Lines, and Polygons.
+- An `Unspecified` Type bucket appears only when current source data contains a blank `POI_Type`.
+- A new unconfigured Type remains visible/filterable using fallback symbology.
+- Scrolling inside the control panel does not unexpectedly zoom the map.
+
+## 3. Unified filtering and counts
+
+The effective visibility rule must remain:
+
+```text
+POI Type AND Geometry
+```
+
+Test at least the following sequence:
+
+1. Start with all Types and all Geometry enabled.
+2. Disable Points: only Lines and Polygons remain; Type counts recalculate for the active geometries.
+3. Re-enable Points and disable Lines: line features disappear and search no longer returns lines.
+4. Re-enable Lines and disable one populated POI Type: all Point/Line/Polygon entities of that Type disappear.
+5. Use Geometry `None`, then `All`.
+6. Use POI Type `None`, then `All`.
+
+The summary must update, for example:
+
+```text
+Showing 84 of 1206 entities
+```
+
+The exact numbers are data-dependent and may change after weekly ArcGIS synchronization.
+
+## 4. Multi-geometry rendering and symbology
+
+Inspect at least one visible entity from every geometry family currently present.
+
+- Point uses the configured Type color/point shape.
+- Line uses the same Type color as its stroke.
+- Polygon uses the same Type color for outline and translucent fill.
+- Points remain visually above Lines and Polygons where features overlap.
+- Lines remain above Polygons.
+- Pan/zoom does not detach or duplicate vector features.
+
+## 5. Search
+
+Use a specific query and a broader query that returns multiple current entities.
+
+Confirm:
+
+- Search remains responsive with the 180 ms debounce.
+- Up to eight ranked results are shown.
+- Each result identifies Point, Line, or Polygon.
+- Result metadata includes Type and Topic when available.
+- `Arrow Up` / `Arrow Down` move through results.
+- `Enter` selects the active result.
+- `Escape` closes the result list.
+- Search only considers entities currently visible after Type + Geometry filtering.
+- Selecting a Point centers/zooms appropriately.
+- Selecting a Line or Polygon uses its bounds rather than treating it as a point.
+- The selected Entity opens in the Detail Panel.
+
+## 6. Popup and Detail Panel
+
+Test a Point, a Line, and a Polygon where current data permits.
+
+Confirm:
+
+- Popup remains concise and offers `View details`.
+- Detail Panel title uses the Entity name, or `Unnamed Point`, `Unnamed Line`, or `Unnamed Polygon` when the name is blank.
+- POI Type and Research Topic are displayed correctly.
+- Blank Type/Topic values display as `Unspecified` without altering ArcGIS data.
+- Description and field-record information render when present.
+- Point shows real coordinates.
+- Line/Polygon show `Map Center (derived)` and `Extent`; the derived map center is not labeled as a scientific centroid.
+- Technical details include Stable Entity ID, ArcGIS OBJECTID, Source Dataset, and GeoJSON Geometry.
+- `×` closes the panel.
+- `Esc` closes the panel.
+- Filtering the active Entity out closes the panel automatically.
+
+## 7. Attachments and media
+
+Use current entities with attachments where available, including Line/Polygon attachments if present.
+
+- Photos appear as thumbnails and open the original/local media.
+- Audio appears in an HTML5 audio player and the file link is usable.
+- Video is presented as a link to the remote ArcGIS attachment, not as a broken image.
+- Other unsupported media is presented as a generic attachment link.
+- Media belonging to Points, Lines, and Polygons behaves consistently.
+- No missing local-media request appears in the console/network panel.
+
+## 8. Basemaps and utilities
 
 Confirm all five basemaps can be selected:
 
@@ -68,79 +192,64 @@ Confirm all five basemaps can be selected:
 
 Also verify:
 
-- mouse movement updates the coordinate display
-- Day/Night toggles on and off
-- Time Zones toggles on and off; if the primary timezone GeoJSON endpoint is unavailable, the existing fallback must not break the map
+- Day/Night toggles on and off.
+- Time Zones toggles on and off; a remote timezone-service failure must not crash the application.
+- Coordinate display updates as the pointer moves over the map.
 
-### C. Research Topic and POI Type filters
+## 9. Standalone and embedded layout
 
-- Both filter sections are visible and independently collapsible.
-- `All` and `None` work independently in each dimension.
-- Multiple values within one dimension behave as OR.
-- Topic and Type dimensions combine as AND.
-- Counts remain visible beside values.
-- Scrolling inside Filters does not zoom the map.
-- `POI_Type = Undefined` may appear as a source-data value until corrected in ArcGIS Online; it must not break filtering.
-- A POI Type missing explicit config styling remains filterable and uses the default style across geometry families.
+### Standalone desktop
 
-### D. Search
+- Header is visible.
+- Control panel remains readable and scrollable.
+- Opening the Detail Panel creates a right-side sibling of the map.
+- Map resizes correctly after opening and closing the panel.
 
-Use several queries, including a broad query and a specific POI such as `Stonehenge` if it is still present in the current dataset.
-
-- Typing remains responsive and does not hang.
-- Only one best match is opened per search.
-- Exact / prefix / partial matching works.
-- Enter performs an immediate search.
-- Search operates only on entities that remain visible after active Topic/Type filters.
-
-### E. Popup and Detail Panel
-
-For a POI with a description and photographs (for example `Stonehenge` in the development snapshot):
-
-- Popup is concise and contains `View details`.
-- `View details` opens the right-hand Detail Panel.
-- Topic and Type are correct.
-- Description is readable.
-- Coordinates and Geometry are shown.
-- Field Record values render when present.
-- Attachment thumbnails load and open the original attachment.
-- Technical details show a Stable Entity ID, ArcGIS OBJECTID, and Source Dataset.
-- `×` closes the panel.
-- `Esc` closes the panel.
-- Filtering the active entity out closes the panel automatically.
-
-### F. Layout modes
-
-Standalone desktop:
-
-- Detail Panel is a right-side sibling of the map and does not cover the main Leaflet controls.
-- Opening/closing the panel leaves the map correctly sized.
-
-Embedded desktop:
+### Embedded desktop
 
 - Header is absent.
-- Filters, search, map controls, popups, and Detail Panel remain usable.
-- Detail Panel is compact enough for embedding.
+- Control panel is more compact than Standalone mode.
+- Detail Panel remains usable without consuming the full map.
+- Search, filters, utilities, popups, and media remain usable.
 
-Narrow/mobile width (both modes):
+### Narrow/mobile — both modes
 
+- Control panel collapse button is visible and works.
+- Collapsed state leaves a compact summary rather than covering the map.
 - Detail Panel becomes a bottom overlay.
-- The close button remains reachable.
-- Filters remain scrollable and do not consume the entire viewport.
-- Map controls are still reachable.
+- Detail close button remains reachable.
+- Detail content scrolls when necessary.
+- Map controls remain reachable around the overlay.
+- No horizontal page scrolling is introduced.
 
-### G. Browser console
+## 10. Browser console gate
 
-Warnings that describe known data conditions are acceptable (for example an unstyled new Topic). Treat JavaScript exceptions, failed local JSON loads, duplicate stable-ID errors, or missing required application files as failures.
+Acceptable console output includes documented warnings for source-data conditions or a newly observed Type that uses fallback styling.
 
-## Stage 10 acceptance criteria
+Treat any of the following as a Stage 12 failure:
 
-Stage 10 is complete when:
+- uncaught JavaScript exception;
+- failed required local JSON/GeoJSON load;
+- duplicate Stable Entity ID error;
+- missing required frontend module;
+- Point/Line/Polygon dataset failing to load;
+- Detail Panel or search interaction throwing an exception;
+- attachment/media local-file 404;
+- Hebrew authored user-interface text.
 
-1. `py scripts\qa_frontend.py` returns PASS or WARNING with 0 errors.
-2. `py scripts\qa_data.py` returns PASS/WARNING with 0 errors.
-3. The manual matrix passes in Standalone and Embedded modes at desktop and narrow/mobile widths.
-4. No v1.2 capability listed above is broken.
-5. No Hebrew user-interface text is visible.
+## Stage 12 acceptance criteria
 
-This regression matrix is the release gate used for v1.3.0. The official release synchronizes `VERSION` and the page title to 1.3.0 after the matrix passes.
+Stage 12 is complete only when all of the following are true:
+
+1. `py scripts\qa_data.py` reports 0 Errors.
+2. `py scripts\qa_frontend.py` reports 0 Errors.
+3. Standalone desktop passes.
+4. Standalone narrow/mobile passes.
+5. Embedded desktop passes.
+6. Embedded narrow/mobile passes.
+7. `?embed=1` matches `?embed=true`.
+8. Point/Line/Polygon rendering, filtering, search, Detail Panel, and media all pass where relevant current data exists.
+9. No blocking browser-console error is present.
+10. No Hebrew authored UI text is visible.
+
+After this gate passes, v1.4 can proceed to Stage 13 documentation cleanup and then Stage 14 release preparation.

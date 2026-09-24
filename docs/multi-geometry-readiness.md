@@ -1,5 +1,8 @@
 # Multi-Geometry Readiness — v1.3 Foundation
 
+> **Historical note:** This document records the v1.3 readiness stage. In v1.4.0, Point, Line, and Polygon publication is active; see `multi-geometry-rendering-v1.4.md` and `architecture.md` for the current contract.
+
+
 Version 1.3 prepares the website architecture for the existing ArcGIS Online line and polygon collection layers without publishing those layers yet and without changing ArcGIS Online / Field Maps.
 
 ## Current scope

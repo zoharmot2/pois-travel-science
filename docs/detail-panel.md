@@ -1,33 +1,63 @@
-# Entity Detail Panel
+# Entity Detail Panel — v1.4.0
 
-Version 1.3 Stage 7 introduces an entity-centric Detail Panel while retaining a concise Leaflet popup.
+The Detail Panel provides a persistent Entity-centric view while the Leaflet popup remains concise.
 
 ## Interaction model
 
-1. Selecting a marker opens a concise popup with the POI name, Research Topic, POI Type, and a **View details** button.
+1. Selecting a Point, Line, or Polygon opens a concise popup.
 2. **View details** opens the persistent Detail Panel.
-3. The panel can be closed with the close button or the `Escape` key.
-4. If the currently open entity is removed from the map by Topic/Type filtering, the Detail Panel closes automatically.
+3. Search-result selection can open/focus the same Entity directly.
+4. The panel can be closed with the close button or `Escape`.
+5. If the open Entity becomes hidden by the active Type × Geometry filters, the panel closes rather than showing an Entity that is no longer present on the map.
 
-## Panel content
+## Common content
 
-The panel presents existing data only; it does not create or write any ArcGIS attributes. Current sections include:
+The panel may show:
 
-- Description
-- Classification (`POI_Topic`, `POI_Type`)
-- Location (coordinates and geometry type)
-- Field Record (collection date, collector, ArcGIS creation/edit dates when available)
-- Attachments / photographs
-- Collapsible technical details (stable Entity ID and ArcGIS OBJECTID)
+- Entity name, with geometry-specific fallback such as `Unnamed Line`;
+- Description;
+- `POI_Type`;
+- Research Topic (`POI_Topic`);
+- collection date and collector;
+- ArcGIS creation/edit information when present;
+- geometry family;
+- source dataset;
+- attachments/media;
+- collapsible technical identifiers/details.
 
-Website-managed metadata remains separate in `entity.websiteMetadata` and is not exposed by Stage 7 because no public metadata fields have yet been defined.
+Blank Type/Topic values may be displayed as `Unspecified` for readability without modifying the underlying ArcGIS value.
 
-## Standalone and embedded behavior
+## Geometry-specific location content
 
-Desktop standalone mode displays the panel beside the map so the map remains usable. The map is resized after the panel opens/closes.
+### Point
 
-Embedded mode uses the same component with a slightly more compact width. On narrow screens the panel becomes a bottom overlay to preserve map space.
+Shows the actual Point coordinates.
 
-## Scope boundary
+### Line / Polygon
 
-Stage 7 does not add Trips, Collections, Routes, external enrichment, analytics, editing, or public/private publication rules. The panel is designed so those capabilities can be added later without changing the core Entity model.
+Shows:
+
+- geometry family/type;
+- derived map center for navigation/display;
+- geographic extent/bounds;
+- source dataset.
+
+The derived center is an interface helper and must not be described or used as a scientific centroid.
+
+## Media sections
+
+Media is grouped by kind when metadata is available:
+
+- **Photos** — local thumbnails with links to the full local file;
+- **Audio** — local HTML5 audio player plus file link;
+- **Other Attachments** — remote video and other unsupported media links.
+
+The UI prefers structured `attachment_media`/`attachmentMedia` metadata and falls back to the legacy attachment URL list for backward compatibility.
+
+## Standalone and Embedded behavior
+
+Desktop Standalone mode displays the panel beside the map. Embedded mode uses a more compact desktop width. On narrow/mobile screens, both modes use a bottom overlay so map space remains available.
+
+## Provenance boundary
+
+The Detail Panel displays existing ArcGIS-derived and website-managed information only. It does not edit ArcGIS attributes. Future Trips, Collections, Routes, enrichment, analytics, and publication controls must preserve their own provenance rather than being silently written into ArcGIS fields.

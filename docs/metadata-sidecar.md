@@ -4,7 +4,7 @@
 
 The metadata sidecar provides a version-controlled place for website-specific information that should not be added to, or written back into, the authoritative ArcGIS Online / Field Maps collection schema.
 
-Version 1.3 establishes stable linkage only. Trips, Collections, Routes, publication/privacy rules, travel-journal fields, and other future metadata structures remain later work.
+Version 1.3 established the stable linkage contract. Version 1.4 keeps that schema unchanged while applying it to active Point, Line, and Polygon Entities. Trips, Collections, Routes, publication/privacy rules, travel-journal fields, and other future metadata structures remain later work.
 
 ## File location
 
@@ -31,7 +31,7 @@ The weekly ArcGIS export pipeline must treat this file as website-managed conten
 
 `entities` is an object keyed by the website's canonical stable Entity ID: the normalized ArcGIS `GlobalID` in lowercase UUID form without braces.
 
-The metadata value for each Entity must be a JSON object. Version 1.3 deliberately does not standardize application-specific fields inside that object yet.
+The metadata value for each Entity must be a JSON object. The current schema deliberately does not standardize application-specific fields inside that object yet.
 
 ## Loading and linkage
 
@@ -90,4 +90,4 @@ Website metadata must not silently overwrite ArcGIS-authored properties. Future 
 
 The sidecar is keyed by stable ID rather than by POI name, `OBJECTID`, coordinates, or array position. This allows website metadata to survive weekly ArcGIS refreshes and ordinary name/attribute edits as long as the authoritative ArcGIS `GlobalID` remains unchanged.
 
-The same pattern applies to future line and polygon Entities because all geometry families use the same Entity and stable-ID contract.
+The same pattern applies to the active Point, Line, and Polygon Entities because all geometry families use the same Entity and stable-ID contract.

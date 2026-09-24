@@ -1,4 +1,4 @@
-# v1.4 map user interface
+# v1.4 Map User Interface
 
 Version 1.4 reorganizes the map interface around the meaning of the data rather than around the ArcGIS source layer.
 
@@ -6,8 +6,8 @@ Version 1.4 reorganizes the map interface around the meaning of the data rather 
 
 The integrated left-side map control follows this order:
 
-1. **POI Types** — the primary legend and visibility control.
-2. **Search** — name search across the currently rendered entities.
+1. **POI Types** — primary legend and visibility control.
+2. **Search** — multi-result name search across currently visible Entities.
 3. **Geometry** — independent visibility controls for Points, Lines, and Polygons.
 4. **Map Utilities** — Day/Night, Time Zones, and live cursor coordinates.
 
@@ -15,13 +15,15 @@ The integrated left-side map control follows this order:
 
 ## POI Type legend
 
-The legend is data-driven. Counts are calculated across every loaded Entity dataset, so once line and polygon ingestion is active a single Type count represents the combined number of matching Points, Lines, and Polygons.
+The legend is data-driven across all active Entity datasets. A single Type count therefore represents matching Points, Lines, and Polygons under the currently active Geometry selection.
 
 Turning a Type off hides every Entity with that `POI_Type`, regardless of geometry family.
 
-The Type swatch communicates the shared Type color. Geometry itself is communicated by the rendered feature and by the separate Geometry control, avoiding a legend that implies that a Type belongs only to points.
+The Type swatch communicates the shared Type color. Geometry is communicated by the rendered feature and the separate Geometry control.
 
 Unknown/new ArcGIS Type values remain visible and filterable with the default style and generate QA/runtime warnings until explicit presentation is configured.
+
+Blank/null source Types remain unmodified but are exposed through the UI-only **Unspecified** bucket so they can be controlled explicitly.
 
 ## Geometry control
 
@@ -31,18 +33,40 @@ Geometry is a separate visibility dimension:
 - Lines
 - Polygons
 
-All three are enabled by default. During Stage 5 only the currently exported point dataset has a non-zero count. The control is already geometry-independent so the counts and filtering will update automatically once line and polygon datasets are loaded in later v1.4 stages.
+All three are enabled by default. Geometry counts are recalculated against the currently enabled POI Types. Type and Geometry combine with AND logic.
 
-Type and Geometry combine with AND logic. For example, enabling only `River/Lake/Delta` and `Polygons` will show only polygon entities with that Type once polygon data is active.
+Each filter section provides independent `All | None` actions.
 
-## Search and utilities
+## Search
 
-Search is located immediately below the Type legend and retains the debounced single-best-result behavior introduced during v1.3. Search works on currently rendered entities, so Type and Geometry visibility constrain the searchable set.
+Search is located immediately below the Type legend and is constrained to Entities currently visible after Type × Geometry filtering.
+
+The v1.4 search behavior:
+
+- 180 ms debounce;
+- up to eight ranked results;
+- exact name matches before starts-with and contains matches;
+- result rows identify geometry family and may show Type/Topic context;
+- `Arrow Up` / `Arrow Down` navigate results;
+- `Enter` selects a result;
+- `Escape` closes the result list.
+
+Navigation is geometry-aware:
+
+```text
+Point   → center/zoom
+Line    → fitBounds
+Polygon → fitBounds
+```
+
+Selecting a result opens/focuses the Entity and its Detail Panel.
+
+## Map utilities
 
 Day/Night and Time Zones are grouped under **Map Utilities**. Live cursor coordinates are displayed in the same section.
 
-## Responsive and embedded behavior
+## Responsive and Embedded behavior
 
-The same codebase serves standalone and embedded modes. The map panel is slightly narrower in embedded mode. At viewport widths of 700 px or less, the panel can collapse to a compact header so the map remains usable on narrow screens.
+The same codebase serves Standalone and Embedded modes. Embedded mode hides the global header and uses a more compact control/detail layout. At viewport widths of 700 px or less, the map control can collapse and the Detail Panel becomes a bottom overlay so map space remains usable.
 
-The Entity Detail Panel remains independent of the left map-control panel and retains its desktop, embedded, and bottom-overlay mobile behavior.
+The release regression matrix validates both display modes at desktop and narrow/mobile widths.

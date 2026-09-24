@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Static regression QA for the standalone and embedded website shells.
+"""Static regression QA for the full v1.4 standalone and embedded website shells.
 
-This intentionally avoids browser/network dependencies. It verifies the source-level
-contracts that make both display modes and the current v1.2/v1.3 foundation features
-possible. Full visual/browser regression remains a manual release gate.
+This intentionally avoids browser/network dependencies. It verifies source-level
+contracts for both display modes, responsive layout, multi-geometry behavior, search,
+filtering, media, and the inherited v1.2/v1.3 map features. Full visual/browser
+regression remains a manual release gate.
 """
 from __future__ import annotations
 
@@ -158,8 +159,8 @@ def main() -> int:
     for token in ["Search POI by name...", "Day/Night", "Time Zones", "coordsDisplay", "L.terminator"]:
         if token not in control_sources:
             error("MAP_CONTROL_REGRESSION", f"Expected map utility/control missing: {token}")
-    if "SEARCH_DELAY_MS = 180" not in map_js or "findBestMatchingLayer" not in map_js:
-        error("SEARCH_REGRESSION", "Optimized debounced single-result search contract is missing.")
+    if "SEARCH_DELAY_MS = 180" not in map_js or "collectSearchMatches" not in map_js:
+        error("SEARCH_REGRESSION", "Optimized debounced search contract is missing.")
 
     # v1.4 Stage 5 integrated controls: Type legend only, then Search, Geometry, Utilities.
     for token in ["POI Types", "Search", "Geometry", "Map Utilities", "addMapControlPanel", "createGeometryFilterItems", "filterEntitiesByTypeAndGeometry"]:
@@ -314,6 +315,48 @@ def main() -> int:
         if token not in qa_data + read("scripts/qa_config.json"):
             error("ATTACHMENT_MEDIA_QA", f"Stage 10 media QA contract missing: {token}")
 
+
+    # v1.4 Stage 12 standalone/embed/responsive release-gate source contracts.
+    if css.count("{") != css.count("}"):
+        error("CSS_BRACE_BALANCE", "css/app.css has unbalanced braces.")
+
+    layout_contracts = [
+        (r"#appWorkspace\s*\{[^}]*display\s*:\s*flex", "WORKSPACE_FLEX",
+         "#appWorkspace must remain a flex layout so the map and desktop Detail Panel resize together."),
+        (r"#map\s*\{[^}]*flex\s*:\s*1", "MAP_FLEX",
+         "#map must remain the flexible workspace region."),
+        (r"body\.embed-mode\s+\.map-ui-panel\s*\{[^}]*width\s*:\s*min\(340px|body\.embed-mode\s+\.map-ui-panel\s*\{[^}]*width\s*:\s*265px",
+         "EMBED_CONTROL_PANEL", "Embedded mode must retain a compact map-control panel width."),
+        (r"body\.embed-mode\s+\.entity-detail-panel\s*\{[^}]*width\s*:\s*min\(340px,\s*38vw\)",
+         "EMBED_DETAIL_PANEL", "Embedded mode must retain a compact desktop Detail Panel."),
+        (r"@media\s*\(max-width:\s*700px\)", "MOBILE_BREAKPOINT",
+         "The v1.4 narrow/mobile breakpoint is missing."),
+        (r"\.map-ui-panel\.collapsed\s+\.map-ui-panel-body\s*\{[^}]*display\s*:\s*none",
+         "MOBILE_CONTROL_COLLAPSE", "Narrow/mobile map controls must remain collapsible."),
+        (r"\.entity-detail-panel,\s*body\.embed-mode\s+\.entity-detail-panel\s*\{[^}]*position\s*:\s*absolute[^}]*bottom\s*:\s*8px",
+         "MOBILE_DETAIL_OVERLAY", "Narrow/mobile Detail Panel must remain a bottom overlay in both modes."),
+    ]
+    for pattern, code, message in layout_contracts:
+        if not re.search(pattern, css, re.S):
+            error(code, message)
+
+    for token in [
+        "map-ui-panel-summary", "Showing ${filteredCount} of ${totalCount} entities",
+        "SEARCH_RESULT_LIMIT = 8", "ArrowDown", "ArrowUp",
+        "focusMapOnLayer", "getBounds", "Photos", "Audio", "Other Attachments"
+    ]:
+        if token not in filters + app + map_js + details + css:
+            error("V14_RELEASE_CONTRACT", f"Full v1.4 regression contract missing: {token}")
+
+    # The main legend is POI Type only. Research Topic remains metadata, not a primary filter.
+    if "Research Topics" in filters or "Topic Filters" in filters:
+        error("TOPIC_PRIMARY_FILTER_REGRESSION", "Research Topic must not return as a primary map filter in v1.4.")
+
+    # Stage 12 assumes all three geometry families are active frontend data sources.
+    for source_dataset in ["points", "lines", "polygons"]:
+        if f"sourceDataset: '{source_dataset}'" not in data_js:
+            error("V14_ACTIVE_DATASET", f"Active frontend dataset missing from data.js: {source_dataset}")
+
     # Data fetching/cache behavior.
     if "cache: 'no-store'" not in data_js or "Date.now()" not in data_js:
         error("DATA_CACHE_BUSTING", "Generated JSON/config loads must retain no-store cache busting.")
@@ -358,7 +401,7 @@ def finish(issues: list[Issue]) -> int:
                     icon = "❌" if issue.severity == "ERROR" else "⚠️"
                     handle.write(f"- {icon} **{issue.code}**: {issue.message}\n")
             else:
-                handle.write("All static standalone/embed regression contracts passed.\n")
+                handle.write("All static v1.4 standalone/embed/responsive regression contracts passed. Manual browser validation is still required for release.\n")
 
     return 1 if errors else 0
 
