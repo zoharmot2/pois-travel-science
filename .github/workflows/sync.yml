@@ -53,11 +53,43 @@ jobs:
           retention-days: 30
 
       - name: Commit and Push Updated Files
+        shell: bash
         run: |
+          set -euo pipefail
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global http.postBuffer 524288000
           git config --global http.maxRequestBuffer 100M
-          git add data/
+
+          # Stage additions, modifications, and deletions under data/.
+          # -A is explicit here because weekly synchronization must persist
+          # newly created line/polygon attachment subdirectories as well as
+          # deletions of ArcGIS entities/attachments.
+          git add -A -- data/
           git reset -- data/derived/qa-report.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Automated update of spatial data, CSV, PDF and attachments" && git push)
+
+          echo "Staged data changes:"
+          git diff --cached --name-status
+
+          echo "Verifying local line/polygon attachments are staged or tracked..."
+          for dir in data/attachments/lines data/attachments/polygons; do
+            if [ -d "$dir" ]; then
+              count=$(find "$dir" -type f | wc -l | tr -d ' ')
+              echo "$dir: $count local file(s)"
+              while IFS= read -r -d '' file; do
+                if ! git ls-files --error-unmatch "$file" >/dev/null 2>&1; then
+                  echo "::error::$file exists after ArcGIS sync but is not staged/tracked by Git."
+                  exit 1
+                fi
+              done < <(find "$dir" -type f -print0)
+            else
+              echo "$dir: not present (no downloaded local media for this dataset)"
+            fi
+          done
+
+          if git diff --quiet && git diff --staged --quiet; then
+            echo "No repository changes to commit."
+          else
+            git commit -m "Automated update of spatial data, CSV, PDF and attachments"
+            git push
+          fi
