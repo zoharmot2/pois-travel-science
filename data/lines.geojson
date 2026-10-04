@@ -4325,215 +4325,91 @@
     },
     {
       "type": "Feature",
-      "id": 4,
+      "id": 9,
       "geometry": {
         "type": "LineString",
         "coordinates": [
           [
-            35.1156728147703,
-            32.0337532228856
+            35.0344415847212,
+            31.9217452732846
           ],
           [
-            35.1843373655515,
-            31.969700509479
+            35.0344523135573,
+            31.9215788086876
+          ],
+          [
+            35.034512327984,
+            31.9216364761814
+          ],
+          [
+            35.0383308,
+            31.9189659
+          ],
+          [
+            35.0354622,
+            31.9212136
+          ],
+          [
+            35.0354098621756,
+            31.9212807901204
+          ],
+          [
+            35.0353706348687,
+            31.9213558500633
+          ],
+          [
+            35.0353142246604,
+            31.9214276410639
+          ],
+          [
+            35.0352580659091,
+            31.9214988453314
+          ],
+          [
+            35.0352034159005,
+            31.9215717259794
+          ],
+          [
+            35.0351586565375,
+            31.9216509768739
+          ],
+          [
+            35.0351118016988,
+            31.9217219296843
+          ],
+          [
+            35.0350440759212,
+            31.92177683115
+          ],
+          [
+            35.0349778588861,
+            31.9218327384442
+          ],
+          [
+            35.0349303334951,
+            31.9219007575884
           ]
         ]
       },
       "properties": {
-        "OBJECTID": 4,
-        "GlobalID": "75d3a6f4-90ec-4f41-ab8b-ad28178d6ad4",
+        "OBJECTID": 9,
+        "GlobalID": "44f1e0be-7faf-4e6b-8b19-8a1533d2b9c4",
         "esrignss_avg_h_rms": null,
         "esrignss_avg_v_rms": null,
         "esrignss_worst_h_rms": null,
         "esrignss_worst_v_rms": null,
         "esrignss_worst_fixtype": null,
         "esrignss_manual_locations": null,
-        "Shape__Length": 11363.18117327592,
-        "CreationDate": "24/09/2026 08:00",
+        "Shape__Length": 1125.9408896397244,
+        "CreationDate": "03/10/2026 14:12",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "24/09/2026 08:00",
+        "EditDate": "03/10/2026 14:12",
         "Editor": "mzohar_univhaifa25",
-        "Title": "-1",
-        "Collection_date": "01/09/2026 11:54",
+        "Title": "Trail",
+        "Collection_date": "26/09/2026 13:35",
         "POI_Type": "General Site",
-        "POI_Description": null,
+        "POI_Description": "Automatic trail capture",
         "POI_Name": "Test",
-        "POI_Topic": "General",
-        "Collect_Name": "Motti Zohar",
-        "attachments": [
-          "data/attachments/lines/4_2_20250328_184705.jpg"
-        ],
-        "attachment_media": [
-          {
-            "url": "data/attachments/lines/4_2_20250328_184705.jpg",
-            "name": "20250328_184705.jpg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 2,
-            "parentObjectId": 4,
-            "sourceDataset": "lines"
-          }
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "id": 6,
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [
-            35.0349082052708,
-            31.9219011347741
-          ],
-          [
-            35.0348095502704,
-            31.9219059543684
-          ],
-          [
-            35.0347326043993,
-            31.9218897353858
-          ]
-        ]
-      },
-      "properties": {
-        "OBJECTID": 6,
-        "GlobalID": "efd05fd9-e45a-4aa9-93cd-1837b26d9db1",
-        "esrignss_avg_h_rms": null,
-        "esrignss_avg_v_rms": null,
-        "esrignss_worst_h_rms": null,
-        "esrignss_worst_v_rms": null,
-        "esrignss_worst_fixtype": null,
-        "esrignss_manual_locations": null,
-        "Shape__Length": 19.82615774510936,
-        "CreationDate": "24/09/2026 09:08",
-        "Creator": "mzohar_univhaifa25",
-        "EditDate": "24/09/2026 09:08",
-        "Editor": "mzohar_univhaifa25",
-        "Title": "Sssa",
-        "Collection_date": null,
-        "POI_Type": null,
-        "POI_Description": null,
-        "POI_Name": null,
-        "POI_Topic": null,
-        "Collect_Name": null,
-        "attachments": [],
-        "attachment_media": []
-      }
-    },
-    {
-      "type": "Feature",
-      "id": 7,
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [
-            35.0345654692501,
-            31.9219268253073
-          ],
-          [
-            35.0346571672708,
-            31.9219015957788
-          ],
-          [
-            35.0347507093102,
-            31.9218926271424
-          ],
-          [
-            35.0348459277302,
-            31.921902182512
-          ]
-        ]
-      },
-      "properties": {
-        "OBJECTID": 7,
-        "GlobalID": "57ed0bfa-4bd5-4bd9-b87d-50f8c259a2c2",
-        "esrignss_avg_h_rms": null,
-        "esrignss_avg_v_rms": null,
-        "esrignss_worst_h_rms": null,
-        "esrignss_worst_v_rms": null,
-        "esrignss_worst_fixtype": null,
-        "esrignss_manual_locations": null,
-        "Shape__Length": 31.88347102108937,
-        "CreationDate": "24/09/2026 09:10",
-        "Creator": "mzohar_univhaifa25",
-        "EditDate": "24/09/2026 09:10",
-        "Editor": "mzohar_univhaifa25",
-        "Title": "Trail",
-        "Collection_date": null,
-        "POI_Type": "General Site",
-        "POI_Description": "Automatic trail capture",
-        "POI_Name": "Hhhssh",
-        "POI_Topic": "General",
-        "Collect_Name": "Motti Zohar",
-        "attachments": [],
-        "attachment_media": []
-      }
-    },
-    {
-      "type": "Feature",
-      "id": 8,
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [
-            35.0349916052073,
-            31.9219675613567
-          ],
-          [
-            35.0349244661629,
-            31.9219086784869
-          ],
-          [
-            35.0348218716681,
-            31.9219222571701
-          ],
-          [
-            35.0347285810858,
-            31.921932566911
-          ],
-          [
-            35.0346306804568,
-            31.9219303876162
-          ],
-          [
-            35.0345383118838,
-            31.9218984944746
-          ],
-          [
-            35.034440914169,
-            31.9218848738819
-          ],
-          [
-            35.0343528203666,
-            31.9218449341133
-          ],
-          [
-            35.0343026127666,
-            31.9218120351434
-          ]
-        ]
-      },
-      "properties": {
-        "OBJECTID": 8,
-        "GlobalID": "8e04aec0-3b63-4814-bfc8-66a429edb6ab",
-        "esrignss_avg_h_rms": null,
-        "esrignss_avg_v_rms": null,
-        "esrignss_worst_h_rms": null,
-        "esrignss_worst_v_rms": null,
-        "esrignss_worst_fixtype": null,
-        "esrignss_manual_locations": null,
-        "Shape__Length": 83.9484398882263,
-        "CreationDate": "24/09/2026 10:19",
-        "Creator": "mzohar_univhaifa25",
-        "EditDate": "24/09/2026 10:19",
-        "Editor": "mzohar_univhaifa25",
-        "Title": "Trail",
-        "Collection_date": "24/09/2026 10:18",
-        "POI_Type": "General Site",
-        "POI_Description": "Automatic trail capture",
-        "POI_Name": "Test 3",
         "POI_Topic": "General",
         "Collect_Name": "Motti Zohar",
         "attachments": [],

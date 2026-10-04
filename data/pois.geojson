@@ -17997,22 +17997,12 @@
         "Longitude": 35.2297475460993,
         "Latitude": 31.7780970002716,
         "attachments": [
-          "data/attachments/258_631_Photo 4.jpg",
           "data/attachments/258_493_PA190270.JPG",
           "data/attachments/258_492_PA190269 - Copy.JPG",
-          "data/attachments/258_491_PA190268.JPG"
+          "data/attachments/258_491_PA190268.JPG",
+          "data/attachments/258_631_Photo 4.jpg"
         ],
         "attachment_media": [
-          {
-            "url": "data/attachments/258_631_Photo 4.jpg",
-            "name": "Photo 4.jpg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 631,
-            "parentObjectId": 258,
-            "sourceDataset": "points"
-          },
           {
             "url": "data/attachments/258_493_PA190270.JPG",
             "name": "PA190270.JPG",
@@ -18040,6 +18030,16 @@
             "kind": "image",
             "storage": "local",
             "attachmentId": 491,
+            "parentObjectId": 258,
+            "sourceDataset": "points"
+          },
+          {
+            "url": "data/attachments/258_631_Photo 4.jpg",
+            "name": "Photo 4.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 631,
             "parentObjectId": 258,
             "sourceDataset": "points"
           }
@@ -74027,6 +74027,210 @@
             "sourceDataset": "points"
           }
         ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1231,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.9790807346844,
+          -13.516407208017
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1231,
+        "GlobalID": "9ecadb4e-4840-4033-8852-bff9c2e87cdd",
+        "esrignss_speed": null,
+        "esrignss_direction": null,
+        "esrisnsr_azimuth": null,
+        "esrignss_positionsourcetype": null,
+        "esrignss_receiver": null,
+        "esrignss_h_rms": null,
+        "esrignss_v_rms": null,
+        "esrignss_latitude": null,
+        "esrignss_longitude": null,
+        "esrignss_altitude": null,
+        "esrignss_pdop": null,
+        "esrignss_hdop": null,
+        "esrignss_vdop": null,
+        "esrignss_fixtype": null,
+        "esrignss_correctionage": null,
+        "esrignss_stationid": null,
+        "esrignss_numsats": null,
+        "esrignss_fixdatetime": null,
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_avg_positions": null,
+        "esrignss_h_stddev": null,
+        "CreationDate": "28/09/2026 21:21",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "28/09/2026 21:21",
+        "Editor": "mzohar_univhaifa25",
+        "Collection_date": "18/08/1999 09:20",
+        "POI_Type": "General Site",
+        "POI_Description": null,
+        "POI_Name": "Plaza de Armas, Cusco",
+        "POI_Topic": "TBV",
+        "Collect_Name": null,
+        "Longitude": -71.9790807346844,
+        "Latitude": -13.516407208017,
+        "attachments": [],
+        "attachment_media": []
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1232,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.5370419601937,
+          -16.3990657233045
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1232,
+        "GlobalID": "f168d310-30f7-4170-bd5c-f1263ccea17a",
+        "esrignss_speed": null,
+        "esrignss_direction": null,
+        "esrisnsr_azimuth": null,
+        "esrignss_positionsourcetype": null,
+        "esrignss_receiver": null,
+        "esrignss_h_rms": null,
+        "esrignss_v_rms": null,
+        "esrignss_latitude": null,
+        "esrignss_longitude": null,
+        "esrignss_altitude": null,
+        "esrignss_pdop": null,
+        "esrignss_hdop": null,
+        "esrignss_vdop": null,
+        "esrignss_fixtype": null,
+        "esrignss_correctionage": null,
+        "esrignss_stationid": null,
+        "esrignss_numsats": null,
+        "esrignss_fixdatetime": null,
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_avg_positions": null,
+        "esrignss_h_stddev": null,
+        "CreationDate": "28/09/2026 21:29",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "28/09/2026 21:29",
+        "Editor": "mzohar_univhaifa25",
+        "Collection_date": "02/08/1999 09:28",
+        "POI_Type": "General Site",
+        "POI_Description": null,
+        "POI_Name": "Plaza de Armas, Arequipa",
+        "POI_Topic": "TBV",
+        "Collect_Name": "Motti Zohar",
+        "Longitude": -71.5370419601937,
+        "Latitude": -16.3990657233045,
+        "attachments": [],
+        "attachment_media": []
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1233,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.9371147136211,
+          -14.8278318578054
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1233,
+        "GlobalID": "9d80123c-157b-4f79-9806-f2f5c65fbde2",
+        "esrignss_speed": null,
+        "esrignss_direction": null,
+        "esrisnsr_azimuth": null,
+        "esrignss_positionsourcetype": null,
+        "esrignss_receiver": null,
+        "esrignss_h_rms": null,
+        "esrignss_v_rms": null,
+        "esrignss_latitude": null,
+        "esrignss_longitude": null,
+        "esrignss_altitude": null,
+        "esrignss_pdop": null,
+        "esrignss_hdop": null,
+        "esrignss_vdop": null,
+        "esrignss_fixtype": null,
+        "esrignss_correctionage": null,
+        "esrignss_stationid": null,
+        "esrignss_numsats": null,
+        "esrignss_fixdatetime": null,
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_avg_positions": null,
+        "esrignss_h_stddev": null,
+        "CreationDate": "28/09/2026 21:34",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "28/09/2026 21:34",
+        "Editor": "mzohar_univhaifa25",
+        "Collection_date": "26/07/1999 09:34",
+        "POI_Type": "General Site",
+        "POI_Description": null,
+        "POI_Name": "Plaza de Armes, Nazca",
+        "POI_Topic": "TBV",
+        "Collect_Name": "Motti Zohar",
+        "Longitude": -74.9371147136211,
+        "Latitude": -14.8278318578054,
+        "attachments": [],
+        "attachment_media": []
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1234,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          85.3079869031015,
+          27.7048385405968
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1234,
+        "GlobalID": "5a626698-f004-412f-afe7-cfbdf3e8cffd",
+        "esrignss_speed": null,
+        "esrignss_direction": null,
+        "esrisnsr_azimuth": null,
+        "esrignss_positionsourcetype": null,
+        "esrignss_receiver": null,
+        "esrignss_h_rms": null,
+        "esrignss_v_rms": null,
+        "esrignss_latitude": null,
+        "esrignss_longitude": null,
+        "esrignss_altitude": null,
+        "esrignss_pdop": null,
+        "esrignss_hdop": null,
+        "esrignss_vdop": null,
+        "esrignss_fixtype": null,
+        "esrignss_correctionage": null,
+        "esrignss_stationid": null,
+        "esrignss_numsats": null,
+        "esrignss_fixdatetime": null,
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_avg_positions": null,
+        "esrignss_h_stddev": null,
+        "CreationDate": "28/09/2026 22:32",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "28/09/2026 22:32",
+        "Editor": "mzohar_univhaifa25",
+        "Collection_date": "16/03/1994 11:31",
+        "POI_Type": "Religious/Faith",
+        "POI_Description": null,
+        "POI_Name": "Durbar Square, Katmandu",
+        "POI_Topic": "TBV",
+        "Collect_Name": "Motti Zohar",
+        "Longitude": 85.3079869031015,
+        "Latitude": 27.7048385405968,
+        "attachments": [],
+        "attachment_media": []
       }
     }
   ]

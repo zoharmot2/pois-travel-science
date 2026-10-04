@@ -9,7 +9,7 @@
       "sourceUrl": "https://services5.arcgis.com/eJYUV73IZAY87Jwy/arcgis/rest/services/POI_Feature_Layer_view/FeatureServer/0",
       "geometryFamily": "point",
       "esriGeometryType": "esriGeometryPoint",
-      "entityCount": 1198,
+      "entityCount": 1202,
       "hasAttachments": true,
       "maxRecordCount": 1000,
       "objectIdField": "OBJECTID",
@@ -214,7 +214,7 @@
       "sourceUrl": "https://services5.arcgis.com/eJYUV73IZAY87Jwy/arcgis/rest/services/POI_Feature_Layer_view/FeatureServer/1",
       "geometryFamily": "line",
       "esriGeometryType": "esriGeometryPolyline",
-      "entityCount": 5,
+      "entityCount": 2,
       "hasAttachments": true,
       "maxRecordCount": 1000,
       "objectIdField": "OBJECTID",
@@ -367,11 +367,11 @@
         ]
       },
       "attachmentSummary": {
-        "references": 2,
-        "local": 2,
+        "references": 1,
+        "local": 1,
         "remote": 0,
         "byKind": {
-          "image": 2,
+          "image": 1,
           "audio": 0,
           "video": 0,
           "other": 0
@@ -385,7 +385,7 @@
       "sourceUrl": "https://services5.arcgis.com/eJYUV73IZAY87Jwy/arcgis/rest/services/POI_Feature_Layer_view/FeatureServer/2",
       "geometryFamily": "polygon",
       "esriGeometryType": "esriGeometryPolygon",
-      "entityCount": 2,
+      "entityCount": 1,
       "hasAttachments": true,
       "maxRecordCount": 1000,
       "objectIdField": "OBJECTID",
@@ -538,11 +538,11 @@
         ]
       },
       "attachmentSummary": {
-        "references": 1,
-        "local": 1,
+        "references": 0,
+        "local": 0,
         "remote": 0,
         "byKind": {
-          "image": 1,
+          "image": 0,
           "audio": 0,
           "video": 0,
           "other": 0
