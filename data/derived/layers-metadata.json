@@ -9,7 +9,7 @@
       "sourceUrl": "https://services5.arcgis.com/eJYUV73IZAY87Jwy/arcgis/rest/services/POI_Feature_Layer_view/FeatureServer/0",
       "geometryFamily": "point",
       "esriGeometryType": "esriGeometryPoint",
-      "entityCount": 1202,
+      "entityCount": 1204,
       "hasAttachments": true,
       "maxRecordCount": 1000,
       "objectIdField": "OBJECTID",
