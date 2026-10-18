@@ -9,7 +9,7 @@
       "sourceUrl": "https://services5.arcgis.com/eJYUV73IZAY87Jwy/arcgis/rest/services/POI_Feature_Layer_view/FeatureServer/0",
       "geometryFamily": "point",
       "esriGeometryType": "esriGeometryPoint",
-      "entityCount": 1204,
+      "entityCount": 1206,
       "hasAttachments": true,
       "maxRecordCount": 1000,
       "objectIdField": "OBJECTID",
@@ -196,11 +196,11 @@
         ]
       },
       "attachmentSummary": {
-        "references": 1076,
-        "local": 1072,
+        "references": 1079,
+        "local": 1075,
         "remote": 4,
         "byKind": {
-          "image": 1072,
+          "image": 1075,
           "audio": 0,
           "video": 4,
           "other": 0
