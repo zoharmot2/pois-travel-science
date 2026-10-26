@@ -8,6 +8,7 @@ import {
     createEmptySiteMetadataSidecar,
     normalizeSiteMetadataSidecar
 } from './metadata.js';
+import { attachEnrichment, ENRICHMENT_PATH } from './enrichment.js';
 
 const SITE_METADATA_PATH = 'data/site/poi-meta.json';
 
@@ -36,7 +37,7 @@ async function fetchOptionalJson(path, fallbackValue) {
     const response = await fetch(withCacheBuster(path), { cache: 'no-store' });
 
     if (response.status === 404) {
-        console.warn(`Optional data file not found: ${path}. Continuing without website metadata.`);
+        console.warn(`Optional data file not found: ${path}. Continuing with fallback data.`);
         return fallbackValue;
     }
 
@@ -55,10 +56,11 @@ async function loadEntityDataSources() {
 }
 
 export async function loadAppData() {
-    const [config, entitySources, rawSiteMetadata] = await Promise.all([
+    const [config, entitySources, rawSiteMetadata, enrichmentDocument] = await Promise.all([
         fetchJson('config.json'),
         loadEntityDataSources(),
-        fetchOptionalJson(SITE_METADATA_PATH, createEmptySiteMetadataSidecar())
+        fetchOptionalJson(SITE_METADATA_PATH, createEmptySiteMetadataSidecar()),
+        fetchOptionalJson(ENRICHMENT_PATH, { entities: {} })
     ]);
 
     const entities = createEntitiesFromSources(entitySources);
@@ -79,6 +81,7 @@ export async function loadAppData() {
 
     const siteMetadata = normalizeSiteMetadataSidecar(rawSiteMetadata, entityIdIndex);
     const metadataMatchedCount = attachSiteMetadata(entities, siteMetadata);
+    const enrichmentMatchedCount = attachEnrichment(entities, enrichmentDocument);
 
     if (siteMetadata.invalidIds.length > 0) {
         console.warn(
@@ -113,6 +116,7 @@ export async function loadAppData() {
         entityIdIndex,
         entitiesMissingStableId,
         siteMetadata,
-        metadataMatchedCount
+        metadataMatchedCount,
+        enrichmentMatchedCount
     };
 }

@@ -20,3 +20,15 @@
 - Added generic Entity model and normalized GlobalID stable identity.
 - Added website metadata sidecar.
 - Added filtering, Detail Panel, multi-geometry readiness, data QA, frontend QA, and formal Standalone/Embedded modes.
+
+## 1.5.0 — Data Enrichment (implementation candidate)
+
+- Added an incremental, GlobalID-keyed, non-destructive enrichment pipeline.
+- Added rate-limited Nominatim reverse geocoding of point features, with per-record administrative location, source citations and timestamps.
+- Recorded OSM nearest-feature identity only as an **unverified candidate**, never a verified match inferred from proximity alone.
+- Added manual candidate approvals in `data/site/enrichment-reviews.json`; provenance is preserved.
+- Extended standalone/embedded detail panels with concise External Geographic Information and Enrichment Notes sections.
+- Extended GitHub Actions with incremental enrichment, QA, and persistent output artifacts.
+- Corrected 13 archived attachment filenames whose ZIP names used `#U...` substitutions, to match the existing references.
+- Network enrichment is inactive until a contactable `ENRICHMENT_USER_AGENT` is configured; no live external retrieval was performed in this release package.
+- The OSM feature matching/scoring module described in the full specification requires additional implementation and live validation before v1.5.0 can be declared fully accepted.

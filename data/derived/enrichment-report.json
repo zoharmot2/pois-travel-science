@@ -1,0 +1,19 @@
+{
+  "by_status": {
+    "completed": 4,
+    "pending": 1202,
+    "unsupported_geometry": 3
+  },
+  "completed": 4,
+  "completion_percent": 0.33,
+  "eligible_points": 1206,
+  "errors_this_run": [],
+  "failed_requests": 0,
+  "network_enabled": false,
+  "network_requests": 0,
+  "release_ready": false,
+  "remaining_eligible": 1202,
+  "reused": 4,
+  "total": 1209,
+  "updated_this_run": []
+}

@@ -4,6 +4,17 @@ on:
   schedule:
     - cron: '0 0 * * 0'
   workflow_dispatch:
+    inputs:
+      enrichment_requests:
+        description: "Nominatim reverse requests for this run (0-10)"
+        required: false
+        default: "10"
+        type: choice
+        options:
+          - "0"
+          - "2"
+          - "5"
+          - "10"
 
 jobs:
   sync-data:
@@ -36,6 +47,31 @@ jobs:
 
       - name: Fetch Points, Lines and Polygons
         run: python scripts/fetch_data.py
+
+      - name: Enrich New POIs with Nominatim (bounded incremental)
+        env:
+          ENRICHMENT_USER_AGENT: ${{ secrets.ENRICHMENT_USER_AGENT }}
+          REQUEST_BUDGET: ${{ github.event.inputs.enrichment_requests || '10' }}
+        run: |
+          if [ -z "$ENRICHMENT_USER_AGENT" ]; then
+            echo "Nominatim disabled: ENRICHMENT_USER_AGENT secret is unset; using cached enrichment only."
+            python scripts/enrich_data.py --offline
+          else
+            echo "Nominatim request budget: ${REQUEST_BUDGET}"
+            python scripts/enrich_data.py --max-requests "${REQUEST_BUDGET}"
+          fi
+
+      - name: Validate Enrichment Data
+        run: python scripts/qa_enrichment.py
+
+      - name: Upload Enrichment Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: enrichment-report-${{ github.run_number }}
+          path: data/derived/enrichment-report.json
+          if-no-files-found: ignore
+          retention-days: 30
 
       - name: Validate Generated Data
         run: python scripts/qa_data.py --baseline-root .qa-baseline

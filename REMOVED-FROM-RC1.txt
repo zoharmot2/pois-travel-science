@@ -1,0 +1,15 @@
+Original v1.4.0 files not present in RC1:
+data/attachments/13_13_תמונה 1.jpg
+data/attachments/14_14_תמונה 1.jpg
+data/attachments/14_15_תמונה 2.jpg
+data/attachments/15_16_תמונה 1.jpg
+data/attachments/15_17_תמונה 2.jpg
+data/attachments/16_18_תמונה 1.jpg
+data/attachments/16_19_תמונה 2.jpg
+data/attachments/26_35_תמונה 1.jpg
+data/attachments/35_47_תמונה 1.jpg
+data/attachments/36_48_תמונה 1.jpg
+data/attachments/37_49_תמונה 1.jpg
+data/attachments/8_7_תמונה 1.jpg
+data/attachments/8_8_תמונה 2.jpg
+scripts/__pycache__/qa_frontend.cpython-313.pyc

@@ -166,6 +166,29 @@ export function getEntityDisplayName(entity) {
     return `Unnamed ${geometryDisplayLabel(entity)}`;
 }
 
+function renderEnrichment(entity) {
+    const e = entity.enrichment;
+    if (!e) return '';
+    const a = e.administrative || {};
+    const p = e.provenance || {};
+    const region = a.state || a.county || '';
+    const fields = [
+        renderField('Country', a.country),
+        renderField('Region', region),
+        renderField('Locality', a.locality),
+        renderField('Address', a.display_address),
+        renderField('Enrichment Status', p.enrichment_status),
+        renderField('Last Enriched', p.enriched_at)
+    ].join('');
+    return `<section class="entity-detail-section entity-detail-enrichment">
+        <h3>External Geographic Information</h3>
+        <div class="entity-detail-fields">${fields}</div>
+        <h3>Enrichment Notes</h3>
+        <div class="entity-detail-description">${formatMultiline(p.enrichment_notes || 'No external enrichment completed.')}</div>
+        ${(p.enrichment_sources || []).length ? '<div class="entity-detail-source">© OpenStreetMap contributors · ODbL 1.0 · Nominatim</div>' : ''}
+    </section>`;
+}
+
 export function buildEntityDetailContent(entity) {
     if (!entity) return '<div class="entity-detail-empty">No entity selected.</div>';
 
@@ -247,6 +270,8 @@ export function buildEntityDetailContent(entity) {
                 <div class="entity-detail-fields">${fieldworkFields}</div>
             </section>
         ` : ''}
+
+        ${renderEnrichment(entity)}
 
         ${renderAttachments(entity)}
 

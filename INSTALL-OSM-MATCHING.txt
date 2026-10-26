@@ -1,0 +1,16 @@
+POIs Travel & Science — v1.5.0-rc2 OSM Matching Pilot
+
+This is an OVERLAY patch for your existing v1.5.0-rc1 installation (including the English update). It is NOT a complete project.
+
+1. Back up your existing project.
+2. Extract into C:\GitHub\pois-travel-science, preserving paths and overwriting these three files.
+3. Run: py scripts/test_enrichment.py
+4. Run: py scripts/qa_enrichment.py
+5. Ensure ENRICHMENT_USER_AGENT is set to your real contactable User-Agent.
+6. Run a strictly bounded pilot: py scripts/enrich_data.py --max-requests 0 --max-match-requests 2
+7. Inspect data/derived/enrichment-report.json (updated_this_run) and individual candidates in data/derived/enrichment.json.
+8. Reload the local website (Ctrl+F5). No OSM entity is automatically accepted.
+
+Do not run --offline between processing runs just to inspect results. Test against a backed-up copy first.
+Overpass search is opt-in; default 0 match searches. Public Overpass availability is not guaranteed.
+This patch is not the final 1.5.0 release; no live external-provider test was carried out.

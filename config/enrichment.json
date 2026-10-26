@@ -1,0 +1,6 @@
+{
+  "network_enabled": true,
+  "max_requests_per_run": 10,
+  "request_interval_seconds": 16,
+  "comment": "Public Nominatim recurring/bulk tasks must not exceed 4 requests/minute; one thread and persistent cache. A larger one-time backfill may require a separate Nominatim provider or self-hosted instance. Never perform frequent bulk jobs."
+}

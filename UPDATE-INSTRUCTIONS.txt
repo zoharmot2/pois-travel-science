@@ -1,0 +1,18 @@
+POIs Travel & Science — v1.5.0-rc1 update-only package
+
+This archive was compared byte-for-byte against the uploaded v1.4.0 project ZIP.
+It contains only files that were added or whose contents changed.
+
+INSTALLATION
+1. Back up your existing v1.4.0 project folder.
+2. Extract the contents of this ZIP INTO THE ROOT of that folder (where index.html is).
+3. Allow existing files to be overwritten; preserve the relative folder structure.
+4. From that root, start: py -m http.server 8000
+5. Visit http://localhost:8000 and test, including ?embed=1.
+6. Do NOT publish this as a final release yet. v1.5.0-rc1 has uncompleted OSM entity matching and has not passed live-provider/browser acceptance testing.
+
+The existing AGOL data/schema are not modified by extracting this archive.
+
+NOTE ON REMOVED FILES
+The original v1.4.0 snapshot contains filenames absent from the updated archive.
+Extracting the ZIP does not remove these old files. See REMOVED-FROM-RC1.txt for the list; these are primarily renamed attachment images. They can be left untouched for initial testing, though the overlay is not a byte-identical mirror of the full RC1 folder.
