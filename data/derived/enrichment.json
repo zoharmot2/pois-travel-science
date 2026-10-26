@@ -232,7 +232,22 @@
       "source_fingerprint": "b854942e99aa81ea156b2968"
     },
     "00ffc668-7aac-4477-8fac-c19df0d68a80": {
-      "administrative": {},
+      "administrative": {
+        "city": null,
+        "country": "Italy",
+        "country_code": "it",
+        "county": "Naples",
+        "display_address": "Souvenir bar chalet, Via Osservatorio, Ercolano, Naples, Campania, 80040, Italy",
+        "house_number": null,
+        "locality": "Ercolano",
+        "municipality": null,
+        "postcode": "80040",
+        "road": "Via Osservatorio",
+        "state": "Campania",
+        "suburb": null,
+        "town": "Ercolano",
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -246,19 +261,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-10-26T12:22:39.626604+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-10-26T12:22:39.626604+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=40.8246683&lon=14.4228791&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-10-26T12:22:39.626604+00:00"
       },
       "source_fingerprint": "0dd6ca8622abea9a1ce559d7"
     },
     "01137059-a94a-494f-bd29-0403d74374ba": {
-      "administrative": {},
+      "administrative": {
+        "city": "Jerusalem",
+        "country": "Israel",
+        "country_code": "il",
+        "county": null,
+        "display_address": "Cardo pizza, Jewish Quarter, Jerusalem, Old City, Jerusalem, Jerusalem Subdistrict, Jerusalem District, 9751494, Israel",
+        "house_number": null,
+        "locality": "Jerusalem",
+        "municipality": null,
+        "postcode": "9751494",
+        "road": "Jewish Quarter",
+        "state": "Jerusalem District",
+        "suburb": "Old City",
+        "town": null,
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -272,19 +312,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-10-26T12:22:55.790666+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-10-26T12:22:55.790666+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=31.7748832&lon=35.2310408&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-10-26T12:22:55.790666+00:00"
       },
       "source_fingerprint": "a55ce156c8bd23bde554718a"
     },
     "015fa375-c9d6-408a-8d50-1fe553260eeb": {
-      "administrative": {},
+      "administrative": {
+        "city": "Hof HaCarmel Regional Council",
+        "country": "Israel",
+        "country_code": "il",
+        "county": null,
+        "display_address": "6511, Hof HaCarmel Regional Council, Hadera Subdistrict, Haifa District, 3056502, Israel",
+        "house_number": null,
+        "locality": "Hof HaCarmel Regional Council",
+        "municipality": null,
+        "postcode": "3056502",
+        "road": "6511",
+        "state": "Haifa District",
+        "suburb": null,
+        "town": null,
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -298,19 +363,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-10-26T12:23:12.162008+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-10-26T12:23:12.162008+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=32.5016317&lon=34.8909300&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-10-26T12:23:12.162008+00:00"
       },
       "source_fingerprint": "74f14a9aaed60366d320edd8"
     },
     "0163605b-7861-4980-907e-dc8c03edc4a9": {
-      "administrative": {},
+      "administrative": {
+        "city": null,
+        "country": "Italy",
+        "country_code": "it",
+        "county": "Naples",
+        "display_address": "Via Osservatorio, Ercolano, Naples, Campania, 80040, Italy",
+        "house_number": null,
+        "locality": "Ercolano",
+        "municipality": null,
+        "postcode": "80040",
+        "road": "Via Osservatorio",
+        "state": "Campania",
+        "suburb": null,
+        "town": "Ercolano",
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -324,19 +414,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-10-26T12:23:28.437991+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-10-26T12:23:28.437991+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=40.8263963&lon=14.4251145&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-10-26T12:23:28.437991+00:00"
       },
       "source_fingerprint": "ccb09f28c9201652bbbfa415"
     },
     "0200020e-0cbe-451f-845a-35d982a18550": {
-      "administrative": {},
+      "administrative": {
+        "city": "City of Westminster",
+        "country": "United Kingdom",
+        "country_code": "gb",
+        "county": null,
+        "display_address": "T4 Tea For U, 137, Strand, St Clement Danes, Covent Garden, City of Westminster, Greater London, England, WC2R 1HH, United Kingdom",
+        "house_number": "137",
+        "locality": "City of Westminster",
+        "municipality": null,
+        "postcode": "WC2R 1HH",
+        "road": "Strand",
+        "state": "England",
+        "suburb": "Covent Garden",
+        "town": null,
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -350,19 +465,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-10-26T12:23:44.813102+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-10-26T12:23:44.813102+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=51.5113163&lon=-0.1188284&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-10-26T12:23:44.813102+00:00"
       },
       "source_fingerprint": "21ea751ec5ad15d33e0c9d47"
     },
     "0227b8b1-9dcb-4a0e-b1c6-e3edda5efad2": {
-      "administrative": {},
+      "administrative": {
+        "city": "Galil Tachton Regional Council",
+        "country": "Israel",
+        "country_code": "il",
+        "county": null,
+        "display_address": "Battlefield outlook, 7717, Galil Tachton Regional Council, Kinneret Subdistrict, North District, 1697200, Israel",
+        "house_number": null,
+        "locality": "Galil Tachton Regional Council",
+        "municipality": null,
+        "postcode": "1697200",
+        "road": "7717",
+        "state": "North District",
+        "suburb": null,
+        "town": null,
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -376,19 +516,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-10-26T12:24:01.179615+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-10-26T12:24:01.179615+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=32.7983867&lon=35.4593167&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-10-26T12:24:01.179615+00:00"
       },
       "source_fingerprint": "d796cb891275e819825b855f"
     },
     "03031386-36c7-40c0-811f-ba56791e9f13": {
-      "administrative": {},
+      "administrative": {
+        "city": null,
+        "country": "Italy",
+        "country_code": "it",
+        "county": "Naples",
+        "display_address": "Souvenir bar chalet, Via Osservatorio, Ercolano, Naples, Campania, 80040, Italy",
+        "house_number": null,
+        "locality": "Ercolano",
+        "municipality": null,
+        "postcode": "80040",
+        "road": "Via Osservatorio",
+        "state": "Campania",
+        "suburb": null,
+        "town": "Ercolano",
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -402,19 +567,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-10-26T12:24:17.470006+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-10-26T12:24:17.470006+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=40.8240949&lon=14.4227555&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-10-26T12:24:17.470006+00:00"
       },
       "source_fingerprint": "9d7d4b1fa5b22bf3d2502de4"
     },
     "03090ad5-79ab-4a32-913e-c0c673b56b5c": {
-      "administrative": {},
+      "administrative": {
+        "city": null,
+        "country": "Italy",
+        "country_code": "it",
+        "county": "Naples",
+        "display_address": "Via Osservatorio, Ercolano, Naples, Campania, 80040, Italy",
+        "house_number": null,
+        "locality": "Ercolano",
+        "municipality": null,
+        "postcode": "80040",
+        "road": "Via Osservatorio",
+        "state": "Campania",
+        "suburb": null,
+        "town": "Ercolano",
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -428,19 +618,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-10-26T12:24:33.838802+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-10-26T12:24:33.838802+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=40.8216364&lon=14.4225056&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-10-26T12:24:33.838802+00:00"
       },
       "source_fingerprint": "243c969f4ca86be586712642"
     },
     "0336259b-6684-44bf-b3e3-a8a6c9891643": {
-      "administrative": {},
+      "administrative": {
+        "city": null,
+        "country": "Italy",
+        "country_code": "it",
+        "county": "Naples",
+        "display_address": "Via Osservatorio, Ercolano, Naples, Campania, 80040, Italy",
+        "house_number": null,
+        "locality": "Ercolano",
+        "municipality": null,
+        "postcode": "80040",
+        "road": "Via Osservatorio",
+        "state": "Campania",
+        "suburb": null,
+        "town": "Ercolano",
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -454,19 +669,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-10-26T12:24:49.982578+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-10-26T12:24:49.982578+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=40.8276453&lon=14.4252882&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-10-26T12:24:49.982578+00:00"
       },
       "source_fingerprint": "b507f63938256bdb0ae04b5e"
     },
     "033dcf3c-a64e-4bf6-af31-67fc53883399": {
-      "administrative": {},
+      "administrative": {
+        "city": "Arava Tichona Regional Council",
+        "country": "Israel",
+        "country_code": "il",
+        "county": null,
+        "display_address": "Arava Tichona Regional Council, Beersheba Subdistrict, South District, Israel",
+        "house_number": null,
+        "locality": "Arava Tichona Regional Council",
+        "municipality": null,
+        "postcode": null,
+        "road": null,
+        "state": "South District",
+        "suburb": null,
+        "town": null,
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -480,14 +720,24 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-10-26T12:25:06.293916+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-10-26T12:25:06.293916+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=30.8535071&lon=35.0691557&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-10-26T12:25:06.293916+00:00"
       },
       "source_fingerprint": "7f536a8e5bfbce1112a41915"
     },
