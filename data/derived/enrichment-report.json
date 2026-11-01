@@ -1,19 +1,19 @@
 {
   "by_status": {
-    "completed": 14,
-    "pending": 1192,
+    "completed": 24,
+    "pending": 1182,
     "unsupported_geometry": 3
   },
-  "completed": 14,
-  "completion_percent": 1.16,
+  "completed": 24,
+  "completion_percent": 1.99,
   "eligible_points": 1206,
   "errors_this_run": [],
   "failed_requests": 0,
   "network_enabled": true,
   "network_requests": 10,
   "release_ready": false,
-  "remaining_eligible": 1192,
-  "reused": 4,
+  "remaining_eligible": 1182,
+  "reused": 14,
   "total": 1209,
   "updated_this_run": [
     {
@@ -21,7 +21,7 @@
       "country": "Italy",
       "enrichment_status": "completed",
       "geometry_family": "points",
-      "globalid": "00ffc668-7aac-4477-8fac-c19df0d68a80",
+      "globalid": "034c846a-0b11-47da-9c47-a16499df7ebc",
       "locality": "Ercolano",
       "name": "BeenHere_QuickCapture_POI"
     },
@@ -30,81 +30,81 @@
       "country": "Israel",
       "enrichment_status": "completed",
       "geometry_family": "points",
-      "globalid": "01137059-a94a-494f-bd29-0403d74374ba",
+      "globalid": "0370ce97-ed53-4ad5-a548-2d61cde156fe",
+      "locality": "Haifa",
+      "name": "Light House"
+    },
+    {
+      "action": "reverse_geocoding",
+      "country": "Italy",
+      "enrichment_status": "completed",
+      "geometry_family": "points",
+      "globalid": "03769c22-32ec-449e-be8e-c12e25085d8f",
+      "locality": "Ercolano",
+      "name": "BeenHere_QuickCapture_POI"
+    },
+    {
+      "action": "reverse_geocoding",
+      "country": "Israel",
+      "enrichment_status": "completed",
+      "geometry_family": "points",
+      "globalid": "03c9b461-f6dd-4957-87e7-ebef1ff71662",
       "locality": "Jerusalem",
       "name": null
     },
     {
       "action": "reverse_geocoding",
+      "country": "Italy",
+      "enrichment_status": "completed",
+      "geometry_family": "points",
+      "globalid": "0430f8cf-6ec1-4297-8f4f-6e33d12e0e76",
+      "locality": "Anacapri",
+      "name": "BeenHere_QuickCapture_POI"
+    },
+    {
+      "action": "reverse_geocoding",
+      "country": "Italy",
+      "enrichment_status": "completed",
+      "geometry_family": "points",
+      "globalid": "0433db6c-b8c9-45b4-acc4-1634801c0de4",
+      "locality": "Ercolano",
+      "name": "BeenHere_QuickCapture_POI"
+    },
+    {
+      "action": "reverse_geocoding",
+      "country": "Italy",
+      "enrichment_status": "completed",
+      "geometry_family": "points",
+      "globalid": "0445ea73-750d-4027-92ea-4a65b26f884b",
+      "locality": "Naples",
+      "name": "BeenHere_QuickCapture_POI"
+    },
+    {
+      "action": "reverse_geocoding",
+      "country": "Italy",
+      "enrichment_status": "completed",
+      "geometry_family": "points",
+      "globalid": "0464217a-9ee6-4af9-a4a1-198a77459cde",
+      "locality": "Ercolano",
+      "name": "BeenHere_QuickCapture_POI"
+    },
+    {
+      "action": "reverse_geocoding",
       "country": "Israel",
       "enrichment_status": "completed",
       "geometry_family": "points",
-      "globalid": "015fa375-c9d6-408a-8d50-1fe553260eeb",
+      "globalid": "046984b5-b092-4c46-b06a-3ed6feea4490",
       "locality": "Hof HaCarmel Regional Council",
-      "name": "Minaret (Bosnian Mosque)"
+      "name": "T16"
     },
     {
       "action": "reverse_geocoding",
       "country": "Italy",
       "enrichment_status": "completed",
       "geometry_family": "points",
-      "globalid": "0163605b-7861-4980-907e-dc8c03edc4a9",
-      "locality": "Ercolano",
+      "globalid": "047a5967-0b37-4448-b7ca-6f0b22a7fd86",
+      "locality": "Ottaviano",
       "name": "BeenHere_QuickCapture_POI"
-    },
-    {
-      "action": "reverse_geocoding",
-      "country": "United Kingdom",
-      "enrichment_status": "completed",
-      "geometry_family": "points",
-      "globalid": "0200020e-0cbe-451f-845a-35d982a18550",
-      "locality": "City of Westminster",
-      "name": "Iron Rails"
-    },
-    {
-      "action": "reverse_geocoding",
-      "country": "Israel",
-      "enrichment_status": "completed",
-      "geometry_family": "points",
-      "globalid": "0227b8b1-9dcb-4a0e-b1c6-e3edda5efad2",
-      "locality": "Galil Tachton Regional Council",
-      "name": "Crater View from southrrn horn"
-    },
-    {
-      "action": "reverse_geocoding",
-      "country": "Italy",
-      "enrichment_status": "completed",
-      "geometry_family": "points",
-      "globalid": "03031386-36c7-40c0-811f-ba56791e9f13",
-      "locality": "Ercolano",
-      "name": "BeenHere_QuickCapture_POI"
-    },
-    {
-      "action": "reverse_geocoding",
-      "country": "Italy",
-      "enrichment_status": "completed",
-      "geometry_family": "points",
-      "globalid": "03090ad5-79ab-4a32-913e-c0c673b56b5c",
-      "locality": "Ercolano",
-      "name": "BeenHere_QuickCapture_POI"
-    },
-    {
-      "action": "reverse_geocoding",
-      "country": "Italy",
-      "enrichment_status": "completed",
-      "geometry_family": "points",
-      "globalid": "0336259b-6684-44bf-b3e3-a8a6c9891643",
-      "locality": "Ercolano",
-      "name": "BeenHere_QuickCapture_POI"
-    },
-    {
-      "action": "reverse_geocoding",
-      "country": "Israel",
-      "enrichment_status": "completed",
-      "geometry_family": "points",
-      "globalid": "033dcf3c-a64e-4bf6-af31-67fc53883399",
-      "locality": "Arava Tichona Regional Council",
-      "name": "Zin River"
     }
   ]
 }
