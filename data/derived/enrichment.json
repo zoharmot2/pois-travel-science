@@ -1252,7 +1252,22 @@
       "source_fingerprint": "49fbc453be170d3285af1b9c"
     },
     "04c36f17-5ea1-415f-8b2d-775e7d81475b": {
-      "administrative": {},
+      "administrative": {
+        "city": "Greater London",
+        "country": "United Kingdom",
+        "country_code": "gb",
+        "county": null,
+        "display_address": "Flitcroft Street, St Giles, Bloomsbury, London Borough of Camden, Greater London, England, WC2H 8DL, United Kingdom",
+        "house_number": null,
+        "locality": "Greater London",
+        "municipality": null,
+        "postcode": "WC2H 8DL",
+        "road": "Flitcroft Street",
+        "state": "England",
+        "suburb": "Bloomsbury",
+        "town": null,
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -1266,19 +1281,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-11-08T04:10:29.174768+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-11-08T04:10:29.174768+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=51.5154533&lon=-0.1289217&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-11-08T04:10:29.174768+00:00"
       },
       "source_fingerprint": "9883e9736444a55f8490c012"
     },
     "04e5524e-2daa-492b-a22a-7c9a36fec8d7": {
-      "administrative": {},
+      "administrative": {
+        "city": "Greater London",
+        "country": "United Kingdom",
+        "country_code": "gb",
+        "county": null,
+        "display_address": "Lord John Russell, 91-93, Marchmont Street, St Pancras, London Borough of Camden, Greater London, England, WC1N 1AL, United Kingdom",
+        "house_number": "91-93",
+        "locality": "Greater London",
+        "municipality": null,
+        "postcode": "WC1N 1AL",
+        "road": "Marchmont Street",
+        "state": "England",
+        "suburb": "St Pancras",
+        "town": null,
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -1292,19 +1332,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-11-08T04:10:45.431205+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-11-08T04:10:45.431205+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=51.5260900&lon=-0.1259150&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-11-08T04:10:45.431205+00:00"
       },
       "source_fingerprint": "296d4ad67ac9b4d9ff1bf07b"
     },
     "057af756-3723-44cf-98e5-df75cdb2e3e0": {
-      "administrative": {},
+      "administrative": {
+        "city": "Be'er Sheva",
+        "country": "Israel",
+        "country_code": "il",
+        "county": null,
+        "display_address": "Negba, Old City, Be'er Sheva, Beersheba Subdistrict, South District, 8426306, Israel",
+        "house_number": null,
+        "locality": "Be'er Sheva",
+        "municipality": null,
+        "postcode": "8426306",
+        "road": "Negba",
+        "state": "South District",
+        "suburb": "Old City",
+        "town": null,
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -1318,19 +1383,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-11-08T04:11:01.670499+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-11-08T04:11:01.670499+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=31.2391007&lon=34.7866896&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-11-08T04:11:01.670499+00:00"
       },
       "source_fingerprint": "af01ff62fbd7d85c3e61a83d"
     },
     "05b3b9b4-4e5d-49d5-b385-e318c0b629ca": {
-      "administrative": {},
+      "administrative": {
+        "city": "Jerusalem",
+        "country": "Israel",
+        "country_code": "il",
+        "county": null,
+        "display_address": "David Street, Jerusalem, Old City, Jerusalem, Jerusalem Subdistrict, Jerusalem District, 9114101, Israel",
+        "house_number": null,
+        "locality": "Jerusalem",
+        "municipality": null,
+        "postcode": "9114101",
+        "road": "David Street",
+        "state": "Jerusalem District",
+        "suburb": "Old City",
+        "town": null,
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -1344,19 +1434,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-11-08T04:11:18.017363+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-11-08T04:11:18.017363+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=31.7767503&lon=35.2293694&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-11-08T04:11:18.017363+00:00"
       },
       "source_fingerprint": "9a33e978a4b7472401285c9f"
     },
     "05b4d18c-6c44-41d0-9e45-649f76418c65": {
-      "administrative": {},
+      "administrative": {
+        "city": null,
+        "country": "Israel",
+        "country_code": "il",
+        "county": null,
+        "display_address": "טיילת אגם ירוחם, Yeruham, Beersheba Subdistrict, South District, Israel",
+        "house_number": null,
+        "locality": "Yeruham",
+        "municipality": null,
+        "postcode": null,
+        "road": "טיילת אגם ירוחם",
+        "state": "South District",
+        "suburb": null,
+        "town": "Yeruham",
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -1370,19 +1485,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-11-08T04:11:34.529233+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-11-08T04:11:34.529233+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=30.9889600&lon=34.8995883&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-11-08T04:11:34.529233+00:00"
       },
       "source_fingerprint": "12d688fe5cbc7654b1c7d9a2"
     },
     "060f177a-02f2-43ba-b8ac-9fedad828c38": {
-      "administrative": {},
+      "administrative": {
+        "city": "Municipal Unit of Rhodes",
+        "country": "Greece",
+        "country_code": "gr",
+        "county": "Rhodes Regional Unit",
+        "display_address": "Σουλεϊμανιγιέ Τζαμί, 11, Ιάσονος, Medieval city of Rhodes, Rhodes, Municipal Unit of Rhodes, Municipality of Rhodes, Rhodes Regional Unit, South Aegean, Aegean, 851 00, Greece",
+        "house_number": "11",
+        "locality": "Municipal Unit of Rhodes",
+        "municipality": "Municipality of Rhodes",
+        "postcode": "851 00",
+        "road": "Ιάσονος",
+        "state": "South Aegean",
+        "suburb": null,
+        "town": null,
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -1396,19 +1536,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-11-08T04:11:50.835582+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-11-08T04:11:50.835582+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=36.4439609&lon=28.2242313&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-11-08T04:11:50.835582+00:00"
       },
       "source_fingerprint": "2f23b206db2dc6fd912def07"
     },
     "06170ff0-3f3e-4ccc-afc2-32f4ad1cdf48": {
-      "administrative": {},
+      "administrative": {
+        "city": "Greater London",
+        "country": "United Kingdom",
+        "country_code": "gb",
+        "county": null,
+        "display_address": "OMG Education, 85, Commercial Street, Spitalfields, Whitechapel, London Borough of Tower Hamlets, Greater London, England, E1 6BG, United Kingdom",
+        "house_number": "85",
+        "locality": "Greater London",
+        "municipality": null,
+        "postcode": "E1 6BG",
+        "road": "Commercial Street",
+        "state": "England",
+        "suburb": "Whitechapel",
+        "town": null,
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -1422,19 +1587,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-11-08T04:12:07.213708+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-11-08T04:12:07.213708+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=51.5185233&lon=-0.0745633&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-11-08T04:12:07.213708+00:00"
       },
       "source_fingerprint": "7ba0e7f3c8967854b855de7f"
     },
     "07946bb7-1813-476d-af61-d32e23ce3fe5": {
-      "administrative": {},
+      "administrative": {
+        "city": null,
+        "country": "Italy",
+        "country_code": "it",
+        "county": "Naples",
+        "display_address": "Strada Matrone, Ottaviano, Naples, Campania, 80040, Italy",
+        "house_number": null,
+        "locality": "Ottaviano",
+        "municipality": null,
+        "postcode": "80040",
+        "road": "Strada Matrone",
+        "state": "Campania",
+        "suburb": null,
+        "town": "Ottaviano",
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -1448,19 +1638,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-11-08T04:12:23.788151+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-11-08T04:12:23.788151+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=40.8188205&lon=14.4257891&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-11-08T04:12:23.788151+00:00"
       },
       "source_fingerprint": "0ca9334158e50e5043e0d0c3"
     },
     "07989685-9fad-4163-91b3-e94972f8718b": {
-      "administrative": {},
+      "administrative": {
+        "city": "Vienna",
+        "country": "Austria",
+        "country_code": "at",
+        "county": null,
+        "display_address": "Café Savoy, 36, Linke Wienzeile, Laimgrube, Mariahilf, Katastralgemeinde Mariahilf, Mariahilf, Vienna, 1060, Austria",
+        "house_number": "36",
+        "locality": "Vienna",
+        "municipality": null,
+        "postcode": "1060",
+        "road": "Linke Wienzeile",
+        "state": null,
+        "suburb": "Mariahilf",
+        "town": null,
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -1474,19 +1689,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-11-08T04:12:40.033055+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-11-08T04:12:40.033055+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=48.1974217&lon=16.3597333&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-11-08T04:12:40.033055+00:00"
       },
       "source_fingerprint": "1b1f392b24fc8d8fca652220"
     },
     "07b86051-88a9-4fa8-8c9c-8f443b0ff97d": {
-      "administrative": {},
+      "administrative": {
+        "city": null,
+        "country": "Italy",
+        "country_code": "it",
+        "county": "Naples",
+        "display_address": "Via Osservatorio, Ercolano, Naples, Campania, 80040, Italy",
+        "house_number": null,
+        "locality": "Ercolano",
+        "municipality": null,
+        "postcode": "80040",
+        "road": "Via Osservatorio",
+        "state": "Campania",
+        "suburb": null,
+        "town": "Ercolano",
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -1500,14 +1740,24 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-11-08T04:12:56.570637+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-11-08T04:12:56.570637+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=40.8253880&lon=14.4237674&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-11-08T04:12:56.570637+00:00"
       },
       "source_fingerprint": "629dfa1aa3c13dd19d2cb71d"
     },

@@ -1,109 +1,109 @@
 {
   "by_status": {
-    "completed": 24,
-    "pending": 1182,
+    "completed": 34,
+    "pending": 1172,
     "unsupported_geometry": 3
   },
-  "completed": 24,
-  "completion_percent": 1.99,
+  "completed": 34,
+  "completion_percent": 2.82,
   "eligible_points": 1206,
   "errors_this_run": [],
   "failed_requests": 0,
   "network_enabled": true,
   "network_requests": 10,
   "release_ready": false,
-  "remaining_eligible": 1182,
-  "reused": 14,
+  "remaining_eligible": 1172,
+  "reused": 24,
   "total": 1209,
   "updated_this_run": [
     {
       "action": "reverse_geocoding",
-      "country": "Italy",
+      "country": "United Kingdom",
       "enrichment_status": "completed",
       "geometry_family": "points",
-      "globalid": "034c846a-0b11-47da-9c47-a16499df7ebc",
-      "locality": "Ercolano",
-      "name": "BeenHere_QuickCapture_POI"
+      "globalid": "04c36f17-5ea1-415f-8b2d-775e7d81475b",
+      "locality": "Greater London",
+      "name": "Rails"
+    },
+    {
+      "action": "reverse_geocoding",
+      "country": "United Kingdom",
+      "enrichment_status": "completed",
+      "geometry_family": "points",
+      "globalid": "04e5524e-2daa-492b-a22a-7c9a36fec8d7",
+      "locality": "Greater London",
+      "name": "Lord John Russle Pub"
     },
     {
       "action": "reverse_geocoding",
       "country": "Israel",
       "enrichment_status": "completed",
       "geometry_family": "points",
-      "globalid": "0370ce97-ed53-4ad5-a548-2d61cde156fe",
-      "locality": "Haifa",
-      "name": "Light House"
-    },
-    {
-      "action": "reverse_geocoding",
-      "country": "Italy",
-      "enrichment_status": "completed",
-      "geometry_family": "points",
-      "globalid": "03769c22-32ec-449e-be8e-c12e25085d8f",
-      "locality": "Ercolano",
-      "name": "BeenHere_QuickCapture_POI"
+      "globalid": "057af756-3723-44cf-98e5-df75cdb2e3e0",
+      "locality": "Be'er Sheva",
+      "name": "Old City "
     },
     {
       "action": "reverse_geocoding",
       "country": "Israel",
       "enrichment_status": "completed",
       "geometry_family": "points",
-      "globalid": "03c9b461-f6dd-4957-87e7-ebef1ff71662",
+      "globalid": "05b3b9b4-4e5d-49d5-b385-e318c0b629ca",
       "locality": "Jerusalem",
       "name": null
     },
     {
       "action": "reverse_geocoding",
-      "country": "Italy",
-      "enrichment_status": "completed",
-      "geometry_family": "points",
-      "globalid": "0430f8cf-6ec1-4297-8f4f-6e33d12e0e76",
-      "locality": "Anacapri",
-      "name": "BeenHere_QuickCapture_POI"
-    },
-    {
-      "action": "reverse_geocoding",
-      "country": "Italy",
-      "enrichment_status": "completed",
-      "geometry_family": "points",
-      "globalid": "0433db6c-b8c9-45b4-acc4-1634801c0de4",
-      "locality": "Ercolano",
-      "name": "BeenHere_QuickCapture_POI"
-    },
-    {
-      "action": "reverse_geocoding",
-      "country": "Italy",
-      "enrichment_status": "completed",
-      "geometry_family": "points",
-      "globalid": "0445ea73-750d-4027-92ea-4a65b26f884b",
-      "locality": "Naples",
-      "name": "BeenHere_QuickCapture_POI"
-    },
-    {
-      "action": "reverse_geocoding",
-      "country": "Italy",
-      "enrichment_status": "completed",
-      "geometry_family": "points",
-      "globalid": "0464217a-9ee6-4af9-a4a1-198a77459cde",
-      "locality": "Ercolano",
-      "name": "BeenHere_QuickCapture_POI"
-    },
-    {
-      "action": "reverse_geocoding",
       "country": "Israel",
       "enrichment_status": "completed",
       "geometry_family": "points",
-      "globalid": "046984b5-b092-4c46-b06a-3ed6feea4490",
-      "locality": "Hof HaCarmel Regional Council",
-      "name": "T16"
+      "globalid": "05b4d18c-6c44-41d0-9e45-649f76418c65",
+      "locality": "Yeruham",
+      "name": "Yeruham Lake"
+    },
+    {
+      "action": "reverse_geocoding",
+      "country": "Greece",
+      "enrichment_status": "completed",
+      "geometry_family": "points",
+      "globalid": "060f177a-02f2-43ba-b8ac-9fedad828c38",
+      "locality": "Municipal Unit of Rhodes",
+      "name": "Suleymaniye Mosque Minaret"
+    },
+    {
+      "action": "reverse_geocoding",
+      "country": "United Kingdom",
+      "enrichment_status": "completed",
+      "geometry_family": "points",
+      "globalid": "06170ff0-3f3e-4ccc-afc2-32f4ad1cdf48",
+      "locality": "Greater London",
+      "name": "Narrow Bld"
     },
     {
       "action": "reverse_geocoding",
       "country": "Italy",
       "enrichment_status": "completed",
       "geometry_family": "points",
-      "globalid": "047a5967-0b37-4448-b7ca-6f0b22a7fd86",
+      "globalid": "07946bb7-1813-476d-af61-d32e23ce3fe5",
       "locality": "Ottaviano",
+      "name": "BeenHere_QuickCapture_POI"
+    },
+    {
+      "action": "reverse_geocoding",
+      "country": "Austria",
+      "enrichment_status": "completed",
+      "geometry_family": "points",
+      "globalid": "07989685-9fad-4163-91b3-e94972f8718b",
+      "locality": "Vienna",
+      "name": "View"
+    },
+    {
+      "action": "reverse_geocoding",
+      "country": "Italy",
+      "enrichment_status": "completed",
+      "geometry_family": "points",
+      "globalid": "07b86051-88a9-4fa8-8c9c-8f443b0ff97d",
+      "locality": "Ercolano",
       "name": "BeenHere_QuickCapture_POI"
     }
   ]
