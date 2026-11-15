@@ -1007,34 +1007,14 @@
         "Longitude": 35.5408103213711,
         "Latitude": 32.790138884971,
         "attachments": [
-          "data/attachments/18_768_Photo 6.jpg",
-          "data/attachments/18_495_WhatsApp Image 2025-07-31 at 14.05.20.jpeg",
           "data/attachments/18_27_11.JPG",
           "data/attachments/18_26_10.JPG",
           "data/attachments/18_25_9.JPG",
-          "data/attachments/18_24_8.JPG"
+          "data/attachments/18_24_8.JPG",
+          "data/attachments/18_768_Photo 6.jpg",
+          "data/attachments/18_495_WhatsApp Image 2025-07-31 at 14.05.20.jpeg"
         ],
         "attachment_media": [
-          {
-            "url": "data/attachments/18_768_Photo 6.jpg",
-            "name": "Photo 6.jpg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 768,
-            "parentObjectId": 18,
-            "sourceDataset": "points"
-          },
-          {
-            "url": "data/attachments/18_495_WhatsApp Image 2025-07-31 at 14.05.20.jpeg",
-            "name": "WhatsApp Image 2025-07-31 at 14.05.20.jpeg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 495,
-            "parentObjectId": 18,
-            "sourceDataset": "points"
-          },
           {
             "url": "data/attachments/18_27_11.JPG",
             "name": "11.JPG",
@@ -1072,6 +1052,26 @@
             "kind": "image",
             "storage": "local",
             "attachmentId": 24,
+            "parentObjectId": 18,
+            "sourceDataset": "points"
+          },
+          {
+            "url": "data/attachments/18_768_Photo 6.jpg",
+            "name": "Photo 6.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 768,
+            "parentObjectId": 18,
+            "sourceDataset": "points"
+          },
+          {
+            "url": "data/attachments/18_495_WhatsApp Image 2025-07-31 at 14.05.20.jpeg",
+            "name": "WhatsApp Image 2025-07-31 at 14.05.20.jpeg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 495,
             "parentObjectId": 18,
             "sourceDataset": "points"
           }
@@ -1510,20 +1510,10 @@
         "Longitude": 24.4776507945466,
         "Latitude": 35.3701881917971,
         "attachments": [
-          "data/attachments/25_34_WhatsApp Image 2024-01-29 at 16.13.14.jpeg",
-          "data/attachments/25_33_WhatsApp Image 2024-01-29 at 16.13.15.jpeg"
+          "data/attachments/25_33_WhatsApp Image 2024-01-29 at 16.13.15.jpeg",
+          "data/attachments/25_34_WhatsApp Image 2024-01-29 at 16.13.14.jpeg"
         ],
         "attachment_media": [
-          {
-            "url": "data/attachments/25_34_WhatsApp Image 2024-01-29 at 16.13.14.jpeg",
-            "name": "WhatsApp Image 2024-01-29 at 16.13.14.jpeg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 34,
-            "parentObjectId": 25,
-            "sourceDataset": "points"
-          },
           {
             "url": "data/attachments/25_33_WhatsApp Image 2024-01-29 at 16.13.15.jpeg",
             "name": "WhatsApp Image 2024-01-29 at 16.13.15.jpeg",
@@ -1531,6 +1521,16 @@
             "kind": "image",
             "storage": "local",
             "attachmentId": 33,
+            "parentObjectId": 25,
+            "sourceDataset": "points"
+          },
+          {
+            "url": "data/attachments/25_34_WhatsApp Image 2024-01-29 at 16.13.14.jpeg",
+            "name": "WhatsApp Image 2024-01-29 at 16.13.14.jpeg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 34,
             "parentObjectId": 25,
             "sourceDataset": "points"
           }
@@ -1649,20 +1649,10 @@
         "Longitude": 23.9843234381699,
         "Latitude": 35.5155215660372,
         "attachments": [
-          "data/attachments/27_37_WhatsApp Image 2024-02-01 at 14.00.02.jpeg",
-          "data/attachments/27_36_WhatsApp Image 2024-02-01 at 14.00.03.jpeg"
+          "data/attachments/27_36_WhatsApp Image 2024-02-01 at 14.00.03.jpeg",
+          "data/attachments/27_37_WhatsApp Image 2024-02-01 at 14.00.02.jpeg"
         ],
         "attachment_media": [
-          {
-            "url": "data/attachments/27_37_WhatsApp Image 2024-02-01 at 14.00.02.jpeg",
-            "name": "WhatsApp Image 2024-02-01 at 14.00.02.jpeg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 37,
-            "parentObjectId": 27,
-            "sourceDataset": "points"
-          },
           {
             "url": "data/attachments/27_36_WhatsApp Image 2024-02-01 at 14.00.03.jpeg",
             "name": "WhatsApp Image 2024-02-01 at 14.00.03.jpeg",
@@ -1670,6 +1660,16 @@
             "kind": "image",
             "storage": "local",
             "attachmentId": 36,
+            "parentObjectId": 27,
+            "sourceDataset": "points"
+          },
+          {
+            "url": "data/attachments/27_37_WhatsApp Image 2024-02-01 at 14.00.02.jpeg",
+            "name": "WhatsApp Image 2024-02-01 at 14.00.02.jpeg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 37,
             "parentObjectId": 27,
             "sourceDataset": "points"
           }
@@ -5974,22 +5974,12 @@
         "Longitude": -0.127908333019962,
         "Latitude": 51.5080549997227,
         "attachments": [
-          "data/attachments/81_163_Photo 1.jpg",
           "data/attachments/81_1021_Photo 4.jpg",
           "data/attachments/81_1020_Photo 3.jpg",
-          "data/attachments/81_1019_Photo 2.jpg"
+          "data/attachments/81_1019_Photo 2.jpg",
+          "data/attachments/81_163_Photo 1.jpg"
         ],
         "attachment_media": [
-          {
-            "url": "data/attachments/81_163_Photo 1.jpg",
-            "name": "Photo 1.jpg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 163,
-            "parentObjectId": 81,
-            "sourceDataset": "points"
-          },
           {
             "url": "data/attachments/81_1021_Photo 4.jpg",
             "name": "Photo 4.jpg",
@@ -6017,6 +6007,16 @@
             "kind": "image",
             "storage": "local",
             "attachmentId": 1019,
+            "parentObjectId": 81,
+            "sourceDataset": "points"
+          },
+          {
+            "url": "data/attachments/81_163_Photo 1.jpg",
+            "name": "Photo 1.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 163,
             "parentObjectId": 81,
             "sourceDataset": "points"
           }
@@ -9272,14 +9272,24 @@
         "Longitude": 34.7863533331397,
         "Latitude": 32.0730216669849,
         "attachments": [
+          "data/attachments/137_263_Photo 6.jpg",
           "data/attachments/137_262_Photo 5.jpg",
           "data/attachments/137_261_Photo 4.jpg",
           "data/attachments/137_260_Photo 3.jpg",
           "data/attachments/137_259_Photo 2.jpg",
-          "data/attachments/137_258_Photo 1.jpg",
-          "data/attachments/137_263_Photo 6.jpg"
+          "data/attachments/137_258_Photo 1.jpg"
         ],
         "attachment_media": [
+          {
+            "url": "data/attachments/137_263_Photo 6.jpg",
+            "name": "Photo 6.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 263,
+            "parentObjectId": 137,
+            "sourceDataset": "points"
+          },
           {
             "url": "data/attachments/137_262_Photo 5.jpg",
             "name": "Photo 5.jpg",
@@ -9327,16 +9337,6 @@
             "kind": "image",
             "storage": "local",
             "attachmentId": 258,
-            "parentObjectId": 137,
-            "sourceDataset": "points"
-          },
-          {
-            "url": "data/attachments/137_263_Photo 6.jpg",
-            "name": "Photo 6.jpg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 263,
             "parentObjectId": 137,
             "sourceDataset": "points"
           }
@@ -12727,22 +12727,12 @@
         "Longitude": 35.0647344457298,
         "Latitude": 31.0247149374127,
         "attachments": [
-          "data/attachments/189_341_Photo 1.jpg",
           "data/attachments/189_344_Photo 4.jpg",
           "data/attachments/189_343_Photo 3.jpg",
-          "data/attachments/189_342_Photo 2.jpg"
+          "data/attachments/189_342_Photo 2.jpg",
+          "data/attachments/189_341_Photo 1.jpg"
         ],
         "attachment_media": [
-          {
-            "url": "data/attachments/189_341_Photo 1.jpg",
-            "name": "Photo 1.jpg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 341,
-            "parentObjectId": 189,
-            "sourceDataset": "points"
-          },
           {
             "url": "data/attachments/189_344_Photo 4.jpg",
             "name": "Photo 4.jpg",
@@ -12770,6 +12760,16 @@
             "kind": "image",
             "storage": "local",
             "attachmentId": 342,
+            "parentObjectId": 189,
+            "sourceDataset": "points"
+          },
+          {
+            "url": "data/attachments/189_341_Photo 1.jpg",
+            "name": "Photo 1.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 341,
             "parentObjectId": 189,
             "sourceDataset": "points"
           }
@@ -14595,73 +14595,23 @@
         "Longitude": 35.0431197730772,
         "Latitude": 30.9409634616754,
         "attachments": [
-          "data/attachments/212_467_WhatsApp Image 2025-04-24 at 18.10.40.jpeg",
-          "data/attachments/212_466_WhatsApp Image 2025-04-24 at 18.10.40(3).jpeg",
-          "data/attachments/212_465_WhatsApp Image 2025-04-24 at 18.10.40(2).jpeg",
-          "data/attachments/212_464_WhatsApp Image 2025-04-24 at 18.10.40(1).jpeg",
-          "data/attachments/212_463_WhatsApp Image 2025-04-24 at 18.10.39.jpeg",
-          "data/attachments/212_462_WhatsApp Image 2025-04-24 at 18.10.39(1).jpeg",
+          "data/attachments/212_460_WhatsApp Image 2025-04-24 at 17.53.46.jpeg",
           "data/attachments/212_461_WhatsApp Image 2025-04-24 at 17.53.47.jpeg",
-          "data/attachments/212_460_WhatsApp Image 2025-04-24 at 17.53.46.jpeg"
+          "data/attachments/212_462_WhatsApp Image 2025-04-24 at 18.10.39(1).jpeg",
+          "data/attachments/212_463_WhatsApp Image 2025-04-24 at 18.10.39.jpeg",
+          "data/attachments/212_464_WhatsApp Image 2025-04-24 at 18.10.40(1).jpeg",
+          "data/attachments/212_465_WhatsApp Image 2025-04-24 at 18.10.40(2).jpeg",
+          "data/attachments/212_466_WhatsApp Image 2025-04-24 at 18.10.40(3).jpeg",
+          "data/attachments/212_467_WhatsApp Image 2025-04-24 at 18.10.40.jpeg"
         ],
         "attachment_media": [
           {
-            "url": "data/attachments/212_467_WhatsApp Image 2025-04-24 at 18.10.40.jpeg",
-            "name": "WhatsApp Image 2025-04-24 at 18.10.40.jpeg",
+            "url": "data/attachments/212_460_WhatsApp Image 2025-04-24 at 17.53.46.jpeg",
+            "name": "WhatsApp Image 2025-04-24 at 17.53.46.jpeg",
             "contentType": "image/jpeg",
             "kind": "image",
             "storage": "local",
-            "attachmentId": 467,
-            "parentObjectId": 212,
-            "sourceDataset": "points"
-          },
-          {
-            "url": "data/attachments/212_466_WhatsApp Image 2025-04-24 at 18.10.40(3).jpeg",
-            "name": "WhatsApp Image 2025-04-24 at 18.10.40(3).jpeg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 466,
-            "parentObjectId": 212,
-            "sourceDataset": "points"
-          },
-          {
-            "url": "data/attachments/212_465_WhatsApp Image 2025-04-24 at 18.10.40(2).jpeg",
-            "name": "WhatsApp Image 2025-04-24 at 18.10.40(2).jpeg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 465,
-            "parentObjectId": 212,
-            "sourceDataset": "points"
-          },
-          {
-            "url": "data/attachments/212_464_WhatsApp Image 2025-04-24 at 18.10.40(1).jpeg",
-            "name": "WhatsApp Image 2025-04-24 at 18.10.40(1).jpeg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 464,
-            "parentObjectId": 212,
-            "sourceDataset": "points"
-          },
-          {
-            "url": "data/attachments/212_463_WhatsApp Image 2025-04-24 at 18.10.39.jpeg",
-            "name": "WhatsApp Image 2025-04-24 at 18.10.39.jpeg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 463,
-            "parentObjectId": 212,
-            "sourceDataset": "points"
-          },
-          {
-            "url": "data/attachments/212_462_WhatsApp Image 2025-04-24 at 18.10.39(1).jpeg",
-            "name": "WhatsApp Image 2025-04-24 at 18.10.39(1).jpeg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 462,
+            "attachmentId": 460,
             "parentObjectId": 212,
             "sourceDataset": "points"
           },
@@ -14676,12 +14626,62 @@
             "sourceDataset": "points"
           },
           {
-            "url": "data/attachments/212_460_WhatsApp Image 2025-04-24 at 17.53.46.jpeg",
-            "name": "WhatsApp Image 2025-04-24 at 17.53.46.jpeg",
+            "url": "data/attachments/212_462_WhatsApp Image 2025-04-24 at 18.10.39(1).jpeg",
+            "name": "WhatsApp Image 2025-04-24 at 18.10.39(1).jpeg",
             "contentType": "image/jpeg",
             "kind": "image",
             "storage": "local",
-            "attachmentId": 460,
+            "attachmentId": 462,
+            "parentObjectId": 212,
+            "sourceDataset": "points"
+          },
+          {
+            "url": "data/attachments/212_463_WhatsApp Image 2025-04-24 at 18.10.39.jpeg",
+            "name": "WhatsApp Image 2025-04-24 at 18.10.39.jpeg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 463,
+            "parentObjectId": 212,
+            "sourceDataset": "points"
+          },
+          {
+            "url": "data/attachments/212_464_WhatsApp Image 2025-04-24 at 18.10.40(1).jpeg",
+            "name": "WhatsApp Image 2025-04-24 at 18.10.40(1).jpeg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 464,
+            "parentObjectId": 212,
+            "sourceDataset": "points"
+          },
+          {
+            "url": "data/attachments/212_465_WhatsApp Image 2025-04-24 at 18.10.40(2).jpeg",
+            "name": "WhatsApp Image 2025-04-24 at 18.10.40(2).jpeg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 465,
+            "parentObjectId": 212,
+            "sourceDataset": "points"
+          },
+          {
+            "url": "data/attachments/212_466_WhatsApp Image 2025-04-24 at 18.10.40(3).jpeg",
+            "name": "WhatsApp Image 2025-04-24 at 18.10.40(3).jpeg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 466,
+            "parentObjectId": 212,
+            "sourceDataset": "points"
+          },
+          {
+            "url": "data/attachments/212_467_WhatsApp Image 2025-04-24 at 18.10.40.jpeg",
+            "name": "WhatsApp Image 2025-04-24 at 18.10.40.jpeg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 467,
             "parentObjectId": 212,
             "sourceDataset": "points"
           }
@@ -14736,31 +14736,21 @@
         "Longitude": 35.0691557190055,
         "Latitude": 30.8535070804088,
         "attachments": [
-          "data/attachments/213_438_WhatsApp Image 2025-04-24 at 17.53.28.jpeg",
-          "data/attachments/213_437_WhatsApp Image 2025-04-24 at 17.53.30.jpeg",
-          "data/attachments/213_436_WhatsApp Image 2025-04-24 at 17.53.32.jpeg",
           "data/attachments/213_435_WhatsApp Image 2025-04-24 at 17.53.34.jpeg",
+          "data/attachments/213_436_WhatsApp Image 2025-04-24 at 17.53.32.jpeg",
+          "data/attachments/213_437_WhatsApp Image 2025-04-24 at 17.53.30.jpeg",
+          "data/attachments/213_438_WhatsApp Image 2025-04-24 at 17.53.28.jpeg",
           "data/attachments/213_434_WhatsApp Image 2025-04-24 at 17.53.36.jpeg",
           "data/attachments/213_433_WhatsApp Image 2025-04-24 at 17.53.40.jpeg"
         ],
         "attachment_media": [
           {
-            "url": "data/attachments/213_438_WhatsApp Image 2025-04-24 at 17.53.28.jpeg",
-            "name": "WhatsApp Image 2025-04-24 at 17.53.28.jpeg",
+            "url": "data/attachments/213_435_WhatsApp Image 2025-04-24 at 17.53.34.jpeg",
+            "name": "WhatsApp Image 2025-04-24 at 17.53.34.jpeg",
             "contentType": "image/jpeg",
             "kind": "image",
             "storage": "local",
-            "attachmentId": 438,
-            "parentObjectId": 213,
-            "sourceDataset": "points"
-          },
-          {
-            "url": "data/attachments/213_437_WhatsApp Image 2025-04-24 at 17.53.30.jpeg",
-            "name": "WhatsApp Image 2025-04-24 at 17.53.30.jpeg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 437,
+            "attachmentId": 435,
             "parentObjectId": 213,
             "sourceDataset": "points"
           },
@@ -14775,12 +14765,22 @@
             "sourceDataset": "points"
           },
           {
-            "url": "data/attachments/213_435_WhatsApp Image 2025-04-24 at 17.53.34.jpeg",
-            "name": "WhatsApp Image 2025-04-24 at 17.53.34.jpeg",
+            "url": "data/attachments/213_437_WhatsApp Image 2025-04-24 at 17.53.30.jpeg",
+            "name": "WhatsApp Image 2025-04-24 at 17.53.30.jpeg",
             "contentType": "image/jpeg",
             "kind": "image",
             "storage": "local",
-            "attachmentId": 435,
+            "attachmentId": 437,
+            "parentObjectId": 213,
+            "sourceDataset": "points"
+          },
+          {
+            "url": "data/attachments/213_438_WhatsApp Image 2025-04-24 at 17.53.28.jpeg",
+            "name": "WhatsApp Image 2025-04-24 at 17.53.28.jpeg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 438,
             "parentObjectId": 213,
             "sourceDataset": "points"
           },
@@ -74321,11 +74321,11 @@
         "esrignss_h_stddev": null,
         "CreationDate": "09/10/2026 06:22",
         "Creator": "mzohar_univhaifa25",
-        "EditDate": "09/10/2026 06:22",
+        "EditDate": "12/11/2026 13:12",
         "Editor": "mzohar_univhaifa25",
         "Collection_date": "09/10/2026 06:21",
         "POI_Type": "General Site",
-        "POI_Description": "Former Abbasia Prison (until ~2010)",
+        "POI_Description": "Near former Abbasia Prison (closed in late 70's?)",
         "POI_Name": "Abbasia Hospital for Mental Health",
         "POI_Topic": "TBV",
         "Collect_Name": "Motti Zohar",
@@ -74472,6 +74472,185 @@
             "sourceDataset": "points"
           }
         ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1239,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          35.016805493109,
+          32.7633539781087
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1239,
+        "GlobalID": "e10ae622-9ef1-4412-8b2b-9c01f61cdfe7",
+        "esrignss_speed": null,
+        "esrignss_direction": null,
+        "esrisnsr_azimuth": null,
+        "esrignss_positionsourcetype": 1,
+        "esrignss_receiver": null,
+        "esrignss_h_rms": null,
+        "esrignss_v_rms": null,
+        "esrignss_latitude": null,
+        "esrignss_longitude": null,
+        "esrignss_altitude": null,
+        "esrignss_pdop": null,
+        "esrignss_hdop": null,
+        "esrignss_vdop": null,
+        "esrignss_fixtype": null,
+        "esrignss_correctionage": null,
+        "esrignss_stationid": null,
+        "esrignss_numsats": null,
+        "esrignss_fixdatetime": null,
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_avg_positions": null,
+        "esrignss_h_stddev": null,
+        "CreationDate": "10/11/2026 15:17",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "10/11/2026 15:17",
+        "Editor": "mzohar_univhaifa25",
+        "Collection_date": "10/11/2026 15:16",
+        "POI_Type": "Scenary View",
+        "POI_Description": null,
+        "POI_Name": "University Sunset",
+        "POI_Topic": "General",
+        "Collect_Name": "Motti Zohar",
+        "Longitude": 35.016805493109,
+        "Latitude": 32.7633539781087,
+        "attachments": [
+          "data/attachments/1239_1090_20261110_171227.jpg"
+        ],
+        "attachment_media": [
+          {
+            "url": "data/attachments/1239_1090_20261110_171227.jpg",
+            "name": "20261110_171227.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 1090,
+            "parentObjectId": 1239,
+            "sourceDataset": "points"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1240,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          35.0292200001298,
+          32.7829566663506
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1240,
+        "GlobalID": "190087da-623e-4dd4-b074-24ce53baac8a",
+        "esrignss_speed": 5.000399999956802,
+        "esrignss_direction": 346.9,
+        "esrisnsr_azimuth": 336.3665824150829,
+        "esrignss_positionsourcetype": 2,
+        "esrignss_receiver": "Samsung SM-A256E",
+        "esrignss_h_rms": 2.82,
+        "esrignss_v_rms": 3.7600000000000002,
+        "esrignss_latitude": 32.78295666666667,
+        "esrignss_longitude": 35.02922,
+        "esrignss_altitude": 104.9,
+        "esrignss_pdop": 1,
+        "esrignss_hdop": 0.4,
+        "esrignss_vdop": 0.8,
+        "esrignss_fixtype": 1,
+        "esrignss_correctionage": null,
+        "esrignss_stationid": null,
+        "esrignss_numsats": 22,
+        "esrignss_fixdatetime": "10/11/2026 15:27",
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_avg_positions": null,
+        "esrignss_h_stddev": null,
+        "CreationDate": "10/11/2026 15:27",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "10/11/2026 15:27",
+        "Editor": "mzohar_univhaifa25",
+        "Collection_date": "10/11/2026 15:27",
+        "POI_Type": "Scenary View",
+        "POI_Description": null,
+        "POI_Name": "Haifa Bay",
+        "POI_Topic": "General",
+        "Collect_Name": "Motti Zohar",
+        "Longitude": 35.0292200001298,
+        "Latitude": 32.7829566663506,
+        "attachments": [
+          "data/attachments/1240_1091_20261110_172642.jpg"
+        ],
+        "attachment_media": [
+          {
+            "url": "data/attachments/1240_1091_20261110_172642.jpg",
+            "name": "20261110_172642.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 1091,
+            "parentObjectId": 1240,
+            "sourceDataset": "points"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1241,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          31.3030495704324,
+          30.0632549944233
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1241,
+        "GlobalID": "c8724ecf-ba29-48ee-b440-a7fef766ee88",
+        "esrignss_speed": null,
+        "esrignss_direction": null,
+        "esrisnsr_azimuth": null,
+        "esrignss_positionsourcetype": null,
+        "esrignss_receiver": null,
+        "esrignss_h_rms": null,
+        "esrignss_v_rms": null,
+        "esrignss_latitude": null,
+        "esrignss_longitude": null,
+        "esrignss_altitude": null,
+        "esrignss_pdop": null,
+        "esrignss_hdop": null,
+        "esrignss_vdop": null,
+        "esrignss_fixtype": null,
+        "esrignss_correctionage": null,
+        "esrignss_stationid": null,
+        "esrignss_numsats": null,
+        "esrignss_fixdatetime": null,
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_avg_positions": null,
+        "esrignss_h_stddev": null,
+        "CreationDate": "12/11/2026 13:13",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "12/11/2026 13:13",
+        "Editor": "mzohar_univhaifa25",
+        "Collection_date": "12/11/2026 13:12",
+        "POI_Type": "General Site",
+        "POI_Description": null,
+        "POI_Name": "Former Abasyiah Prison?",
+        "POI_Topic": "TBV",
+        "Collect_Name": "Motti Zohar",
+        "Longitude": 31.3030495704324,
+        "Latitude": 30.0632549944233,
+        "attachments": [],
+        "attachment_media": []
       }
     }
   ]

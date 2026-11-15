@@ -1762,7 +1762,22 @@
       "source_fingerprint": "629dfa1aa3c13dd19d2cb71d"
     },
     "08131134-8af0-45e9-aad3-230e3a93d877": {
-      "administrative": {},
+      "administrative": {
+        "city": "City of Westminster",
+        "country": "United Kingdom",
+        "country_code": "gb",
+        "county": null,
+        "display_address": "Birdcage Walk, Westminster, Victoria, City of Westminster, Greater London, England, SW1H 9AP, United Kingdom",
+        "house_number": null,
+        "locality": "City of Westminster",
+        "municipality": null,
+        "postcode": "SW1H 9AP",
+        "road": "Birdcage Walk",
+        "state": "England",
+        "suburb": "Victoria",
+        "town": null,
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -1776,19 +1791,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-11-15T04:37:38.692705+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-11-15T04:37:38.692705+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=51.5013250&lon=-0.1308967&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-11-15T04:37:38.692705+00:00"
       },
       "source_fingerprint": "1acb85ebde5dc7053adff3de"
     },
     "08533cdc-1656-4906-a5fd-1c63eba270c5": {
-      "administrative": {},
+      "administrative": {
+        "city": null,
+        "country": "Italy",
+        "country_code": "it",
+        "county": "Naples",
+        "display_address": "Via Osservatorio, Ercolano, Naples, Campania, 80040, Italy",
+        "house_number": null,
+        "locality": "Ercolano",
+        "municipality": null,
+        "postcode": "80040",
+        "road": "Via Osservatorio",
+        "state": "Campania",
+        "suburb": null,
+        "town": "Ercolano",
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -1802,19 +1842,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-11-15T04:37:55.019317+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-11-15T04:37:55.019317+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=40.8275845&lon=14.4252727&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-11-15T04:37:55.019317+00:00"
       },
       "source_fingerprint": "9b7a99535016e4f87d2e2e91"
     },
     "087f8987-30f7-49ac-acd7-47c7b10294c0": {
-      "administrative": {},
+      "administrative": {
+        "city": null,
+        "country": "Italy",
+        "country_code": "it",
+        "county": "Naples",
+        "display_address": "Via Filietto, Anacapri, Naples, Campania, 80071, Italy",
+        "house_number": null,
+        "locality": "Anacapri",
+        "municipality": null,
+        "postcode": "80071",
+        "road": "Via Filietto",
+        "state": "Campania",
+        "suburb": null,
+        "town": null,
+        "village": "Anacapri"
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -1828,19 +1893,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-11-15T04:38:11.772653+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-11-15T04:38:11.772653+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=40.5540092&lon=14.2194291&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-11-15T04:38:11.772653+00:00"
       },
       "source_fingerprint": "2af2746605af8298c457f1de"
     },
     "08814aaa-9317-430b-9a15-4a5f8e577efd": {
-      "administrative": {},
+      "administrative": {
+        "city": "Greater London",
+        "country": "United Kingdom",
+        "country_code": "gb",
+        "county": null,
+        "display_address": "7, Leigh Street, King's Cross, London Borough of Camden, Greater London, England, WC1H 9EW, United Kingdom",
+        "house_number": "7",
+        "locality": "Greater London",
+        "municipality": null,
+        "postcode": "WC1H 9EW",
+        "road": "Leigh Street",
+        "state": "England",
+        "suburb": "King's Cross",
+        "town": null,
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -1854,19 +1944,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-11-15T04:38:28.300596+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-11-15T04:38:28.300596+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=51.5264217&lon=-0.1252967&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-11-15T04:38:28.300596+00:00"
       },
       "source_fingerprint": "0f8b76ff8d4bfb597fb80300"
     },
     "0886d3f2-9be2-4fc8-b649-15b4d920cfb0": {
-      "administrative": {},
+      "administrative": {
+        "city": null,
+        "country": "Italy",
+        "country_code": "it",
+        "county": "Naples",
+        "display_address": "Strada Matrone, Ottaviano, Naples, Campania, 80040, Italy",
+        "house_number": null,
+        "locality": "Ottaviano",
+        "municipality": null,
+        "postcode": "80040",
+        "road": "Strada Matrone",
+        "state": "Campania",
+        "suburb": null,
+        "town": "Ottaviano",
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -1880,19 +1995,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-11-15T04:38:44.615111+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-11-15T04:38:44.615111+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=40.8190171&lon=14.4249477&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-11-15T04:38:44.615111+00:00"
       },
       "source_fingerprint": "51f54ef2ea2302f8c4e874ba"
     },
     "08a1fd05-f80b-4b23-8755-ea18855e38e6": {
-      "administrative": {},
+      "administrative": {
+        "city": null,
+        "country": "Italy",
+        "country_code": "it",
+        "county": "Naples",
+        "display_address": "Via Osservatorio, Ercolano, Naples, Campania, 80040, Italy",
+        "house_number": null,
+        "locality": "Ercolano",
+        "municipality": null,
+        "postcode": "80040",
+        "road": "Via Osservatorio",
+        "state": "Campania",
+        "suburb": null,
+        "town": "Ercolano",
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -1906,19 +2046,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-11-15T04:39:00.869748+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-11-15T04:39:00.869748+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=40.8196129&lon=14.4239901&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-11-15T04:39:00.869748+00:00"
       },
       "source_fingerprint": "2f787a1b0495ee98843d38b2"
     },
     "08da631c-59ec-482a-8d7e-fc683ef86c66": {
-      "administrative": {},
+      "administrative": {
+        "city": null,
+        "country": "Italy",
+        "country_code": "it",
+        "county": "Naples",
+        "display_address": "Strada Matrone, Ottaviano, Naples, Campania, 80040, Italy",
+        "house_number": null,
+        "locality": "Ottaviano",
+        "municipality": null,
+        "postcode": "80040",
+        "road": "Strada Matrone",
+        "state": "Campania",
+        "suburb": null,
+        "town": "Ottaviano",
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -1932,19 +2097,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-11-15T04:39:17.057611+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-11-15T04:39:17.057611+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=40.8188530&lon=14.4270453&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-11-15T04:39:17.057611+00:00"
       },
       "source_fingerprint": "11a56bd4d32510074a0914c5"
     },
     "09121687-2309-4dcf-9939-4e4989247d6d": {
-      "administrative": {},
+      "administrative": {
+        "city": "Arava Tichona Regional Council",
+        "country": "Israel",
+        "country_code": "il",
+        "county": null,
+        "display_address": "40, Arava Tichona Regional Council, Beersheba Subdistrict, South District, Israel",
+        "house_number": null,
+        "locality": "Arava Tichona Regional Council",
+        "municipality": null,
+        "postcode": null,
+        "road": "40",
+        "state": "South District",
+        "suburb": null,
+        "town": null,
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -1958,19 +2148,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-11-15T04:39:33.357632+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-11-15T04:39:33.357632+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=30.2806017&lon=35.0011600&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-11-15T04:39:33.357632+00:00"
       },
       "source_fingerprint": "4a8a01ec2f11622afcff627e"
     },
     "091fcca9-4a67-4ebc-96aa-c6f9da90f349": {
-      "administrative": {},
+      "administrative": {
+        "city": null,
+        "country": "Italy",
+        "country_code": "it",
+        "county": "Naples",
+        "display_address": "Via Osservatorio, Ercolano, Naples, Campania, 80040, Italy",
+        "house_number": null,
+        "locality": "Ercolano",
+        "municipality": null,
+        "postcode": "80040",
+        "road": "Via Osservatorio",
+        "state": "Campania",
+        "suburb": null,
+        "town": "Ercolano",
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -1984,19 +2199,44 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-11-15T04:39:49.790007+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-11-15T04:39:49.790007+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=40.8216406&lon=14.4225874&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-11-15T04:39:49.790007+00:00"
       },
       "source_fingerprint": "7c129a3f09849575a927b1c1"
     },
     "0933179c-af76-42d7-8ead-5693f5256d93": {
-      "administrative": {},
+      "administrative": {
+        "city": "Galil Elyon Regional Council",
+        "country": "Israel",
+        "country_code": "il",
+        "county": null,
+        "display_address": "Jacob's Ford, 91, Galil Elyon Regional Council, Safed Subdistrict, North District, Israel",
+        "house_number": null,
+        "locality": "Galil Elyon Regional Council",
+        "municipality": null,
+        "postcode": null,
+        "road": "91",
+        "state": "North District",
+        "suburb": null,
+        "town": null,
+        "village": null
+      },
       "candidates": [],
       "geometry_family": "points",
       "match_quality": {
@@ -2010,14 +2250,24 @@
       },
       "osm_entity": null,
       "provenance": {
-        "enriched_at": null,
-        "enrichment_notes": "No external enrichment completed.",
-        "enrichment_sources": [],
-        "enrichment_status": "pending",
+        "enriched_at": "2026-11-15T04:40:06.179994+00:00",
+        "enrichment_notes": "Administrative location obtained from OpenStreetMap through Nominatim (reverse geocoding).",
+        "enrichment_sources": [
+          "OpenStreetMap / Nominatim"
+        ],
+        "enrichment_status": "completed",
         "enrichment_version": "1.5.0",
         "preferred_language": "en",
-        "source_provenance": [],
-        "source_retrieved_at": null
+        "source_provenance": [
+          {
+            "license": "ODbL-1.0",
+            "method": "reverse_geocoding",
+            "retrieved_at": "2026-11-15T04:40:06.179994+00:00",
+            "source": "OpenStreetMap / Nominatim",
+            "source_url": "https://nominatim.openstreetmap.org/reverse?lat=33.0046003&lon=35.6277619&format=jsonv2&addressdetails=1&zoom=18&namedetails=1&accept-language=en"
+          }
+        ],
+        "source_retrieved_at": "2026-11-15T04:40:06.179994+00:00"
       },
       "source_fingerprint": "da178625ad5dd5c861123e11"
     },
@@ -4048,6 +4298,32 @@
         "source_retrieved_at": null
       },
       "source_fingerprint": "263663cd9156eb8b9e0689a5"
+    },
+    "190087da-623e-4dd4-b074-24ce53baac8a": {
+      "administrative": {},
+      "candidates": [],
+      "geometry_family": "points",
+      "match_quality": {
+        "match_distance_m": null,
+        "match_evidence": [],
+        "match_method": null,
+        "match_score": null,
+        "match_status": "no_match",
+        "review_status": "not_reviewed",
+        "spatial_relation": null
+      },
+      "osm_entity": null,
+      "provenance": {
+        "enriched_at": null,
+        "enrichment_notes": "No external enrichment completed.",
+        "enrichment_sources": [],
+        "enrichment_status": "pending",
+        "enrichment_version": "1.5.0",
+        "preferred_language": "en",
+        "source_provenance": [],
+        "source_retrieved_at": null
+      },
+      "source_fingerprint": "6553e1cddd675cc628570e12"
     },
     "191d8651-db1b-4e3a-a573-e373b3e30a27": {
       "administrative": {},
@@ -25577,6 +25853,32 @@
       },
       "source_fingerprint": "1d037a3e51694975cee4c7c0"
     },
+    "c8724ecf-ba29-48ee-b440-a7fef766ee88": {
+      "administrative": {},
+      "candidates": [],
+      "geometry_family": "points",
+      "match_quality": {
+        "match_distance_m": null,
+        "match_evidence": [],
+        "match_method": null,
+        "match_score": null,
+        "match_status": "no_match",
+        "review_status": "not_reviewed",
+        "spatial_relation": null
+      },
+      "osm_entity": null,
+      "provenance": {
+        "enriched_at": null,
+        "enrichment_notes": "No external enrichment completed.",
+        "enrichment_sources": [],
+        "enrichment_status": "pending",
+        "enrichment_version": "1.5.0",
+        "preferred_language": "en",
+        "source_provenance": [],
+        "source_retrieved_at": null
+      },
+      "source_fingerprint": "aabfd85c54e51166b374fa16"
+    },
     "c880e683-6b9e-4223-a600-ef301c3cb588": {
       "administrative": {},
       "candidates": [],
@@ -28540,6 +28842,32 @@
         "source_retrieved_at": null
       },
       "source_fingerprint": "6aa85e6b4438ed3241ba6df2"
+    },
+    "e10ae622-9ef1-4412-8b2b-9c01f61cdfe7": {
+      "administrative": {},
+      "candidates": [],
+      "geometry_family": "points",
+      "match_quality": {
+        "match_distance_m": null,
+        "match_evidence": [],
+        "match_method": null,
+        "match_score": null,
+        "match_status": "no_match",
+        "review_status": "not_reviewed",
+        "spatial_relation": null
+      },
+      "osm_entity": null,
+      "provenance": {
+        "enriched_at": null,
+        "enrichment_notes": "No external enrichment completed.",
+        "enrichment_sources": [],
+        "enrichment_status": "pending",
+        "enrichment_version": "1.5.0",
+        "preferred_language": "en",
+        "source_provenance": [],
+        "source_retrieved_at": null
+      },
+      "source_fingerprint": "efb225a3c90bd6f1cb233de7"
     },
     "e1106c9f-9f74-4140-a261-4d574c076a00": {
       "administrative": {},
