@@ -1,36 +1,45 @@
 {
   "by_status": {
-    "completed": 44,
-    "pending": 1165,
+    "completed": 54,
+    "pending": 1163,
     "unsupported_geometry": 3
   },
-  "completed": 44,
-  "completion_percent": 3.64,
-  "eligible_points": 1209,
+  "completed": 54,
+  "completion_percent": 4.44,
+  "eligible_points": 1217,
   "errors_this_run": [],
   "failed_requests": 0,
   "network_enabled": true,
   "network_requests": 10,
   "release_ready": false,
-  "remaining_eligible": 1165,
-  "reused": 34,
-  "total": 1212,
+  "remaining_eligible": 1163,
+  "reused": 44,
+  "total": 1220,
   "updated_this_run": [
     {
       "action": "reverse_geocoding",
+      "country": "Palestinian Territories",
+      "enrichment_status": "completed",
+      "geometry_family": "points",
+      "globalid": "079ce6f1-1de8-4c36-8b38-f61bbe6bee68",
+      "locality": "Mateh Binyamin Regional Council",
+      "name": "Sizemore Fig"
+    },
+    {
+      "action": "reverse_geocoding",
       "country": "United Kingdom",
       "enrichment_status": "completed",
       "geometry_family": "points",
-      "globalid": "08131134-8af0-45e9-aad3-230e3a93d877",
+      "globalid": "0955c1f4-630a-4313-9131-9fef0c3d97bb",
       "locality": "City of Westminster",
-      "name": "Blvd."
+      "name": "Stanfords Travel Book Store"
     },
     {
       "action": "reverse_geocoding",
       "country": "Italy",
       "enrichment_status": "completed",
       "geometry_family": "points",
-      "globalid": "08533cdc-1656-4906-a5fd-1c63eba270c5",
+      "globalid": "095a9582-73db-4c42-b928-e6a11ba57152",
       "locality": "Ercolano",
       "name": "BeenHere_QuickCapture_POI"
     },
@@ -39,43 +48,7 @@
       "country": "Italy",
       "enrichment_status": "completed",
       "geometry_family": "points",
-      "globalid": "087f8987-30f7-49ac-acd7-47c7b10294c0",
-      "locality": "Anacapri",
-      "name": "BeenHere_QuickCapture_POI"
-    },
-    {
-      "action": "reverse_geocoding",
-      "country": "United Kingdom",
-      "enrichment_status": "completed",
-      "geometry_family": "points",
-      "globalid": "08814aaa-9317-430b-9a15-4a5f8e577efd",
-      "locality": "Greater London",
-      "name": "Norfolk Arms Pub"
-    },
-    {
-      "action": "reverse_geocoding",
-      "country": "Italy",
-      "enrichment_status": "completed",
-      "geometry_family": "points",
-      "globalid": "0886d3f2-9be2-4fc8-b649-15b4d920cfb0",
-      "locality": "Ottaviano",
-      "name": "BeenHere_QuickCapture_POI"
-    },
-    {
-      "action": "reverse_geocoding",
-      "country": "Italy",
-      "enrichment_status": "completed",
-      "geometry_family": "points",
-      "globalid": "08a1fd05-f80b-4b23-8755-ea18855e38e6",
-      "locality": "Ercolano",
-      "name": "BeenHere_QuickCapture_POI"
-    },
-    {
-      "action": "reverse_geocoding",
-      "country": "Italy",
-      "enrichment_status": "completed",
-      "geometry_family": "points",
-      "globalid": "08da631c-59ec-482a-8d7e-fc683ef86c66",
+      "globalid": "09e4b486-9703-426d-a894-df7dfd959060",
       "locality": "Ottaviano",
       "name": "BeenHere_QuickCapture_POI"
     },
@@ -84,27 +57,54 @@
       "country": "Israel",
       "enrichment_status": "completed",
       "geometry_family": "points",
-      "globalid": "09121687-2309-4dcf-9939-4e4989247d6d",
+      "globalid": "0a420819-5a09-4468-9cf5-b25bfc0bdfb5",
       "locality": "Arava Tichona Regional Council",
-      "name": "Tsihor River"
-    },
-    {
-      "action": "reverse_geocoding",
-      "country": "Italy",
-      "enrichment_status": "completed",
-      "geometry_family": "points",
-      "globalid": "091fcca9-4a67-4ebc-96aa-c6f9da90f349",
-      "locality": "Ercolano",
-      "name": "BeenHere_QuickCapture_POI"
+      "name": null
     },
     {
       "action": "reverse_geocoding",
       "country": "Israel",
       "enrichment_status": "completed",
       "geometry_family": "points",
-      "globalid": "0933179c-af76-42d7-8ead-5693f5256d93",
-      "locality": "Galil Elyon Regional Council",
-      "name": null
+      "globalid": "0a4487ec-79a9-41cc-a018-931572393e34",
+      "locality": "Kfar Ruth",
+      "name": "View of Titora hill"
+    },
+    {
+      "action": "reverse_geocoding",
+      "country": "Italy",
+      "enrichment_status": "completed",
+      "geometry_family": "points",
+      "globalid": "0a603523-002a-412c-83a2-46833933801a",
+      "locality": "Ercolano",
+      "name": "BeenHere_QuickCapture_POI"
+    },
+    {
+      "action": "reverse_geocoding",
+      "country": "Italy",
+      "enrichment_status": "completed",
+      "geometry_family": "points",
+      "globalid": "0a83e12e-301e-4a1c-bc9c-d31669840852",
+      "locality": "Sorrento",
+      "name": "Pumis Bazalt"
+    },
+    {
+      "action": "reverse_geocoding",
+      "country": "Italy",
+      "enrichment_status": "completed",
+      "geometry_family": "points",
+      "globalid": "0aa1831e-bf35-447b-a64c-bfc3aa520740",
+      "locality": "Ercolano",
+      "name": "BeenHere_QuickCapture_POI"
+    },
+    {
+      "action": "reverse_geocoding",
+      "country": "United States",
+      "enrichment_status": "completed",
+      "geometry_family": "points",
+      "globalid": "0ab90da5-f13a-4efb-af1f-a9a056570f0f",
+      "locality": "Houston",
+      "name": "Bayou Park"
     }
   ]
 }

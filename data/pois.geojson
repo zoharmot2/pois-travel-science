@@ -1008,11 +1008,11 @@
         "Latitude": 32.790138884971,
         "attachments": [
           "data/attachments/18_27_11.JPG",
+          "data/attachments/18_768_Photo 6.jpg",
+          "data/attachments/18_495_WhatsApp Image 2025-07-31 at 14.05.20.jpeg",
           "data/attachments/18_26_10.JPG",
           "data/attachments/18_25_9.JPG",
-          "data/attachments/18_24_8.JPG",
-          "data/attachments/18_768_Photo 6.jpg",
-          "data/attachments/18_495_WhatsApp Image 2025-07-31 at 14.05.20.jpeg"
+          "data/attachments/18_24_8.JPG"
         ],
         "attachment_media": [
           {
@@ -1022,6 +1022,26 @@
             "kind": "image",
             "storage": "local",
             "attachmentId": 27,
+            "parentObjectId": 18,
+            "sourceDataset": "points"
+          },
+          {
+            "url": "data/attachments/18_768_Photo 6.jpg",
+            "name": "Photo 6.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 768,
+            "parentObjectId": 18,
+            "sourceDataset": "points"
+          },
+          {
+            "url": "data/attachments/18_495_WhatsApp Image 2025-07-31 at 14.05.20.jpeg",
+            "name": "WhatsApp Image 2025-07-31 at 14.05.20.jpeg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 495,
             "parentObjectId": 18,
             "sourceDataset": "points"
           },
@@ -1052,26 +1072,6 @@
             "kind": "image",
             "storage": "local",
             "attachmentId": 24,
-            "parentObjectId": 18,
-            "sourceDataset": "points"
-          },
-          {
-            "url": "data/attachments/18_768_Photo 6.jpg",
-            "name": "Photo 6.jpg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 768,
-            "parentObjectId": 18,
-            "sourceDataset": "points"
-          },
-          {
-            "url": "data/attachments/18_495_WhatsApp Image 2025-07-31 at 14.05.20.jpeg",
-            "name": "WhatsApp Image 2025-07-31 at 14.05.20.jpeg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 495,
             "parentObjectId": 18,
             "sourceDataset": "points"
           }
@@ -2719,20 +2719,10 @@
         "Longitude": -6.26027781957938,
         "Latitude": 53.3498485627765,
         "attachments": [
-          "data/attachments/42_103_Photo 2.jpg",
-          "data/attachments/42_59_Photo 1.jpg"
+          "data/attachments/42_59_Photo 1.jpg",
+          "data/attachments/42_103_Photo 2.jpg"
         ],
         "attachment_media": [
-          {
-            "url": "data/attachments/42_103_Photo 2.jpg",
-            "name": "Photo 2.jpg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 103,
-            "parentObjectId": 42,
-            "sourceDataset": "points"
-          },
           {
             "url": "data/attachments/42_59_Photo 1.jpg",
             "name": "Photo 1.jpg",
@@ -2740,6 +2730,16 @@
             "kind": "image",
             "storage": "local",
             "attachmentId": 59,
+            "parentObjectId": 42,
+            "sourceDataset": "points"
+          },
+          {
+            "url": "data/attachments/42_103_Photo 2.jpg",
+            "name": "Photo 2.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 103,
             "parentObjectId": 42,
             "sourceDataset": "points"
           }
@@ -5974,12 +5974,22 @@
         "Longitude": -0.127908333019962,
         "Latitude": 51.5080549997227,
         "attachments": [
+          "data/attachments/81_163_Photo 1.jpg",
           "data/attachments/81_1021_Photo 4.jpg",
           "data/attachments/81_1020_Photo 3.jpg",
-          "data/attachments/81_1019_Photo 2.jpg",
-          "data/attachments/81_163_Photo 1.jpg"
+          "data/attachments/81_1019_Photo 2.jpg"
         ],
         "attachment_media": [
+          {
+            "url": "data/attachments/81_163_Photo 1.jpg",
+            "name": "Photo 1.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 163,
+            "parentObjectId": 81,
+            "sourceDataset": "points"
+          },
           {
             "url": "data/attachments/81_1021_Photo 4.jpg",
             "name": "Photo 4.jpg",
@@ -6007,16 +6017,6 @@
             "kind": "image",
             "storage": "local",
             "attachmentId": 1019,
-            "parentObjectId": 81,
-            "sourceDataset": "points"
-          },
-          {
-            "url": "data/attachments/81_163_Photo 1.jpg",
-            "name": "Photo 1.jpg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 163,
             "parentObjectId": 81,
             "sourceDataset": "points"
           }
@@ -6616,20 +6616,10 @@
         "Longitude": 16.3656790675393,
         "Latitude": 48.1997641088255,
         "attachments": [
-          "data/attachments/90_176_IMG_20240416_165421.jpg",
-          "data/attachments/90_175_IMG_20240416_170625.jpg"
+          "data/attachments/90_175_IMG_20240416_170625.jpg",
+          "data/attachments/90_176_IMG_20240416_165421.jpg"
         ],
         "attachment_media": [
-          {
-            "url": "data/attachments/90_176_IMG_20240416_165421.jpg",
-            "name": "IMG_20240416_165421.jpg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 176,
-            "parentObjectId": 90,
-            "sourceDataset": "points"
-          },
           {
             "url": "data/attachments/90_175_IMG_20240416_170625.jpg",
             "name": "IMG_20240416_170625.jpg",
@@ -6637,6 +6627,16 @@
             "kind": "image",
             "storage": "local",
             "attachmentId": 175,
+            "parentObjectId": 90,
+            "sourceDataset": "points"
+          },
+          {
+            "url": "data/attachments/90_176_IMG_20240416_165421.jpg",
+            "name": "IMG_20240416_165421.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 176,
             "parentObjectId": 90,
             "sourceDataset": "points"
           }
@@ -17997,22 +17997,12 @@
         "Longitude": 35.2297475460993,
         "Latitude": 31.7780970002716,
         "attachments": [
-          "data/attachments/258_631_Photo 4.jpg",
           "data/attachments/258_493_PA190270.JPG",
           "data/attachments/258_492_PA190269 - Copy.JPG",
-          "data/attachments/258_491_PA190268.JPG"
+          "data/attachments/258_491_PA190268.JPG",
+          "data/attachments/258_631_Photo 4.jpg"
         ],
         "attachment_media": [
-          {
-            "url": "data/attachments/258_631_Photo 4.jpg",
-            "name": "Photo 4.jpg",
-            "contentType": "image/jpeg",
-            "kind": "image",
-            "storage": "local",
-            "attachmentId": 631,
-            "parentObjectId": 258,
-            "sourceDataset": "points"
-          },
           {
             "url": "data/attachments/258_493_PA190270.JPG",
             "name": "PA190270.JPG",
@@ -18040,6 +18030,16 @@
             "kind": "image",
             "storage": "local",
             "attachmentId": 491,
+            "parentObjectId": 258,
+            "sourceDataset": "points"
+          },
+          {
+            "url": "data/attachments/258_631_Photo 4.jpg",
+            "name": "Photo 4.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 631,
             "parentObjectId": 258,
             "sourceDataset": "points"
           }
@@ -74651,6 +74651,540 @@
         "Latitude": 30.0632549944233,
         "attachments": [],
         "attachment_media": []
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1242,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          35.0256266662298,
+          31.8429016664563
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1242,
+        "GlobalID": "79943473-2f8b-4901-bbc4-a8d834957f68",
+        "esrignss_speed": 1.6667999999856002,
+        "esrignss_direction": 280.4,
+        "esrisnsr_azimuth": 260.8625431031221,
+        "esrignss_positionsourcetype": 2,
+        "esrignss_receiver": "Samsung SM-A256E",
+        "esrignss_h_rms": 1.8800000000000001,
+        "esrignss_v_rms": 3.7600000000000002,
+        "esrignss_latitude": 31.842901666666663,
+        "esrignss_longitude": 35.025626666666675,
+        "esrignss_altitude": 251.4,
+        "esrignss_pdop": 1,
+        "esrignss_hdop": 0.4,
+        "esrignss_vdop": 0.8,
+        "esrignss_fixtype": 1,
+        "esrignss_correctionage": null,
+        "esrignss_stationid": null,
+        "esrignss_numsats": 30,
+        "esrignss_fixdatetime": "21/11/2026 12:08",
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_avg_positions": null,
+        "esrignss_h_stddev": null,
+        "CreationDate": "21/11/2026 12:09",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "21/11/2026 12:09",
+        "Editor": "mzohar_univhaifa25",
+        "Collection_date": "21/11/2026 12:09",
+        "POI_Type": "Spring/Pool/Cistern",
+        "POI_Description": null,
+        "POI_Name": "Arc House",
+        "POI_Topic": "Aqueducts",
+        "Collect_Name": "Motti Zohar",
+        "Longitude": 35.0256266662298,
+        "Latitude": 31.8429016664563,
+        "attachments": [
+          "data/attachments/1242_1092_attachments_20261121140829.jpg",
+          "data/attachments/1242_1093_attachments_20261121140900.jpg"
+        ],
+        "attachment_media": [
+          {
+            "url": "data/attachments/1242_1092_attachments_20261121140829.jpg",
+            "name": "attachments_20261121140829.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 1092,
+            "parentObjectId": 1242,
+            "sourceDataset": "points"
+          },
+          {
+            "url": "data/attachments/1242_1093_attachments_20261121140900.jpg",
+            "name": "attachments_20261121140900.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 1093,
+            "parentObjectId": 1242,
+            "sourceDataset": "points"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1243,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          35.0255066665792,
+          31.8430183332254
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1243,
+        "GlobalID": "20e2bbef-e2b6-4fc4-8d40-d1c6e1c4c3cc",
+        "esrignss_speed": 0,
+        "esrignss_direction": 110.6,
+        "esrisnsr_azimuth": 1.2762230875727028,
+        "esrignss_positionsourcetype": 2,
+        "esrignss_receiver": "Samsung SM-A256E",
+        "esrignss_h_rms": 1.8800000000000001,
+        "esrignss_v_rms": 3.7600000000000002,
+        "esrignss_latitude": 31.84301833333333,
+        "esrignss_longitude": 35.025506666666665,
+        "esrignss_altitude": 258.7,
+        "esrignss_pdop": 1,
+        "esrignss_hdop": 0.4,
+        "esrignss_vdop": 0.8,
+        "esrignss_fixtype": 1,
+        "esrignss_correctionage": null,
+        "esrignss_stationid": null,
+        "esrignss_numsats": 32,
+        "esrignss_fixdatetime": "21/11/2026 12:11",
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_avg_positions": null,
+        "esrignss_h_stddev": null,
+        "CreationDate": "21/11/2026 12:11",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "21/11/2026 12:11",
+        "Editor": "mzohar_univhaifa25",
+        "Collection_date": "21/11/2026 12:11",
+        "POI_Type": "General Site",
+        "POI_Description": "שיזף",
+        "POI_Name": "Jujube",
+        "POI_Topic": "General",
+        "Collect_Name": "Motti Zohar",
+        "Longitude": 35.0255066665792,
+        "Latitude": 31.8430183332254,
+        "attachments": [
+          "data/attachments/1243_1094_attachments_20261121141121.jpg"
+        ],
+        "attachment_media": [
+          {
+            "url": "data/attachments/1243_1094_attachments_20261121141121.jpg",
+            "name": "attachments_20261121141121.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 1094,
+            "parentObjectId": 1243,
+            "sourceDataset": "points"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1244,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          35.0255161339239,
+          31.8431344748238
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1244,
+        "GlobalID": "079ce6f1-1de8-4c36-8b38-f61bbe6bee68",
+        "esrignss_speed": null,
+        "esrignss_direction": null,
+        "esrisnsr_azimuth": null,
+        "esrignss_positionsourcetype": 1,
+        "esrignss_receiver": null,
+        "esrignss_h_rms": null,
+        "esrignss_v_rms": null,
+        "esrignss_latitude": null,
+        "esrignss_longitude": null,
+        "esrignss_altitude": null,
+        "esrignss_pdop": null,
+        "esrignss_hdop": null,
+        "esrignss_vdop": null,
+        "esrignss_fixtype": null,
+        "esrignss_correctionage": null,
+        "esrignss_stationid": null,
+        "esrignss_numsats": null,
+        "esrignss_fixdatetime": null,
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_avg_positions": null,
+        "esrignss_h_stddev": null,
+        "CreationDate": "21/11/2026 12:21",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "21/11/2026 12:22",
+        "Editor": "mzohar_univhaifa25",
+        "Collection_date": "21/11/2026 12:20",
+        "POI_Type": "General Site",
+        "POI_Description": "פיקוס השקמה",
+        "POI_Name": "Sizemore Fig",
+        "POI_Topic": "General",
+        "Collect_Name": "Motti Zohar",
+        "Longitude": 35.0255161339239,
+        "Latitude": 31.8431344748238,
+        "attachments": [
+          "data/attachments/1244_1095_attachments_20261121142042.jpg"
+        ],
+        "attachment_media": [
+          {
+            "url": "data/attachments/1244_1095_attachments_20261121142042.jpg",
+            "name": "attachments_20261121142042.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 1095,
+            "parentObjectId": 1244,
+            "sourceDataset": "points"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1245,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          35.0255450003873,
+          31.8415800002748
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1245,
+        "GlobalID": "25c8010a-7906-481d-a9cb-526d16a8bb7e",
+        "esrignss_speed": 0,
+        "esrignss_direction": 0,
+        "esrisnsr_azimuth": 356.82736026849955,
+        "esrignss_positionsourcetype": 2,
+        "esrignss_receiver": "Samsung SM-A256E",
+        "esrignss_h_rms": 1.8800000000000001,
+        "esrignss_v_rms": 4.7,
+        "esrignss_latitude": 31.841579999999997,
+        "esrignss_longitude": 35.025545,
+        "esrignss_altitude": 283.7,
+        "esrignss_pdop": 1.2,
+        "esrignss_hdop": 0.4,
+        "esrignss_vdop": 1,
+        "esrignss_fixtype": 1,
+        "esrignss_correctionage": null,
+        "esrignss_stationid": null,
+        "esrignss_numsats": 22,
+        "esrignss_fixdatetime": "21/11/2026 12:33",
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_avg_positions": null,
+        "esrignss_h_stddev": null,
+        "CreationDate": "21/11/2026 12:34",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "21/11/2026 12:41",
+        "Editor": "mzohar_univhaifa25",
+        "Collection_date": "21/11/2026 12:34",
+        "POI_Type": "Scenary View",
+        "POI_Description": null,
+        "POI_Name": "Mevo Horon Reservoir",
+        "POI_Topic": "General",
+        "Collect_Name": "Motti Zohar",
+        "Longitude": 35.0255450003873,
+        "Latitude": 31.8415800002748,
+        "attachments": [
+          "data/attachments/1245_1096_attachments_20261121143409.jpg",
+          "data/attachments/1245_1097_attachments_20261121144146.jpg"
+        ],
+        "attachment_media": [
+          {
+            "url": "data/attachments/1245_1096_attachments_20261121143409.jpg",
+            "name": "attachments_20261121143409.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 1096,
+            "parentObjectId": 1245,
+            "sourceDataset": "points"
+          },
+          {
+            "url": "data/attachments/1245_1097_attachments_20261121144146.jpg",
+            "name": "attachments_20261121144146.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 1097,
+            "parentObjectId": 1245,
+            "sourceDataset": "points"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1246,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          35.0256728737713,
+          31.8414871290931
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1246,
+        "GlobalID": "d0629d80-6f6b-4fed-be74-80d7b3556a6d",
+        "esrignss_speed": null,
+        "esrignss_direction": null,
+        "esrisnsr_azimuth": null,
+        "esrignss_positionsourcetype": 1,
+        "esrignss_receiver": null,
+        "esrignss_h_rms": null,
+        "esrignss_v_rms": null,
+        "esrignss_latitude": null,
+        "esrignss_longitude": null,
+        "esrignss_altitude": null,
+        "esrignss_pdop": null,
+        "esrignss_hdop": null,
+        "esrignss_vdop": null,
+        "esrignss_fixtype": null,
+        "esrignss_correctionage": null,
+        "esrignss_stationid": null,
+        "esrignss_numsats": null,
+        "esrignss_fixdatetime": null,
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_avg_positions": null,
+        "esrignss_h_stddev": null,
+        "CreationDate": "21/11/2026 12:47",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "21/11/2026 12:47",
+        "Editor": "mzohar_univhaifa25",
+        "Collection_date": "21/11/2026 12:47",
+        "POI_Type": "General Site",
+        "POI_Description": null,
+        "POI_Name": "Caves",
+        "POI_Topic": "General",
+        "Collect_Name": "Motti Zohar",
+        "Longitude": 35.0256728737713,
+        "Latitude": 31.8414871290931,
+        "attachments": [
+          "data/attachments/1246_1098_attachments_20261121144642.jpg"
+        ],
+        "attachment_media": [
+          {
+            "url": "data/attachments/1246_1098_attachments_20261121144642.jpg",
+            "name": "attachments_20261121144642.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 1098,
+            "parentObjectId": 1246,
+            "sourceDataset": "points"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1247,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          35.0250149997595,
+          31.8421933332585
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1247,
+        "GlobalID": "0e42c7f1-1ba2-43b9-99cd-3e0e6ddef7ff",
+        "esrignss_speed": 1.1111999999904,
+        "esrignss_direction": 0,
+        "esrisnsr_azimuth": 309.3383832277511,
+        "esrignss_positionsourcetype": 2,
+        "esrignss_receiver": "Samsung SM-A256E",
+        "esrignss_h_rms": 2.82,
+        "esrignss_v_rms": 5.64,
+        "esrignss_latitude": 31.842193333333327,
+        "esrignss_longitude": 35.025014999999996,
+        "esrignss_altitude": 273.8,
+        "esrignss_pdop": 1.2,
+        "esrignss_hdop": 0.4,
+        "esrignss_vdop": 1.2,
+        "esrignss_fixtype": 1,
+        "esrignss_correctionage": null,
+        "esrignss_stationid": null,
+        "esrignss_numsats": 21,
+        "esrignss_fixdatetime": "21/11/2026 12:52",
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_avg_positions": null,
+        "esrignss_h_stddev": null,
+        "CreationDate": "21/11/2026 12:53",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "21/11/2026 12:53",
+        "Editor": "mzohar_univhaifa25",
+        "Collection_date": "21/11/2026 12:52",
+        "POI_Type": null,
+        "POI_Description": null,
+        "POI_Name": "Aaa",
+        "POI_Topic": "General",
+        "Collect_Name": "Motti Zohar",
+        "Longitude": 35.0250149997595,
+        "Latitude": 31.8421933332585,
+        "attachments": [
+          "data/attachments/1247_1099_attachments_20261121145251.jpg"
+        ],
+        "attachment_media": [
+          {
+            "url": "data/attachments/1247_1099_attachments_20261121145251.jpg",
+            "name": "attachments_20261121145251.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 1099,
+            "parentObjectId": 1247,
+            "sourceDataset": "points"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1248,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          35.0245533330771,
+          31.8451516663991
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1248,
+        "GlobalID": "65b53738-6df8-4141-b97b-f903efc4ba84",
+        "esrignss_speed": 1.2963999999887998,
+        "esrignss_direction": 309.6,
+        "esrisnsr_azimuth": 352.82060630961297,
+        "esrignss_positionsourcetype": 2,
+        "esrignss_receiver": "Samsung SM-A256E",
+        "esrignss_h_rms": 1.8800000000000001,
+        "esrignss_v_rms": 2.82,
+        "esrignss_latitude": 31.845151666666666,
+        "esrignss_longitude": 35.02455333333334,
+        "esrignss_altitude": 250.4,
+        "esrignss_pdop": 0.8,
+        "esrignss_hdop": 0.4,
+        "esrignss_vdop": 0.6,
+        "esrignss_fixtype": 1,
+        "esrignss_correctionage": null,
+        "esrignss_stationid": null,
+        "esrignss_numsats": 31,
+        "esrignss_fixdatetime": "21/11/2026 13:00",
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_avg_positions": null,
+        "esrignss_h_stddev": null,
+        "CreationDate": "21/11/2026 13:01",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "21/11/2026 13:01",
+        "Editor": "mzohar_univhaifa25",
+        "Collection_date": "21/11/2026 13:01",
+        "POI_Type": "General Site",
+        "POI_Description": null,
+        "POI_Name": "Sign",
+        "POI_Topic": "General",
+        "Collect_Name": "Motti Zohar",
+        "Longitude": 35.0245533330771,
+        "Latitude": 31.8451516663991,
+        "attachments": [
+          "data/attachments/1248_1100_attachments_20261121150107.jpg"
+        ],
+        "attachment_media": [
+          {
+            "url": "data/attachments/1248_1100_attachments_20261121150107.jpg",
+            "name": "attachments_20261121150107.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 1100,
+            "parentObjectId": 1248,
+            "sourceDataset": "points"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1249,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          34.9770300003499,
+          31.8377699996392
+        ]
+      },
+      "properties": {
+        "OBJECTID": 1249,
+        "GlobalID": "b1daee03-9da1-4dbf-8354-da3c5bca1ed2",
+        "esrignss_speed": 0,
+        "esrignss_direction": 318.6,
+        "esrisnsr_azimuth": 341.31581261975504,
+        "esrignss_positionsourcetype": 2,
+        "esrignss_receiver": "Samsung SM-A256E",
+        "esrignss_h_rms": 1.8800000000000001,
+        "esrignss_v_rms": 2.82,
+        "esrignss_latitude": 31.837770000000003,
+        "esrignss_longitude": 34.977030000000006,
+        "esrignss_altitude": 219.6,
+        "esrignss_pdop": 0.8,
+        "esrignss_hdop": 0.4,
+        "esrignss_vdop": 0.6,
+        "esrignss_fixtype": 1,
+        "esrignss_correctionage": null,
+        "esrignss_stationid": null,
+        "esrignss_numsats": 31,
+        "esrignss_fixdatetime": "21/11/2026 14:14",
+        "esrignss_avg_h_rms": null,
+        "esrignss_avg_v_rms": null,
+        "esrignss_avg_positions": null,
+        "esrignss_h_stddev": null,
+        "CreationDate": "21/11/2026 14:15",
+        "Creator": "mzohar_univhaifa25",
+        "EditDate": "21/11/2026 14:15",
+        "Editor": "mzohar_univhaifa25",
+        "Collection_date": "21/11/2026 14:15",
+        "POI_Type": "Scenary View",
+        "POI_Description": null,
+        "POI_Name": "View",
+        "POI_Topic": "General",
+        "Collect_Name": "Motti Zohar",
+        "Longitude": 34.9770300003499,
+        "Latitude": 31.8377699996392,
+        "attachments": [
+          "data/attachments/1249_1101_attachments_20261121161506.jpg"
+        ],
+        "attachment_media": [
+          {
+            "url": "data/attachments/1249_1101_attachments_20261121161506.jpg",
+            "name": "attachments_20261121161506.jpg",
+            "contentType": "image/jpeg",
+            "kind": "image",
+            "storage": "local",
+            "attachmentId": 1101,
+            "parentObjectId": 1249,
+            "sourceDataset": "points"
+          }
+        ]
       }
     }
   ]
